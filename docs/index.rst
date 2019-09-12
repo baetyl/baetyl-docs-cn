@@ -14,11 +14,13 @@
 Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
 .. toctree::
+   BAETYL 主页 <https://baetyl.io>
+
+.. toctree::
    :maxdepth: 2
    :caption: 概述
    
    overview/Whatis.md
-   overview/Advantages.md
    overview/Design.md
    overview/Framework.md
    overview/Extension.md
@@ -52,6 +54,12 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    develop/How-to-import-third-party-libraries-for-node-runtime.md
    develop/How-to-develop-a-customize-runtime-for-function.md
    develop/How-to-develop-a-customize-module.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 实践 
+
+   practice/Write-data-to-TSDB.md
 
 .. toctree::
    :maxdepth: 2
