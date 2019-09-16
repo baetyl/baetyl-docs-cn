@@ -9,12 +9,12 @@
 .. figure:: images/logo/logo-with-name.png
       :width: 150px
       :align: right
-      :target: https://baetyl.io
+      :target: https://baetyl.io/zh/
 
 Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
 .. toctree::
-   BAETYL 主页 <https://baetyl.io>
+   BAETYL 主页 <https://baetyl.io/zh/>
 
 .. toctree::
    :maxdepth: 2
