@@ -17,9 +17,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'BAETYL Documentation'
-copyright = '2019, BAETYL'
-author = 'BAETYL'
+project = u'BAETYL 文档'
+copyright = u'2019, BAETYL'
+author = u'BAETYL'
 
 
 # -- General configuration ---------------------------------------------------
