@@ -31,8 +31,8 @@ Baetyl 作为一个边缘计算平台，除了提供底层服务管理能力外�
 
 ## 快速安装
 
-- [快速安装 Baetyl](../setup/Quick-Install.md)
-- [源码编译 Baetyl](../setup/Build-from-Source.md)
+- [快速安装 Baetyl](../install/Quick-Install.md)
+- [源码编译 Baetyl](../install/Build-from-Source.md)
 
 ## 开发文档
 

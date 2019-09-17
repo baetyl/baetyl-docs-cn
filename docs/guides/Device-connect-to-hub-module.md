@@ -3,14 +3,14 @@
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu18.04
-- 本文测试前先安装 Baetyl，并导入默认配置包，可参考 [快速安装 Baetyl](../setup/Quick-Install.md)
+- 本文测试前先安装 Baetyl，并导入默认配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
 - 模拟 MQTT Client 行为的客户端为 MQTT.fx 和 MQTTBOX，其中 [MQTT.fx](../Resources.md) 用于 TCP 和 SSL 连接方式的测试，[MQTTBOX](../Resources.md) 用于 WS(Websocket）连接方式的测试。
 - 本文所用的 Hub 模块镜像为 Baetyl 云端管理套件中发布的官方镜像：`hub.baidubce.com/baetyl/baetyl-hub:latest`
-- 您也可以通过 Baetyl 源码自行编译所需的 Hub 模块镜像，具体请查看 [如何从源码构建镜像](../setup/Build-from-Source.md)
+- 您也可以通过 Baetyl 源码自行编译所需的 Hub 模块镜像，具体请查看 [如何从源码构建镜像](../install/Build-from-Source.md)
 
 Baetyl Hub 模块的完整的配置参考 [Hub 模块配置](./Config-interpretation.md)。
 
-_**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../setup/Build-from-Source.md)。_
+_**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
 
 ## 操作流程
 
@@ -106,7 +106,7 @@ logger:
 
 依据 `Step 1`，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 `baetyl` 是否正常运行。正常启动的情况如下图所示。
 
-![Baetyl 状态](../images/setup/systemctl-status.png)
+![Baetyl 状态](../images/install/systemctl-status.png)
 
 _**提示**：Darwin 系统通过源码安装 Baetyl，可执行 `sudo baetyl start` 以容器模式启动 Baetyl。_
 

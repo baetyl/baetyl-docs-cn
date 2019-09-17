@@ -28,8 +28,8 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    :maxdepth: 2
    :caption: 安装
 
-   setup/Quick-Install.md
-   setup/Build-from-Source.md
+   install/Quick-Install.md
+   install/Build-from-Source.md
 
 .. toctree::
    :maxdepth: 2

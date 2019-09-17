@@ -72,10 +72,10 @@ curl -sSL http://dl.baetyl.io/install_with_docker_example.sh | sudo -E bash -
 
 - 在终端中命令 `sudo systemctl status baetyl` 来查看 `baetyl` 是否正常运行。正常如下图所示，否则说明主程序 `baetyl` 启动失败；
 
-![Baetyl](../images/setup/systemctl-status.png)
+![Baetyl](../images/install/systemctl-status.png)
 
 - 在终端中执行命令 `docker stats` 查看当前 docker 中容器的运行状态。由于主程序 `baetyl` 会先到镜像仓库拉取需要的镜像，用户需要等待 2~5 分钟执行此条命令。以上一步中导入的示例配置为例，待主程序拉取完成后，容器的运行状态如下图所示。如果用户本地的镜像与下述不一致，说明模块启动失败；
 
-![当前运行 docker 容器查询](../images/setup/docker-stats.png)
+![当前运行 docker 容器查询](../images/install/docker-stats.png)
 
 - 针对上述两种失败情况，用户需要查看主程序日志来了解具体的错误情况。主程序日志的默认存放位置为 `/usr/local/var/log/baetyl/baetyl.log`。针对日志中出现的错误，用户可先参考 [常见问题](../FAQ.md) 进行解决。必要时可以直接 [提交 Issue](https://github.com/baetyl/baetyl/issues)。
