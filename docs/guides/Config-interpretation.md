@@ -1,17 +1,6 @@
 # Baetyl 配置文件释义
 
-- [说在前头](#说在前头)
-- [主程序配置](#主程序配置)
-- [应用配置](#应用配置)
-- [baetyl-agent 配置](#baetyl-agent-配置)
-- [baetyl-hub 配置](#baetyl-hub-配置)
-- [baetyl-function-manager 配置](#baetyl-function-manager-配置)
-- [baetyl-function-python27、baetyl-function-python36 配置](#baetyl-function-python27-配置-baetyl-function-python36-配置)
-- [baetyl-remote-mqtt 配置](#baetyl-remote-mqtt-配置)
-
-## 说在前头
-
-支持的单位：
+单位统一说明：
 
 - 大小：b：字节（byte）；k：千字节（kilobyte）；m：兆字节（megabyte），g：吉字节（gigabyte）
 - 时间：s：秒；m：分；h：小时
@@ -20,7 +9,7 @@
 
 ## 主程序配置
 
-主程序的配置和应用配置是分离的，默认配置文件是工作目录下的`etc/baetyl/baetyl.yml`，配置解读如下：
+主程序的配置和应用配置是分离的，默认配置文件是工作目录下的`etc/baetyl/conf.yml`，配置解读如下：
 
 ```yaml
 mode: 默认值：docker，服务运行模式。docker：容器模式；native：进程模式
@@ -242,7 +231,7 @@ functions: 函数列表
     timeout: 默认值：30s，Client 连接函数实例超时时间
 ```
 
-## baetyl-function-python27、baetyl-function-python36 配置
+## baetyl-function-python 配置
 
 ```yaml
 # 两个模块的配置方式相同，可参考下面一份配置

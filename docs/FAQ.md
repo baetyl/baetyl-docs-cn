@@ -6,7 +6,7 @@
 
 ![图片](images/faq/docker-engine-conf-miss.png)
 
-**参考方案**: 如上图所示，Baetyl 启动缺少配置依赖文件，参考 [GitHub-Baetyl](https://github.com/baetyl/baetyl) example 文件夹补充相应配置文件即可（位于 `etc/baetyl/baetyl.yml`）。
+**参考方案**: 如上图所示，Baetyl 启动缺少配置依赖文件，参考 [GitHub-Baetyl](https://github.com/baetyl/baetyl) example 文件夹补充相应配置文件即可（位于 `etc/baetyl/conf.yml`）。
 
 ## 问题 2: Ubuntu/Debian 下输入命令 `docker info` 后显示如下信息：
 

@@ -1,26 +1,5 @@
 # Baetyl 架构
 
-- [概念](#概念)
-- [组成](#组成)
-- [主程序](#主程序)
-  - [引擎系统](#引擎系统)
-    - [Docker 引擎](#docker-引擎)
-    - [Native 引擎](#native-引擎)
-  - [RESTful API](#restful-api)
-    - [System Inspect](#system-inspect)
-    - [System Update](#system-update)
-    - [Instance Start&Stop](#instance-startstop)
-    - [Instance Report](#instance-report)
-  - [环境变量](#环境变量)
-- [官方模块](#官方模块)
-  - [baetyl-agent](#baetyl-agent)
-  - [baetyl-hub](#baetyl-hub)
-  - [baetyl-function-manager](#baetyl-function-manager)
-  - [baetyl-function-python27](#baetyl-function-python27)
-  - [baetyl-function-python36](#baetyl-function-python36)
-  - [baetyl-function-node85](#baetyl-function-node85)
-  - [baetyl-remote-mqtt](#baetyl-remote-mqtt)
-
 ## 概念
 
 - **系统**：这里专指 Baetyl 系统，包行 **主程序**、**服务**、**存储卷** 和使用的系统资源。
@@ -55,11 +34,8 @@
 
 主程序启停过程如下：
 
-1. 执行启动命令：`sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 `baetyl` 是否正常运行。
-
-_**提示**：Darwin 系统可通过执行 `sudo baetyl start` 以容器模式启动 Baetyl。_
-
-2. 主程序首先会加载工作目录下的 `etc/baetyl/baetyl.yml`，初始化运行模式、API Server、日志和退出超时时间等，这些配置不会随应用配置下发而改变。如果启动没有报错，会在 `/var/run/` 目录下生成 baetyl.sock（Linux）文件。
+1. 执行启动命令：`sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 `baetyl` 是否正常运行。Darwin 系统下可通过执行 `sudo baetyl start` 在终端前台执行运行 baetyl。
+2. 主程序首先会加载工作目录下的 `etc/baetyl/conf.yml`，初始化运行模式、API Server、日志和退出超时时间等，这些配置不会随应用配置下发而改变。如果启动没有报错，会在 `/var/run/` 目录下生成 baetyl.sock（Linux）文件。
 3. 然后主程序会尝试加载应用配置 `var/db/baetyl/application.yml`，如果该配置不存在则不启动任何服务，否则加载应用配置中的服务列表和存储卷列表。该文件会随应用配置下发而更新，届时系统会根据新配置重新编排服务。
 4. 在启动所有服务前，主程序会先调用 Engine 接口执行一些准备工作，比如容器模式下会先尝试下载所有服务的镜像。
 5. 准备工作完成后，开始顺序启动所有服务，如果服务启动失败则会导致主程序退出。容器模式下会将存储卷映射到容器内部；进程模式下会为每个服务创建各自的临时工作目录，并将存储卷软链到工作目录下，服务退出后临时工作目录会被清理，行为同容器模式。
@@ -145,8 +121,8 @@ Baetyl 主程序会暴露一组 RESTful API，采用 HTTP/1。在 Linux 系统�
 
 Header 名称如下：
 
-- x-baetyl-username：账号名称，即服务名称
-- x-baetyl-password：账号密码，即动态 Token
+- x-openedge-username：账号名称，即服务名称
+- x-openedge-password：账号密码，即动态 Token
 
 下面是目前提供的接口：
 
@@ -211,13 +187,11 @@ type Hardware struct {
 
 #### System Update
 
-该接口用于更新系统中的应用，我们称之为应用 OTA，后续还会实现主程序 OTA（即 Baetyl 主程序的自升级）。应用 OTA 会先停止所有老服务再启动所有新服务，所以有停服时间。我们后续会继续优化，避免重启未更新的服务。
+该接口用于更新系统中的应用和主程序，我们称之为应用 OTA 和主程序 OTA。其中应用 OTA 会对比配置中的存储卷、网络以及服务自身的配置，如果有变化则会重启服务，如果没有变化则不会重启服务。
 
 一次应用 OTA 的过程如下：
 
 ![update](../images/overview/design/design_app_ota.png)
-
-_**注意**：目前应用 OTA 采用全量更新的方式，即先停止所有老服务再启动所有新服务，因此服务会中断。_
 
 #### Instance Start&Stop
 
@@ -324,7 +298,9 @@ _**注意**：目前应用 OTA 采用全量更新的方式，即先停止所有�
 Baetyl 目前会给服务实例设置如下几个系统环境变量：
 
 - OPENEDGE_HOST_OS：Baetyl 所在设备（宿主机）的系统类型
+- OPENEDGE_HOST_ID：Baetyl 所在设备（宿主机）的HOST ID，可以作为设备的指纹
 - OPENEDGE_MASTER_API：Baetyl 主程序的 API Server 地址
+- OPENEDGE_MASTER_API_VERSION：Baetyl 主程序的 API 的版本
 - OPENEDGE_RUNNING_MODE：Baetyl 主程序采用的服务运行模式
 - OPENEDGE_SERVICE_NAME：服务的名称
 - OPENEDGE_SERVICE_TOKEN：动态分配的 Token
