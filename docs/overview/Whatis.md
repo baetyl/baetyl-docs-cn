@@ -1,8 +1,8 @@
 # 什么是 Baetyl
 
-[Baetyl](https://baetyl.io) 是百度云开源的边缘计算相关产品，可将云计算能力拓展至用户现场，提供临时离线、低延时的计算服务，包括设备接入、消息路由、消息远程同步、函数计算、设备信息上报、配置下发等功能。Baetyl 和 [智能边缘 BIE](https://cloud.baidu.com/product/bie.html)（Baidu-IntelliEdge）云端管理套件配合使用，通过在云端进行智能边缘核心设备的建立、存储卷创建、服务创建、函数编写，然后生成配置文件下发至 Baetyl 本地运行包，可达到云端管理和应用下发，边缘设备上运行应用的效果，满足各种边缘计算场景。
+[Baetyl](https://baetyl.io) 是 [Linux Foundation Edge](https://www.lfedge.org) 旗下项目，旨在将云计算能力拓展至用户现场，提供临时离线、低延时的计算服务，包括设备接入、消息路由、消息远程同步、函数计算、设备信息上报、配置下发等功能。Baetyl 和 [智能边缘 BIE](https://cloud.baidu.com/product/bie.html)（Baidu-IntelliEdge）云端管理套件配合使用，通过在云端进行智能边缘核心设备的建立、存储卷创建、服务创建、函数编写，然后生成配置文件下发至 Baetyl 本地运行包，整体可达到 **边缘计算、云端管理、边云协同** 的效果，满足各种边缘计算场景。
 
-在[架构设计](./Design.md)上，Baetyl 一方面推行 **模块化**，拆分各项主要功能，确保每一项功能都是一个独立的模块，整体由主程序控制启动、退出，确保各项子功能模块运行互不依赖、互不影响；总体上来说，推行模块化的设计模式，可以充分满足用户 **按需使用、按需部署** 的切实要求；另一方面，Baetyl 在设计上还采用全面 **容器化** 的设计思路，基于各模块的镜像可以在 Docker 支持的各类操作系统上进行 **一键式构建**，依托 Docker 跨平台支持的特性，确保 Baetyl 在各系统、各平台的环境一致、标准化；此外，Baetyl 还针对 Docker 容器化模式赋予其 **资源隔离与限制** 能力，精确分配各运行实例的 CPU、内存等资源，提升资源利用效率。
+在[架构设计](Design.md)上，Baetyl 一方面推行 **模块化**，拆分各项主要功能，确保每一项功能都是一个独立的模块，整体由主程序控制启动、退出，确保各项子功能模块运行互不依赖、互不影响；总体上来说，推行模块化的设计模式，可以充分满足用户 **按需使用、按需部署** 的切实要求；另一方面，Baetyl 在设计上还采用全面 **容器化** 的设计思路，基于各模块的镜像可以在支持 Docker 的各类操作系统上进行 **一键式构建**，依托 Docker 跨平台支持的特性，确保 Baetyl 在各系统、平台的环境一致；此外，Baetyl 还针对 Docker 容器化模式赋予其 **资源隔离与限制** 能力，精确分配各运行实例的 CPU、内存等资源，提升资源利用效率。
 
 ## 优势
 
@@ -13,16 +13,16 @@
 
 ## 组成
 
-Baetyl 作为一个边缘计算平台，除了提供底层服务管理能力外，还提供一些基础功能模块，具体如下：
+Baetyl 作为一个边缘计算框架，除了提供底层服务管理能力外，还提供一些基础功能模块，具体如下：
 
-- Baetyl [主程序](Design.md#主程序) 负责服务实例的管理，如启动、退出、守护等，由引擎系统、API、命令行构成。目前支持两种运行模式：Native 进程模式和 Docker 容器模式
-- 官方模块 [baetyl-agent](Design.md#baetyl-agent) 负责和 BIE 云端管理套件通讯，可以进行应用下发，设备信息上报等。强制证书认证，保证传输安全；
-- 官方模块 [baetyl-hub](Design.md#baetyl-hub) 提供基于 [MQTT 协议](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html) 的消息订阅和发布功能，支持 4 种接入方式：TCP、SSL、WS 及 WSS；
-- 官方模块 [baetyl-remote-mqtt](Design.md#baetyl-remote-mqtt) 用于桥接两个 MQTT Server 进行消息同步，支持配置多路消息转发；
-- 官方模块 [baetyl-function-manager](Design.md#baetyl-function-manager) 提供基于 MQTT 消息机制，弹性、高可用、扩展性好、响应快的计算能力；
-- 官方模块 [baetyl-function-python27](Design.md#baetyl-function-python27) 提供 Python2.7 函数运行时，可由 `baetyl-function-manager` 动态启动实例；
-- 官方模块 [baetyl-function-python36](Design.md#baetyl-function-python36) 提供 Python3.6 函数运行时，可由`baetyl-function-manager` 动态启动实例；
-- 官方模块 [baetyl-function-node85](Design.md#baetyl-function-node85) 提供 Node 8.5 函数运行时，可由`baetyl-function-manager` 动态启动实例；
+- Baetyl [主程序](Design.html#id3) 负责服务实例的管理，如启动、退出、守护等，由引擎系统、API、命令行构成。目前支持两种运行模式：Native 进程模式和 Docker 容器模式
+- 官方模块 [baetyl-agent](Design.html#baetyl-agent) 负责和 BIE 云端管理套件通讯，可以进行应用下发，设备信息上报等。强制证书认证，保证传输安全；
+- 官方模块 [baetyl-hub](Design.html#baetyl-hub) 提供基于 [MQTT 协议](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html) 的消息订阅和发布功能，支持 4 种接入方式：TCP、SSL、WS 及 WSS；
+- 官方模块 [baetyl-remote-mqtt](Design.html#baetyl-remote-mqtt) 用于桥接两个 MQTT Server 进行消息同步，支持配置多路消息转发；
+- 官方模块 [baetyl-function-manager](Design.html#baetyl-function-manager) 提供基于 MQTT 消息机制，弹性、高可用、扩展性好、响应快的计算能力；
+- 官方模块 [baetyl-function-python27](Design.html#baetyl-function-python27) 提供 Python2.7 函数运行时，可由 `baetyl-function-manager` 动态启动实例；
+- 官方模块 [baetyl-function-python36](Design.html#baetyl-function-python36) 提供 Python3.6 函数运行时，可由`baetyl-function-manager` 动态启动实例；
+- 官方模块 [baetyl-function-node85](Design.html#baetyl-function-node85) 提供 Node 8.5 函数运行时，可由`baetyl-function-manager` 动态启动实例；
 - SDK (Golang) 可用于开发自定义模块。
 
 ### 架构图

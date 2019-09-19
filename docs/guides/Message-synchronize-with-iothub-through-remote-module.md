@@ -1,4 +1,4 @@
-# 利用 Remote 模块进行 Baetyl 与百度 IoT Hub 间消息同步
+# 利用 Remote 远程服务实现 Baetyl 与百度 IoTHub 消息同步
 
 **声明**：
 

@@ -1,10 +1,11 @@
-# 通过 Baetyl 将数据脱敏后存到云端 TSDB
+# 通过 Baetyl 将数据脱敏后存储百度云 TSDB
 
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu18.04
-- 模拟 MQTT client 向本地 Hub 模块发送消息的客户端为 [MQTT.fx](../Resources.md#下载-MQTT.fx-客户端)
-- 模拟 MQTT client 向云端远程 Hub 模块订阅消息的客户端为 [MQTTBOX](../Resources.md#下载-MQTTBOX-客户端)
+- 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqtt-fx)
+- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBOX](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
+- 本文所应用的各服务与本地 Hub 服务间通信认证强制使用 TLS/SSL 安全证书
 
 ## 测试前准备
 
@@ -26,7 +27,7 @@
 
 ![创建物接入 Endpoint](../images/practice/write-tsdb/practice-create-iothub-endpoint.png)
 
-如上，已创建好一个名为 `baetyl_demo` 的物接入项目。其用户名为 `vn33eye/test`，身份信息为 principal，认证方式为证书认证，策略为 policy，对主题 **data/filter** 有发布和订阅消息的权限（详见下文测试时 MQTT Remote 远程服务模块配置）。
+如上，已创建好一个名为 `baetyl_demo` 的物接入项目。其用户名为 `guqgsr9/test`，身份信息为 principal，认证方式为证书认证，策略为 policy，对主题 **data/filter** 有发布和订阅消息的权限（详见下文测试时 MQTT Remote 远程服务模块配置）。
 
 ## 创建规则引擎 Rule
 
@@ -38,10 +39,7 @@
 
 如上，已创建好一个名为 filter 的规则，该规则用于对本地设备实际产生的原始数据进行 **过滤、脱敏** 等处理。图中所示为筛选实际生产数据中的 **temperature、ts、unit** 等字段，且满足 **temperature > 50** 信息，然后将之上传至远程云端 Hub 模块。
 
-**提示**：
-
-- 这里不需要为规则设置数据目的地；
-- 实例和主题配置虽是必选项，但该条规则从 BIE 云端管理平台下发后会自动抽取 SQL 语句部分，其他配置内容不会连同下发。
+**提示**：这里不需要为规则设置数据目的地，仅作为云端 SQL 语句测试使用。
 
 **物接入既定主题接收消息用规则**：
 
@@ -63,7 +61,7 @@
 
 ![创建物可视](../images/practice/write-tsdb/practice-iotvz-config.png)
 
-如上，已创建一个名为 `baetyl_demo` 的物可视展示板，其展示数据来源于时序数据库 **baetyl**，时间序列度量信息为 **device_temperature**，显示数据的时间依据数据存储 TSDB 的时间确定。
+如上，已创建一个名为 `baetyl_demo` 的物可视展示板，其展示数据来源于时序数据库 **baetyl**，时间序列度量信息为 **device_temperature**，X 轴为时间戳，Y 轴为设备温度值。
 
 至此，正式测试前云端相关服务的创建、设置工作已经完成。
 
@@ -73,24 +71,25 @@ _**提示**：以上创建的物接入 Endpoint、规则引擎 Rule、TSDB 数�
 
 将生产设备数据经 **脱敏** 后上云、写入 TSDB 及在云端物可视进行展示所涉及的流程步骤主要包括：
 
-- 步骤1: **创建核心并下载配置(含主程序)** 在 BIE 云端管理套件页面选定区域（北京，或广州）创建核心，完善核心创建所需配置信息，点击“下载配置”，然后选择包含主程序，具体请参考[BIE操作指南](https://cloud.baidu.com/doc/BIE/GettingStarted.html)
+- 步骤1: **创建核心并下载配置(含主程序)** 在 BIE 云端管理套件页面选定区域（北京，或广州）创建核心，完善核心创建所需配置信息，点击“下载配置”，然后选择包含主程序，具体请参考[BIE 快速入门](https://cloud.baidu.com/doc/BIE/s/3jwvyho85)
 - 步骤2: **本地启动 Baetyl** 本地解压缩主程序（含配置）后，启动 Baetyl，然后点击核心连接状态按钮，如 Baetyl 正常启动，即可看到核心连接状态已变更为 **已连接**
     - Baetyl 启动参考命令：
-        - `tar -zxvf baetyl-xxx.tar.gz`
-        - `cd baetyl-xxx`
-        - `sudo baetyl start`
-- 步骤3: **建立服务配置** 进入已创建的核心，然后开始依次创建本次测试所需的服务配置信息（Hub 服务配置、Function Manager服务配置、Function Filter服务配置、Remote服务配置），详细内容可参考[BIE快速入门](https://cloud.baidu.com/doc/BIE/QuickGuide.html)
-    - Hub 服务配置：需要挂载conf、data、cert、log四个挂载卷，分别存储Hub服务的配置、持久化数据、ssl认证资源和日志
-    ![localhub_volume](../images/practice/write-tsdb/localhub_volume.png)
+        - `mkdir baetyl-demo`
+        - `cd baetyl-demo && unzip -d . baetyl-xxx.zip`
+        - `sudo chmod +x bin/baetyl`
+        - `sudo bin/baetyl start`
+- 步骤3: **建立服务配置** 进入已创建的核心，然后开始依次创建本次测试所需的服务配置信息（Hub 服务配置、Function Manager服务配置、Function Filter 服务配置、Remote服务配置），详细内容可参考[BIE 操作实践](https://cloud.baidu.com/doc/BIE/s/0jzdn8zls)
+    - Hub 服务配置：需要挂载conf、data、cert、log四个挂载卷，分别存储Hub服务的配置、持久化数据、ssl认证资源和日志，有关存储卷的详细介绍可以参考 [BIE 存储卷应用](https://cloud.baidu.com/doc/BIE/s/Cjzdn8xig)
+    ![localhub_volume](../images/practice/write-tsdb/localhub-volume.png)
     - Function Manager 服务配置：需要挂载conf、log两个挂载卷，分别存储配置和日志数据
-    ![localhubfunction_manager_volume](../images/practice/write-tsdb/localfunction_manager_volume.png)
+    ![localhubfunction_manager_volume](../images/practice/write-tsdb/function-manager-volume.png)
     - Function Filter 服务配置：需要挂载conf挂载卷，存储配置信息
-    ![localhubfunction_filter_volume](../images/practice/write-tsdb/localfunction_filter_volume.png)
+    ![localhubfunction_filter_volume](../images/practice/write-tsdb/function-filter-volume.png)
     - Remote 服务配置：需要挂载conf、cert、log三个挂载卷，存储配置、ssl认证资源和日志
-    ![localhubremote_volume](../images/practice/write-tsdb/localremote_volume.png)
-- 步骤4: **发布及下发服务配置** 完成核心所需的各个服务的配置后，点击“生成配置”按钮生成当前版本配置，然后再点击“下发配置”按钮将生成的版本配置下发至本地，Baetyl 服务会自动切换、加载该下发的新配置信息，具体可参考[BIE快速入门](https://cloud.baidu.com/doc/BIE/QuickGuide.html)
+    ![localhubremote_volume](../images/practice/write-tsdb/remote-mqtt-volume.png)
+- 步骤4: **发布及下发服务配置** 完成核心所需的各个服务的配置后，点击“生成配置”按钮生成当前版本配置，然后再点击“下发配置”按钮将生成的版本配置下发至本地，Baetyl 服务会自动切换、加载该下发的新配置信息，具体可参考[BIE 操作实践](https://cloud.baidu.com/doc/BIE/s/0jzdn8zls)
     - 此过程要求 Baetyl 持续 **保持连接** 状态，如果 Baetyl 在下发配置前已断开连接，则重新启动 Baetyl，在连接状态恢复至 **已连接** 后下发新配置即可（推荐）；或可选择 **下载配置** 按钮，将该新配置下载至本地，然后自行在本地替换，然后再启动 Baetyl
-- 步骤5: **配置 MQTTBOX 连接信息** 启动 MQTTBOX，配置其与本地 Hub 模块建立连接所需的各配置信息
+- 步骤5: **配置 MQTTBOX 连接信息** 启动 MQTTBOX，配置其与本地 Hub 服务建立连接所需的各配置信息
 - 步骤6: **发送测试数据** 在 MQTTBOX 与本地 Hub 模块建立连接后，向主题 **data** 发送测试数据，然后打开 TSDB 面板，查看是否有数据成功写入，同时打开物可视展示板，观察数据写入的状态
 - 步骤7：**结果验证** 若上述过程顺利，则可以看到刚才已发送的测试已经成功写入 TSDB，并在物可视进行展示。
 
@@ -107,122 +106,131 @@ services:
     image: 'hub.baidubce.com/baetyl/baetyl-agent:latest'
     replica: 1
     mounts:
-      - name: agent-conf-c8a2r4voa-V1
+      - name: agent-conf-wgon28r2x-V1
         path: etc/baetyl
         readonly: true
-      - name: agent-cert-c8a2r4voa-V1
+      - name: agent-cert-wgon28r2x-V1
         path: var/db/baetyl/cert
         readonly: true
-      - name: agent-volumes-c8a2r4voa-V1
+      - name: agent-volumes-wgon28r2x-V1
         path: var/db/baetyl/volumes
-      - name: agent-log-c8a2r4voa-V1
+      - name: agent-log-wgon28r2x-V1
         path: var/log/baetyl
-  - name: dxc-localhub
+  - name: localhub
     image: 'hub.baidubce.com/baetyl/baetyl-hub:latest'
     replica: 1
     ports:
       - '1883:1883'
       - '8883:8883'
-    env: {}
     mounts:
-      - name: dxc-localhub-conf-V1
+      - name: baetyl-localhub-conf-V1
         path: etc/baetyl
-      - name: dxc-localhub-cert-V1
+        readonly: true
+      - name: baetyl-log-V1
+        path: var/log/baetyl
+      - name: baetyl-localhub-cert-V1
         path: var/db/baetyl/cert
-      - name: dxc-localhub-data-V1
+        readonly: true
+      - name: baetyl-persist-data-V1
         path: var/db/baetyl/data
-      - name: dxc-localhub-log-V1
-        path: var/log/baetyl
-  - name: dxc-remote-iothub
-    image: 'hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest'
+  - name: function-manager
+    image: >-
+      hub.baidubce.com/baetyl/baetyl-function-manager:latest
     replica: 1
-    env: {}
     mounts:
-      - name: dxc-remote-iothub-conf-V1
+      - name: baetyl-func-manager-conf-V1
         path: etc/baetyl
         readonly: true
-      - name: dxc-remote-iothub-cert-V1
+      - name: baetyl-mqtt-client-cert-V1
         path: var/db/baetyl/cert
-      - name: dxc-remote-iothub-log-V1
-        path: var/log/baetyl
-  - name: dxc-function-manager
-    image: 'hub.baidubce.com/baetyl/baetyl-function-manager:latest'
-    replica: 1
-    env: {}
-    mounts:
-      - name: dxc-function-manager-conf-V1
-        path: etc/baetyl
         readonly: true
-      - name: dxc-function-manager-log-V1
+      - name: baetyl-log-V1
         path: var/log/baetyl
-  - name: dxc-function-filter
+  - name: function-filter
     image: 'hub.baidubce.com/baetyl/baetyl-function-sql:latest'
     replica: 0
-    env: {}
     mounts:
-      - name: dxc-function-filter-conf-V1
+      - name: baetyl-function-filter-conf-V1
         path: etc/baetyl
+        readonly: true
+  - name: remote-mqtt
+    image: 'hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest'
+    replica: 1
+    mounts:
+      - name: baetyl-remote-mqtt-conf-V1
+        path: etc/baetyl
+        readonly: true
+      - name: baetyl-remote-iothub-cert-V1
+        path: var/db/baetyl/iothub/cert
+        readonly: true
+      - name: baetyl-mqtt-client-cert-V1
+        path: var/db/baetyl/localhub/cert
+        readonly: true
+      - name: baetyl-log-V1
+        path: var/log/baetyl
 volumes:
-  - name: agent-conf-c8a2r4voa-V1
-    path: var/db/baetyl/agent-conf-c8a2r4voa/V1
+  - name: agent-conf-wgon28r2x-V1
+    path: var/db/baetyl/agent-conf-wgon28r2x/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxxx
-      md5: sXH/NXjPLTn17eNDMRxHTg==
-  - name: agent-cert-c8a2r4voa-V1
-    path: var/db/baetyl/agent-cert-c8a2r4voa/V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: 6wKhAQhA/H1nymnO6G7u3g==
+      version: V1
+  - name: agent-cert-wgon28r2x-V1
+    path: var/db/baetyl/agent-cert-wgon28r2x/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxx
-      md5: Bs/LsR58pMh8yuFZnTZlGw==
-  - name: agent-volumes-c8a2r4voa-V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: ZzM0vIavNPP66En8Cog3Wg==
+      version: V1
+  - name: agent-volumes-wgon28r2x-V1
     path: var/db/baetyl
-  - name: agent-log-c8a2r4voa-V1
+  - name: agent-log-wgon28r2x-V1
     path: var/db/baetyl/agent-log
-  - name: dxc-localhub-conf-V1
-    path: var/db/baetyl/dxc-localhub-conf/V1
+  - name: baetyl-log-V1
+    path: var/db/baetyl/baetyl-log
+  - name: baetyl-localhub-cert-V1
+    path: var/db/baetyl/baetyl-localhub-cert/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxx
-      md5: xacIA6W8XL6ZKS5dsjX0aQ==
-  - name: dxc-localhub-cert-V1
-    path: var/db/baetyl/dxc-localhub-cert/V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: El/cnLg2nGC1/UfTZl6NLw==
+      version: V1
+  - name: baetyl-persist-data-V1
+    path: var/db/baetyl/baetyl-persist-data
+  - name: baetyl-mqtt-client-cert-V1
+    path: var/db/baetyl/baetyl-mqtt-client-cert/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxxxx
-      md5: mSoMOQHl914HEHKTQiOyDQ==
-  - name: dxc-localhub-data-V1
-    path: var/db/baetyl/dxc-localhub-data
-  - name: dxc-localhub-log-V1
-    path: var/db/baetyl/dxc-localhub-log
-  - name: dxc-remote-iothub-conf-V1
-    path: var/db/baetyl/dxc-remote-iothub-conf/V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: 8/McnX+CC3dQoyYCtN+99Q==
+      version: V1
+  - name: baetyl-function-filter-conf-V1
+    path: var/db/baetyl/baetyl-function-filter-conf/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxxxxx
-      md5: oPDBGL3jRqo38EHnRO9F1w==
-  - name: dxc-remote-iothub-cert-V1
-    path: var/db/baetyl/dxc-remote-iothub-cert/V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: TshyXdCfRZqAnS57MCzIRw==
+      version: V1
+  - name: baetyl-localhub-conf-V1
+    path: var/db/baetyl/baetyl-localhub-conf/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxxxxxx
-      md5: T7TS786mCX2n9R/O0JpH3Q==
-  - name: dxc-remote-iothub-log-V1
-    path: var/db/baetyl/dxc-remote-iothub-log
-  - name: dxc-function-manager-conf-V1
-    path: var/db/baetyl/dxc-function-manager-conf/V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: 4SCOtrGHd8fAnx7nkJ5pGw==
+      version: V1
+  - name: baetyl-remote-iothub-cert-V1
+    path: var/db/baetyl/baetyl-remote-iothub-cert/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxxxxxx
-      md5: SOCtclXmEZCGLpQxx7LthQ==
-  - name: dxc-function-manager-log-V1
-    path: var/db/baetyl/dxc-function-manager-log
-  - name: dxc-function-filter-conf-V1
-    path: var/db/baetyl/dxc-function-filter-conf/V1
+      url: https://edge.bos.gz.xxxxxxx
+      md5: XzfchDcE3xUcWa/PwqLGCw==
+      version: V1
+  - name: baetyl-remote-mqtt-conf-V1
+    path: var/db/baetyl/baetyl-remote-mqtt-conf/V1
     meta:
-      url: >-
-        https://edge.bos.gz.xxxxxxxxxx
-      md5: 6GxcIxNVAAIPTfx0xJ69gQ==
+      url: https://edge.bos.gz.xxxxxxx
+      md5: ncrHak7Le3nodgVoIrEmMQ==
+      version: V1
+  - name: baetyl-func-manager-conf-V1
+    path: var/db/baetyl/baetyl-func-manager-conf/V1
+    meta:
+      url: https://edge.bos.gz.xxxxxxx
+      md5: 65ksedn9d6jUcLEtHJl/0Q==
+      version: V1
 ```
 
 ### Hub 服务配置
@@ -239,9 +247,9 @@ principals:
   - username: two-way-tls
     permissions:
       - action: 'pub'
-        permit: ['tls/#']
+        permit: ['#']
       - action: 'sub'
-        permit: ['tls/#']
+        permit: ['#']
   - username: test
     password: hahaha
     permissions:
@@ -250,17 +258,20 @@ principals:
       - action: 'sub'
         permit: ['#']
 logger:
-  path: var/log/baetyl/service.log
-  level: "info"
+  path: var/log/baetyl/localhub-service.log
+  level: "debug"
 ```
 
 ### Function Manager 服务配置
 
 ```yaml
 hub:
-  address: tcp://dxc-localhub:1883
-  username: test
-  password: hahaha
+  address: ssl://localhub:8883
+  username: two-way-tls
+  ca: var/db/baetyl/cert/ca.pem
+  cert: var/db/baetyl/cert/client.pem
+  key: var/db/baetyl/cert/client.key
+  insecure: true
 rules:
   - clientid: localfunc-1
     subscribe:
@@ -273,12 +284,11 @@ rules:
       qos: 1
 functions:
   - name: filter
-    service: dxc-function-filter
+    service: function-filter
     instance:
-      min: 1
       max: 10
 logger:
-  path: var/log/baetyl/service.log
+  path: var/log/baetyl/func-service.log
   level: "debug"
 ```
 
@@ -296,17 +306,20 @@ functions:
 
 ```yaml
 hub:
-  address: tcp://dxc-localhub:1883
-  username: test
-  password: hahaha
+  address: ssl://localhub:8883
+  username: two-way-tls
+  ca: var/db/baetyl/localhub/cert/ca.pem
+  cert: var/db/baetyl/localhub/cert/client.pem
+  key: var/db/baetyl/localhub/cert/client.key
+  insecure: true
 remotes:
   - name: iothub
-    address: 'ssl://xxxx.mqtt.iot.bj.baidubce.com:8884'
-    clientid: 11dd7422353c46fc8851ef8fb7114533
-    username: eqzw9sq/edge_client
-    ca: var/db/baetyl/cert/ca.pem
-    cert: var/db/baetyl/cert/client.pem
-    key: var/db/baetyl/cert/client.key
+    address: 'ssl://guqgsr9.mqtt.iot.gz.baidubce.com:1884'
+    clientid: remote-iothub-1
+    username: guqgsr9/test
+    ca: var/db/baetyl/iothub/cert/ca.pem
+    cert: var/db/baetyl/iothub/cert/client.pem
+    key: var/db/baetyl/iothub/cert/client.key
 rules:
   - hub:
       subscriptions:
@@ -315,14 +328,12 @@ rules:
     remote:
       name: iothub
       subscriptions:
-        - topic: data
-          qos: 0
 logger:
-  path: var/log/baetyl/service.log
+  path: var/log/baetyl/remote-service.log
   level: "debug"
 ```
 
-如上配置，本地 Hub 模块会将主题 **data/filter** 的消息发送给 Remote 远程服务模块（上文创建物接入 Endpoint 已拥有主题 **data/filter** 的订阅权限），然后远程 Hub 模块接收到主题 **data/filter** 的消息触发规则 **baetyl-demo** （上文已创建），然后由规则引擎对消息进行封装（以满足 TSDB 规范），传送给 TSDB，最终在物可视进行可视化展示。
+如上配置，本地 Hub 服务会将主题 **data/filter** 的消息发送给 Remote 远程服务（上文创建物接入 Endpoint 已拥有主题 **data/filter** 的订阅权限），然后远程 Hub 服务（这里指百度云 IoTHub 平台）接收到主题 **data/filter** 的消息触发规则 **baetyl-demo** （上文已创建），然后由规则引擎对消息进行封装（以满足 TSDB 规范），传送给 TSDB，最终在物可视进行可视化展示。
 
 ### 测试
 
@@ -338,8 +349,8 @@ logger:
 
 ```json
 {
-    "temperature": 65.6, // 温度
-    "ts": 1547307294, // Unix 时间戳
+    "temperature": 67.5, // 温度
+    "ts": 1568817178, // Unix 时间戳
     "deviceid": "dev001", // 设备 ID
     "factory": "shanghai", // 生产地址
     "type": "temperature tensor", // 设备类型
@@ -351,26 +362,18 @@ logger:
 
 **MQTTBOX 收到处理后的消息**，表示消息已被 Function Filter 服务处理，并将结果回传给了 Hub 服务。
 
-![MQTTBOX 收到处理后的消息](../images/practice/write-tsdb/practice-mqttfx-data1-succ.png)
+![MQTTBOX 收到处理后的消息](../images/practice/write-tsdb/practice-mqttbox-data-succ.png)
 
 **MQTT.fx 收到云端物接入的消息**，表示该消息已通过 Remote 服务发往了云端物接入
 
-![MQTTFX 收到处理后的消息](../images/practice/write-tsdb/practice-mqttbox-data1-succ.png)
-
-**TSDB 查询面板得到的信息**：
-
-![TSDB 查询面板得到的信息](../images/practice/write-tsdb/practice-tsdb-single-view.png)
-
-**物可视展示板得到的信息**：
-
-![物可视展示板得到的信息](../images/practice/write-tsdb/practice-iotvz-single-view.png)
+![MQTTFX 收到处理后的消息](../images/practice/write-tsdb/practice-mqttfx-data-succ.png)
 
 如果我们通过 MQTTBOX 向主题 **data** 发送的消息内容为：
 
 ```json
 {
     "temperature": 35.6, // 温度
-    "ts": 1547307894, // Unix 时间戳
+    "ts": 1568817182, // Unix 时间戳
     "deviceid": "dev001", // 设备 ID
     "factory": "shanghai", // 生产地址
     "type": "temperature tensor", // 设备类型
@@ -378,29 +381,9 @@ logger:
 }
 ```
 
-则 MQTTBOX 和 MQTT.fx 均不会收到处理后的消息（`temperature < 50` 被过滤掉）。具体如下图示：
-
-**MQTTBOX 未收到处理后的消息**，还是最初收到的消息
-
-![MQTTBOX 未收到处理后的消息](../images/practice/write-tsdb/practice-mqttfx-data1-succ.png)
-
-**云端物接入未收到 Remote 服务发送的消息**，还是最初收到的消息
-
-![MQTTfx 未收到处理后的消息](../images/practice/write-tsdb/practice-mqttbox-data1-succ.png)
-
-可见，MQTTBOX 和 MQTT.fx 均未收到被处理后的消息，是因为该条消息不符合 SQL 运行时过滤规则（本文 case 为 `temperature < 50`）被过滤掉了。
-
-同理，规则引擎 **baetyl-demo**、TSDB 和物可视均不会收到该处理后的消息。
+则 MQTTBOX 和 MQTT.fx 均不会收到处理后的消息（`temperature < 50` 被过滤掉）。同理，规则引擎 **baetyl-demo**、TSDB 和物可视均不会收到该处理后的消息。
 
 为更清晰地在云端展示处理后的结果，我们写入多条符合要求的数据，得到对应的 TSDB 和物可视的展示效果如下图示。
-
-**MQTTBOX 收到多条处理结果**
-
-![MQTTBOX 收到多条处理结果](../images/practice/write-tsdb/practice-mqttbox-multi-succ.png)
-
-**MQTT.fx 收到多条处理结果**
-
-![MQTT.fx 收到多条处理结果](../images/practice/write-tsdb/practice-mqttfx-multi-succ.png)
 
 **TSDB 收到多条处理结果**
 
@@ -410,4 +393,4 @@ logger:
 
 ![物可视收到多条处理结果](../images/practice/write-tsdb/practice-iotvz-multi-view.png)
 
-至此，通过 Baetyl 将数据写入 TSDB 及物可视进行可视化展示就全部结束了。
+至此，通过 Baetyl 已实现将数据写入百度云 TSDB 及通过物可视进行可视化展示。
