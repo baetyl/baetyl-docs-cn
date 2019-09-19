@@ -15,14 +15,14 @@
 
 Baetyl 作为一个边缘计算框架，除了提供底层服务管理能力外，还提供一些基础功能模块，具体如下：
 
-- Baetyl [主程序](https://docs.baetyl.io/zh_CN/latest/overview/Design.html#id3) 负责服务实例的管理，如启动、退出、守护等，由引擎系统、API、命令行构成。目前支持两种运行模式：Native 进程模式和 Docker 容器模式
-- 官方模块 [baetyl-agent](https://docs.baetyl.io/zh_CN/latest/overview/Design.html#baetyl-agent) 负责和 BIE 云端管理套件通讯，可以进行应用下发，设备信息上报等。强制证书认证，保证传输安全；
-- 官方模块 [baetyl-hub](https://docs.baetyl.io/en/latest/overview/Design.html#baetyl-hub) 提供基于 [MQTT 协议](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html) 的消息订阅和发布功能，支持 4 种接入方式：TCP、SSL、WS 及 WSS；
-- 官方模块 [baetyl-remote-mqtt](https://docs.baetyl.io/en/latest/overview/Design.html#baetyl-remote-mqtt) 用于桥接两个 MQTT Server 进行消息同步，支持配置多路消息转发；
-- 官方模块 [baetyl-function-manager](https://docs.baetyl.io/en/latest/overview/Design.html#baetyl-function-manager) 提供基于 MQTT 消息机制，弹性、高可用、扩展性好、响应快的计算能力；
-- 官方模块 [baetyl-function-python27](https://docs.baetyl.io/en/latest/overview/Design.html#baetyl-function-python27) 提供 Python2.7 函数运行时，可由 `baetyl-function-manager` 动态启动实例；
-- 官方模块 [baetyl-function-python36](https://docs.baetyl.io/en/latest/overview/Design.html#baetyl-function-python36) 提供 Python3.6 函数运行时，可由`baetyl-function-manager` 动态启动实例；
-- 官方模块 [baetyl-function-node85](https://docs.baetyl.io/en/latest/overview/Design.html#baetyl-function-node85) 提供 Node 8.5 函数运行时，可由`baetyl-function-manager` 动态启动实例；
+- Baetyl [主程序](Design.html#id3) 负责服务实例的管理，如启动、退出、守护等，由引擎系统、API、命令行构成。目前支持两种运行模式：Native 进程模式和 Docker 容器模式
+- 官方模块 [baetyl-agent](Design.html#baetyl-agent) 负责和 BIE 云端管理套件通讯，可以进行应用下发，设备信息上报等。强制证书认证，保证传输安全；
+- 官方模块 [baetyl-hub](Design.html#baetyl-hub) 提供基于 [MQTT 协议](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html) 的消息订阅和发布功能，支持 4 种接入方式：TCP、SSL、WS 及 WSS；
+- 官方模块 [baetyl-remote-mqtt](Design.html#baetyl-remote-mqtt) 用于桥接两个 MQTT Server 进行消息同步，支持配置多路消息转发；
+- 官方模块 [baetyl-function-manager](Design.html#baetyl-function-manager) 提供基于 MQTT 消息机制，弹性、高可用、扩展性好、响应快的计算能力；
+- 官方模块 [baetyl-function-python27](Design.html#baetyl-function-python27) 提供 Python2.7 函数运行时，可由 `baetyl-function-manager` 动态启动实例；
+- 官方模块 [baetyl-function-python36](Design.html#baetyl-function-python36) 提供 Python3.6 函数运行时，可由`baetyl-function-manager` 动态启动实例；
+- 官方模块 [baetyl-function-node85](Design.html#baetyl-function-node85) 提供 Node 8.5 函数运行时，可由`baetyl-function-manager` 动态启动实例；
 - SDK (Golang) 可用于开发自定义模块。
 
 ### 架构图
