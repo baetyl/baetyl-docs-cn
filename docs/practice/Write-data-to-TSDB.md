@@ -349,7 +349,7 @@ logger:
 
 ```json
 {
-    "temperature": 65.6, // 温度
+    "temperature": 67.5, // 温度
     "ts": 1568817178, // Unix 时间戳
     "deviceid": "dev001", // 设备 ID
     "factory": "shanghai", // 生产地址
