@@ -70,7 +70,7 @@ source ~/.bash_profile
 
 **问题 8: Baetyl 支持数据计算后将计算结果推送 Kafka 吗？**
 
-**参考方案**：支持，您可以参考 [如何针对 Python 运行时编写 Python 脚本](https://docs.baetyl.io/zh_CN/latest/develop/How-to-write-a-python-script-for-python-runtime.html) 一文，向 Hub 订阅消息，并将消息逐个写入 Kafka。您也可以参考 [如何开发一个 Baetyl 自定义模块](https://docs.baetyl.io/zh_CN/latest/develop/How-to-develop-a-customize-module.html)，该模块用于向 Hub 订阅消息，然后批量写入 Kafka。
+**参考方案**：支持，您可以参考 [如何针对 Python 运行时编写 Python 脚本](develop/How-to-write-a-python-script-for-python-runtime.md) 一文，向 Hub 订阅消息，并将消息逐个写入 Kafka。您也可以参考 [如何开发一个 Baetyl 自定义模块](develop/How-to-develop-a-customize-module.md)，该模块用于向 Hub 订阅消息，然后批量写入 Kafka。
 
 **问题 9: Baetyl 配置更改的方式有哪些？只能通过 [云端管理套件](https://cloud.baidu.com/product/bie.html) 进行配置更改吗？**
 
@@ -94,7 +94,7 @@ source ~/.bash_profile
 - 云端下发配置目前只支持容器模式
 - 如果是云端下发配置，`localfunc` 里配置的 hub 地址应为 `localhub` 而非 `0.0.0.0`
 
-根据以上信息结合实际报错进行判断，根据需要重新从云端进行配置下发，或者参考 [配置解析文档](./guides/Config-interpretation.md) 进行核对及配置。
+根据以上信息结合实际报错进行判断，根据需要重新从云端进行配置下发，或者参考 [配置解析文档](guides/Config-interpretation.md) 进行核对及配置。
 
 **问题 12： 在使用智能边缘 BIE 云端管理套件时，如何选取 [CFC](https://cloud.baidu.com/product/cfc.html) 函数?**
 
@@ -110,13 +110,13 @@ source ~/.bash_profile
 
 - ports 配置了宿主机和容器内的端口映射关系；
 - listen 则是 Hub 的监听端口，Hub 是进程模式则监听宿主机的端口，Hub 是容器模式则监听容器内的端口；
-- 请参考 [配置文件解读文档](https://docs.baetyl.io/zh_CN/latest/guides/Config-interpretation.html)。
+- 请参考 [配置文件解读文档](guides/Config-interpretation.md)。
 
 **问题 14：消息通过 Baetyl 传输到 [百度云 IoT Hub](https://cloud.baidu.com/product/iot.html) 后，如何在云端进行后续的数据处理？**
 
-**参考方案**：消息到达物接入后，可以通过 [规则引擎](https://cloud.baidu.com/product/re.html) 进行简单的 sql 处理，或者通过规则引擎传输给 [百度云函数计算平台](https://cloud.baidu.com/product/cfc.html) 等其他云端服务，具体配置详情参考 [规则引擎操作指南](https://cloud.baidu.com/doc/RE/GUIGettingStarted.html#.E6.93.8D.E4.BD.9C.E5.87.86.E5.A4.87)。更多配置亦可参考 [通过 Baetyl 实现数据脱敏后存储百度云 TSDB](https://docs.baetyl.io/zh_CN/latest/practice/Write-data-to-TSDB.html) 一文。
+**参考方案**：消息到达物接入后，可以通过 [规则引擎](https://cloud.baidu.com/product/re.html) 进行简单的 sql 处理，或者通过规则引擎传输给 [百度云函数计算平台](https://cloud.baidu.com/product/cfc.html) 等其他云端服务，具体配置详情参考 [规则引擎操作指南](https://cloud.baidu.com/doc/RE/GUIGettingStarted.html#.E6.93.8D.E4.BD.9C.E5.87.86.E5.A4.87)。更多配置亦可参考 [通过 Baetyl 实现数据脱敏后存储百度云 TSDB](practice/Write-data-to-TSDB.md) 一文。
 
-**问题 15：Baetyl 如何使用 [Remote](https://docs.baetyl.io/zh_CN/latest/guides/Message-synchronize-with-iothub-through-remote-module.html) 功能连接 [百度云 IoT Hub 设备型项目](https://cloud.baidu.com/doc/IOT/GettingStarted.html#.E5.88.9B.E5.BB.BA.E7.89.A9.E6.A8.A1.E5.9E.8B)？**
+**问题 15：Baetyl 如何使用 [Remote](guides/Message-synchronize-with-iothub-through-remote-module.md) 功能连接 [百度云 IoT Hub 设备型项目](https://cloud.baidu.com/doc/IOT/GettingStarted.html#.E5.88.9B.E5.BB.BA.E7.89.A9.E6.A8.A1.E5.9E.8B)？**
 
 **参考方案**：Baetyl 端云协同强制使用证书认证，目前物接入设备型项目还不支持证书认证，作为临时方案可以在本地手动配置用户名密码和物接入设备型项目交互。
 
@@ -127,9 +127,9 @@ source ~/.bash_profile
 需要满足下如下两个条件:
 
 - 发送给本地 Hub 的消息的 QoS 必须是 1，保证消息在本地持久化。
-- Remote 向本地 Hub 订阅消息的 QoS 和向云端 Hub 发布消息的 QoS 也必须都为 1，保证消息成功上云。请参考 [配置文件解读文档](https://docs.baetyl.io/zh_CN/latest/guides/Config-interpretation.html)。
+- Remote 向本地 Hub 订阅消息的 QoS 和向云端 Hub 发布消息的 QoS 也必须都为 1，保证消息成功上云。请参考 [配置文件解读文档](guides/Config-interpretation.md)。
 
-**问题 17：从云端下发配置到边缘后，默认都是 `docker` 模式启动，修改 `mode: native` 之后，启动报错类似下述内容："failed to update system: open /Users/xxx/baetyl_native/var/run/baetyl/services/agent/lib/baetyl/hub.baidubce.com/baetyl/baetyl-agent:0.1.2/package.yml: no such file or directory"**
+**问题 17：从云端下发配置到边缘后，默认都是 `docker` 模式启动，修改 `mode: native` 之后，启动报错类似下述内容："failed to update system: open /Users/xxx/baetyl_native/var/run/baetyl/services/agent/lib/baetyl/hub.baidubce.com/baetyl/baetyl-agent:latest/package.yml: no such file or directory"**
 
 **参考方案**： 目前我们的云管理不支持进程模式，如果需要在本地以进程模式启动 `Baetyl` 请参考 `example/native` 中的配置内容，执行命令 `make install-native` 来进行安装，并通过命令 `sudo baetyl start` 以进程方式来启动。
 
