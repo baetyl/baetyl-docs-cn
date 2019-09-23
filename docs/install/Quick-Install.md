@@ -2,7 +2,7 @@
 
 相较于之前版本的手动下载安装方式，新版本 Baetyl 支持包管理器的安装方式。通过包管理器方式，用户可以在终端简单输入几条命令，快速安装 Baetyl。
 
-Baetyl 包管理器目前支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9.、CentOS7.、Raspbian-stretch，支持的平台有 amd64、i386、armv7l 和 arm64。Baetyl  
+Baetyl 包管理器目前支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9.、CentOS7.、Raspbian-stretch，支持的平台有 amd64、i386、armv7l 和 arm64。
 
 Baetyl 支持两种运行模式，分别是 **docker** 容器模式和 **native** 进程模式。本文基于 **docker** 容器模式进行快速安装。
 
