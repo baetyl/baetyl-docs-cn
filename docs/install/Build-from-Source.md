@@ -123,14 +123,16 @@ make image # 在本地生成模块镜像
 env GOOS=linux GOARCH=amd64 make image
 ```
 
-通过上述命令编译生成如下六个镜像:
+通过上述命令编译生成如下镜像:
 
 ```shell
 baetyl-agent:latest
 baetyl-hub:latest
 baetyl-function-manager:latest
 baetyl-remote-mqtt:latest
+baetyl-timer:latest
 baetyl-function-python27:latest
+baetyl-function-python36:latest
 baetyl-function-node85:latest
 ```
 
@@ -147,7 +149,7 @@ cd $GOPATH/src/github.com/baetyl/baetyl
 make rebuild
 ```
 
-**注意**: 因为 Node 8.5 运行时模块在 `make` 时候会调用 `npm install` 命令安装依赖，所以需要事先安装 `node` 和 `npm`, 具体可以参考 [Nodejs 官网](https://nodejs.org/en/download/) 。
+**注意**: 因为 Node 8.5 运行时模块在 `make` 阶段会调用 `npm install` 命令安装依赖，所以需要事先安装 `node` 和 `npm`, 具体可以参考 [Nodejs 官网](https://nodejs.org/en/download/) 。
 
 编译完成后会在根目录及各个模块目录下生成如下六个可执行文件:
 
@@ -178,6 +180,10 @@ make install-native # native 进程模式安装并使用示例配置
 cd $GOPATH/src/github.com/baetyl/baetyl
 make install PREFIX=output
 ```
+
+在 Darwin 平台上，需要设置 Baetyl 使用到的 `/usr/local/var` 目录可挂载到容器内。
+
+![Mount path on Mac](../images/install/docker-path-mount-on-mac.png) 
 
 ### 运行
 

@@ -34,6 +34,8 @@ LoadConfig(interface{}) error
 NewHubClient(string, []mqtt.TopicInfo) (*mqtt.Dispatcher, error)
 // 返回日志接口
 Log() logger.Logger
+// 检查运行模式
+IsNative() bool
 // 等待退出，接收 SIGTERM 和 SIGINT 信号
 Wait()
 // 返回等待退出的 Channel

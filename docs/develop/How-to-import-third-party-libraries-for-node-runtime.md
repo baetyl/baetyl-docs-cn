@@ -2,7 +2,7 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
+- 本文测试所用设备系统为 Ubuntu16.04
 - 运行模式为 **docker** 容器模式，**native** 进程模式配置流程相同
 - Node 版本为 8.5
 - 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.html#下载-MQTTBOX-客户端)
@@ -50,7 +50,7 @@ functions:
 version: v0
 services:
   - name: localhub
-    image: baetyl-hub
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -63,7 +63,7 @@ services:
       - name: localhub-log
         path: var/log/baetyl
   - name: function-manager
-    image: baetyl-function-manager
+    image: hub.baidubce.com/baetyl/baetyl-function-manager
     replica: 1
     mounts:
       - name: function-manager-conf
@@ -72,7 +72,7 @@ services:
       - name: function-manager-log
         path: var/log/baetyl
   - name: function-sayhi
-    image: baetyl-function-node85
+    image: hub.baidubce.com/baetyl/baetyl-function-node85
     replica: 0
     mounts:
       - name: function-sayjs-conf
@@ -169,7 +169,7 @@ functions:
     "users": [
         { "user": "barney", "age": 36, "active": true  },
         { "user": "fred",   "age": 40, "active": false },
-        { "user": 'Jane',   "age": 32, "active": true  }
+        { "user": "Jane",   "age": 32, "active": true  }
     ]
 }
 ```
