@@ -5,7 +5,7 @@
 - 本文测试所用设备系统为 Ubuntu18.04
 - 本文测试前先安装 Baetyl，并导入默认配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
 - python 版本为 3.6，2.7 版本配置流程相同，但需要在 python 脚本中注意语言差异
-- 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.md#下载MQTTBOX客户端)
+- 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.html#下载MQTTBOX客户端)
 - 本文所用镜像为依赖 Baetyl 源码自行编译所得，具体请查看 [如何从源码构建镜像](../install/Build-from-Source.md)
 - 本文中基于 Hub 模块创建的服务名称为 `localhub` 服务
 

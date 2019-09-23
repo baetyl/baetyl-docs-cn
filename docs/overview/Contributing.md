@@ -55,7 +55,7 @@ Baetyl 使用通用的 [Git 分支构建模型](http://nvie.com/posts/a-successf
 
 
 **注意**：以上所有代码提交步骤要求及规范，同样适用文档贡献。
-- [英文文档主页](https://baetyl.readthedocs.io/en/latest)
-- [中文文档主页](https://baetyl.readthedocs.io/zh_CN/latest)
+- [英文文档主页](https://docs.baetyl.io/en/latest)
+- [中文文档主页](https://docs.baetyl.io/zh_CN/latest)
 - [英文文档仓库](https://github.com/baetyl/docs.baetyl.io)
 - [中文文档仓库](https://github.com/baetyl/cn.docs.baetyl.io)

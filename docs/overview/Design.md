@@ -299,17 +299,17 @@ type Hardware struct {
 
 Baetyl 目前会给服务实例设置如下几个系统环境变量：
 
-- OPENEDGE_HOST_OS：Baetyl 所在设备（宿主机）的系统类型
-- OPENEDGE_HOST_ID：Baetyl 所在设备（宿主机）的HOST ID，可以作为设备的指纹
-- OPENEDGE_MASTER_API：Baetyl 主程序的 API Server 地址
-- OPENEDGE_MASTER_API_VERSION：Baetyl 主程序的 API 的版本
-- OPENEDGE_RUNNING_MODE：Baetyl 主程序采用的服务运行模式
-- OPENEDGE_SERVICE_NAME：服务的名称
-- OPENEDGE_SERVICE_TOKEN：动态分配的 Token
-- OPENEDGE_SERVICE_INSTANCE_NAME：服务实例的名称，用于动态指定
-- OPENEDGE_SERVICE_INSTANCE_ADDRESS：服务实例的地址，用于动态指定
+- BAETYL_HOST_OS：Baetyl 所在设备（宿主机）的系统类型
+- BAETYL_HOST_ID：Baetyl 所在设备（宿主机）的HOST ID，可以作为设备的指纹
+- BAETYL_MASTER_API_ADDRESS：Baetyl 主程序的 API Server 地址
+- BAETYL_MASTER_API_VERSION：Baetyl 主程序的 API 的版本
+- BAETYL_SERVICE_MODE：Baetyl 主程序采用的服务运行模式
+- BAETYL_SERVICE_NAME：服务的名称
+- BAETYL_SERVICE_TOKEN：动态分配的 Token
+- BAETYL_SERVICE_INSTANCE_NAME：服务实例的名称，用于动态指定
+- BAETYL_SERVICE_INSTANCE_ADDRESS：服务实例的地址，用于动态指定
 
-官方提供的函数计算管理服务就是通过读取 `OPENEDGE_MASTER_API` 来连接 Baetyl 主程序的，比如 Linux 系统下 `OPENEDGE_MASTER_API` 默认是 `unix:///var/run/baetyl.sock`；其他系统的容器模式下 `OPENEDGE_MASTER_API` 默认是 `tcp://host.docker.internal:50050`；其他系统的进程模式下 `OPENEDGE_MASTER_API` 默认是 `tcp://127.0.0.1:50050`。
+官方提供的函数计算管理服务就是通过读取 `BAETYL_MASTER_API_ADDRESS` 来连接 Baetyl 主程序的，比如 Linux 系统下 `BAETYL_MASTER_API_ADDRESS` 默认是 `unix:///var/run/baetyl.sock`；其他系统的容器模式下 `BAETYL_MASTER_API_ADDRESS` 默认是 `tcp://host.docker.internal:50050`；其他系统的进程模式下 `BAETYL_MASTER_API_ADDRESS` 默认是 `tcp://127.0.0.1:50050`。
 
 _**注意**：应用中配置的环境变量如果和上述系统环境变量相同会被覆盖。_
 
