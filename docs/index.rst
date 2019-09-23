@@ -19,7 +19,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 .. toctree::
    :maxdepth: 2
    :caption: 概述
-   
+
    overview/Whatis.md
    overview/Design.md
    overview/Contributing.md
@@ -43,7 +43,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
 .. toctree::
    :maxdepth: 2
-   :caption: 开发 
+   :caption: 开发
 
    develop/How-to-write-a-python-script-for-python-runtime.md
    develop/How-to-write-a-node-script-for-node-runtime.md
@@ -54,18 +54,30 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
 .. toctree::
    :maxdepth: 2
-   :caption: 实践 
+   :caption: 实践
 
    practice/Write-data-to-TSDB.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: 问题 
+   :caption: 问题
 
    FAQ.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: 资源 
+   :caption: 资源
 
    Resources.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 版本信息
+
+   releasenotes/Baetyl-0.1.0.md
+   releasenotes/Baetyl-0.1.1.md
+   releasenotes/Baetyl-0.1.2.md
+   releasenotes/Baetyl-0.1.3.md
+   releasenotes/Baetyl-0.1.4.md
+   releasenotes/Baetyl-0.1.5.md
+   releasenotes/Baetyl-0.1.6.md
