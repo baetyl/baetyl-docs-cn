@@ -2,7 +2,7 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
+- 本文测试所用设备系统为 Ubuntu16.04
 - 运行模式为 **docker** 容器模式，**native** 进程模式配置流程相同
 - Python 版本为 3.6，2.7 版本配置流程相同，但需要在 Python 脚本中注意语言差异
 - 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.html#下载-MQTTBOX-客户端)
@@ -50,7 +50,7 @@ functions:
 version: v0
 services:
   - name: localhub
-    image: baetyl-hub
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -63,7 +63,7 @@ services:
       - name: localhub-log
         path: var/log/baetyl
   - name: function-manager
-    image: baetyl-function-manager
+    image: hub.baidubce.com/baetyl/baetyl-function-manager
     replica: 1
     mounts:
       - name: function-manager-conf
@@ -72,7 +72,7 @@ services:
       - name: function-manager-log
         path: var/log/baetyl
   - name: function-sayhi3
-    image: baetyl-function-python36
+    image: hub.baidubce.com/baetyl/baetyl-function-python36
     replica: 0
     mounts:
       - name: function-sayhi-conf
@@ -117,7 +117,7 @@ pip download requests
 - 步骤 2: 解压 `.whl` 文件，得到源码包，然后删除 `.whl` 文件和包描述文件，只保留源码包
 
 ```shell
-unzip -d . "*.whl"
+unzip \*.whl
 rm -rf *.whl *.dist-info
 ```
 
@@ -143,7 +143,7 @@ python your_script.py
 
 ![Python requests 第三方库脚本目录](../images/develop/python-third-lib-dir-requests.png)
 
-下面，我们编写脚本 `get.py` 来获取 [https://baetyl.io](https://baetyl.io) 的 headers 信息，假定触发条件为 Python 运行时接收到来自 `localhub` 服务的 `A` 指令，具体如下：
+下面，我们编写脚本 `get.py` 来获取 [https://baidu.com](https://baidu.com) 的 headers 信息，假定触发条件为 Python 运行时接收到来自 `localhub` 服务的 `A` 指令，具体如下：
 
 ```python
 #!/usr/bin/env python3
@@ -157,7 +157,7 @@ def handler(event, context):
   """
   if 'action' in event:
     if event['action'] == 'A':
-      r = requests.get('https://baetyl.io')
+      r = requests.get('https://baidu.com')
       if str(r.status_code) == '200':
         event['info'] = dict(r.headers)
       else:
@@ -179,7 +179,7 @@ functions:
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-如上，`localhub` 服务接收到发送到主题 `py` 的消息后，会调用 `get.py` 脚本执行具体处理逻辑，然后将执行结果以 MQTT 消息形式反馈给主题 `py/hi`。这里，我们通过 MQTTBOX 订阅主题 `py/hi`，并向主题 `py` 发送消息 `{"action": "A"}`，然后观察 MQTTBOX 订阅主题 `py/hi` 的消息收取情况。如正常，则可正常获取 [https://baetyl.io](https://baetyl.io) 的 headers 信息。
+如上，`localhub` 服务接收到发送到主题 `py` 的消息后，会调用 `get.py` 脚本执行具体处理逻辑，然后将执行结果以 MQTT 消息形式反馈给主题 `py/hi`。这里，我们通过 MQTTBOX 订阅主题 `py/hi`，并向主题 `py` 发送消息 `{"action": "A"}`，然后观察 MQTTBOX 订阅主题 `py/hi` 的消息收取情况。如正常，则可正常获取 [https://baidu.com](https://baidu.com) 的 headers 信息。
 
 ![获取Baetyl官网headers信息](../images/develop/write-python-script-third-lib-requests.png)
 
@@ -197,7 +197,7 @@ pip3 download torch torchvision
 - 步骤 2: 解压 `.whl` 文件，得到源码包，然后删除 `.whl` 文件和包描述文件
 
 ```shell
-unzip -d . *.whl
+unzip \*.whl
 rm -rf *.whl *.dist-info
 ```
 

@@ -2,7 +2,7 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
+- 本文测试所用设备系统为 Ubuntu16.04
 - node 版本为 8.5
 - 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.html#下载-MQTTBOX-客户端)
 - 本文中基于 Hub 模块创建的服务名称为 `localhub` 服务。并且针对本文的测试案例中，对应的 `localhub` 服务、函数计算服务以及其他服务的配置统一如下：
@@ -55,7 +55,7 @@ functions:
 version: v0
 services:
   - name: localhub
-    image: baetyl-hub
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -68,7 +68,7 @@ services:
       - name: localhub-log
         path: var/log/baetyl
   - name: function-manager
-    image: baetyl-function-manager
+    image: hub.baidubce.com/baetyl/baetyl-function-manager
     replica: 1
     mounts:
       - name: function-manager-conf
@@ -77,7 +77,7 @@ services:
       - name: function-manager-log
         path: var/log/baetyl
   - name: function-sayhi
-    image: baetyl-function-node85
+    image: hub.baidubce.com/baetyl/baetyl-function-node85
     replica: 0
     mounts:
       - name: function-sayjs-conf

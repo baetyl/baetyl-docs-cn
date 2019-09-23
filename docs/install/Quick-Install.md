@@ -1,6 +1,6 @@
 # 快速安装 Baetyl
 
-相较于之前版本的手动下载安装方式，最新版本(0.1.5 版本) Baetyl 支持包管理器的安装方式。通过包管理器方式，用户可以在终端简单输入几条命令，快速安装 Baetyl。
+相较于之前版本的手动下载安装方式，新版本 Baetyl 支持包管理器的安装方式。通过包管理器方式，用户可以在终端简单输入几条命令，快速安装 Baetyl。
 
 Baetyl 包管理器目前支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9.、CentOS7.、Raspbian-stretch，支持的平台有 amd64、i386、armv7l 和 arm64。
 
@@ -34,24 +34,6 @@ curl -sSL http://dl.baetyl.io/install.sh | sudo -E bash -
 
 执行完毕后，Baetyl 将会被安装到 `/usr/local` 目录下。
 
-最新版本的 Baetyl 使用 Systemd 守护，用户可使用以下命令启动 Baetyl:
-
-```shell
-sudo systemctl start baetyl
-```
-
-停止 Baetyl:
-
-```shell
-sudo systemctl stop baetyl
-```
-
-如果用户只需要在前台运行 Baetyl，不需要 Systemd 进行守护，可执行以下命令:
-
-```shell
-sudo baetyl start
-```
-
 ## 导入示例配置包（可选）
 
 作为一个边缘计算框架，Baetyl 通过 hub 模块提供基于 MQTT 的消息路由服务，通过 function-manager 模块和 python27、python36、nodejs85、sql 等运行时模块来提供本地函数计算服务。用户需要通过编辑配置文件，来让 baetyl 主程序加载相应的模块以及设定模块本身的运行参数。关于各个模块的配置详情，可参考 [配置解读](../guides/Config-interpretation.md) 中的内容进行进一步了解。
@@ -65,6 +47,32 @@ curl -sSL http://dl.baetyl.io/install_with_docker_example.sh | sudo -E bash -
 示例配置只用于学习和测试目的，用户应根据自己的实际工作场景按需配置。
 
 如果用户不需要启动任何模块，那就不需要导入任何配置文件。
+
+## 启动 Baetyl
+
+采用快速安装方式后，Baetyl 可以使用 Systemd 守护，用户可使用以下命令启动 Baetyl:
+
+```shell
+sudo systemctl start baetyl
+```
+
+如果之前安装过 Baetyl 或者导入了新的配置文件，建议使用重启方式:
+
+```shell
+sudo systemctl restart baetyl
+```
+
+停止 Baetyl:
+
+```shell
+sudo systemctl stop baetyl
+```
+
+如果用户只需要在前台运行 Baetyl，不需要 Systemd 进行守护，可执行以下命令:
+
+```shell
+sudo baetyl start
+```
 
 ## 验证是否成功安装
 
