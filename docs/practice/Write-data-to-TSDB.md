@@ -23,7 +23,7 @@
 
 ### 创建物接入 Endpoint
 
-相关创建过程可参考 [快速创建物接入 Endpoint](https://cloud.baidu.com/doc/IOT/Quickstart-new.html#.E6.A6.82.E8.BF.B0)（包括创建用户、身份、策略及主题权限信息等），这里仅给出创建完成后的结果示意图。
+相关创建过程可参考 [快速创建物接入 Endpoint](https://cloud.baidu.com/doc/IOT/s/cjwvy7ate)（包括创建用户、身份、策略及主题权限信息等），这里仅给出创建完成后的结果示意图。
 
 ![创建物接入 Endpoint](../images/practice/write-tsdb/practice-create-iothub-endpoint.png)
 
@@ -31,7 +31,7 @@
 
 ## 创建规则引擎 Rule
 
-相关创建过程可参考 [快速创建规则引擎 Rule](https://cloud.baidu.com/doc/RE/QuickGuide.html#.E5.88.9B.E5.BB.BA.E8.A7.84.E5.88.99)（包括转换 SQL 语句编写、约束条件设置、数据目的地指定等）。这里需要创建两条规则，其一是用于对本地设备产生的原始数据进行过滤；其二是实时提取从物接入既定主题接收的数据消息，并将其转换为 TSDB 能够接收的数据内容，然后将之传送给 TSDB。创建完成后的结果示意图具体如下：
+相关创建过程可参考 [快速创建规则引擎 Rule](https://cloud.baidu.com/doc/RE/s/jjwvz38tr)（包括转换 SQL 语句编写、约束条件设置、数据目的地指定等）。这里需要创建两条规则，其一是用于对本地设备产生的原始数据进行过滤；其二是实时提取从物接入既定主题接收的数据消息，并将其转换为 TSDB 能够接收的数据内容，然后将之传送给 TSDB。创建完成后的结果示意图具体如下：
 
 **设备生产数据过滤用规则**：
 
@@ -45,11 +45,11 @@
 
 ![数据解析、转换 TSDB 规则](../images/practice/write-tsdb/practice-hub-from-rule.png)
 
-如上，已创建好一个名为 `baetyl-demo` 的规则，该规则会默认从物接入 Endpoint 的 **data/filter** 主题提取消息，然后通过 [SQL 语句进行转换](https://cloud.baidu.com/doc/RE/GUIGettingStarted.html#.E6.97.B6.E5.BA.8F.E6.95.B0.E6.8D.AE.E5.BA.93.28TSDB.29)，将其转换为符合 [TSDB 规范](https://cloud.baidu.com/doc/TSDB/GUIGettingStarted.html#.E4.B8.8E.E5.A4.A9.E5.B7.A5.E4.BA.A7.E5.93.81.E5.AF.B9.E6.8E.A5) 的数据，并将之存储在名为 **baetyl** 的 TSDB 数据库中。
+如上，已创建好一个名为 `baetyl-demo` 的规则，该规则会默认从物接入 Endpoint 的 **data/filter** 主题提取消息，然后通过 [SQL 语句进行转换](https://cloud.baidu.com/doc/RE/s/zjwvz3a4u)，将其转换为符合 [TSDB 规范](https://cloud.baidu.com/doc/TSDB/s/ijwvxskbm) 的数据，并将之存储在名为 **baetyl** 的 TSDB 数据库中。
 
 ## 创建 TSDB 数据库
 
-相关创建过程可参考 [快速创建TSDB](https://cloud.baidu.com/doc/TSDB/QuickGuide.html#.E5.88.9B.E5.BB.BA.E6.95.B0.E6.8D.AE.E5.BA.93)（包括查询类别、时间范围、时间序列度量等），这里仅给出创建完成后的结果示意图。
+相关创建过程可参考 [快速创建TSDB](https://cloud.baidu.com/doc/TSDB/s/ejwvxsgp8)（包括查询类别、时间范围、时间序列度量等），这里仅给出创建完成后的结果示意图。
 
 ![创建 TSDB](../images/practice/write-tsdb/practice-tsdb-config.png)
 
@@ -57,7 +57,7 @@
 
 ## 创建物可视展示板
 
-相关创建过程可参考 [快速创建物可视](https://cloud.baidu.com/doc/IOTVIZ/GettingStarted.html#.E8.B4.A6.E5.8F.B7.E6.B3.A8.E5.86.8C)（包括设置来源数据表、时间序列度量信息等），这里仅给出创建完成后的结果示意图。
+相关创建过程可参考 [快速创建物可视](https://cloud.baidu.com/doc/IOTVIZ/s/ujwvxl6yx)（包括设置来源数据表、时间序列度量信息等），这里仅给出创建完成后的结果示意图。
 
 ![创建物可视](../images/practice/write-tsdb/practice-iotvz-config.png)
 
@@ -79,13 +79,13 @@ _**提示**：以上创建的物接入 Endpoint、规则引擎 Rule、TSDB 数�
         - `sudo chmod +x bin/baetyl`
         - `sudo bin/baetyl start`
 - 步骤3: **建立服务配置** 进入已创建的核心，然后开始依次创建本次测试所需的服务配置信息（Hub 服务配置、Function Manager服务配置、Function Filter 服务配置、Remote服务配置），详细内容可参考[BIE 操作实践](https://cloud.baidu.com/doc/BIE/s/0jzdn8zls)
-    - Hub 服务配置：需要挂载conf、data、cert、log四个挂载卷，分别存储Hub服务的配置、持久化数据、ssl认证资源和日志，有关存储卷的详细介绍可以参考 [BIE 存储卷应用](https://cloud.baidu.com/doc/BIE/s/Cjzdn8xig)
+    - Hub 服务配置：需要挂载 conf、data、cert、log 四个挂载卷，分别存储 Hub 服务的配置、持久化数据、ssl认证资源和日志，存储卷挂载应用相关内容具体可参考 [如何正确地引入存储卷](https://cloud.baidu.com/doc/BIE/s/Cjzdn8xig)
     ![localhub_volume](../images/practice/write-tsdb/localhub-volume.png)
-    - Function Manager 服务配置：需要挂载conf、log两个挂载卷，分别存储配置和日志数据
+    - Function Manager 服务配置：需要挂载 conf、cert、log 三个挂载卷，分别存储配置、连接 Hub 服务的客户端证书和日志数据
     ![localhubfunction_manager_volume](../images/practice/write-tsdb/function-manager-volume.png)
     - Function Filter 服务配置：需要挂载conf挂载卷，存储配置信息
     ![localhubfunction_filter_volume](../images/practice/write-tsdb/function-filter-volume.png)
-    - Remote 服务配置：需要挂载conf、cert、log三个挂载卷，存储配置、ssl认证资源和日志
+    - Remote 服务配置：需要挂载 conf、localhub-cert、iothub-cert、log 四个挂载卷，存储配置、本地 localhub 服务 SSL 证书、云端 iothub 服务 SSL 证书和日志
     ![localhubremote_volume](../images/practice/write-tsdb/remote-mqtt-volume.png)
 - 步骤4: **发布及下发服务配置** 完成核心所需的各个服务的配置后，点击“生成配置”按钮生成当前版本配置，然后再点击“下发配置”按钮将生成的版本配置下发至本地，Baetyl 服务会自动切换、加载该下发的新配置信息，具体可参考[BIE 操作实践](https://cloud.baidu.com/doc/BIE/s/0jzdn8zls)
     - 此过程要求 Baetyl 持续 **保持连接** 状态，如果 Baetyl 在下发配置前已断开连接，则重新启动 Baetyl，在连接状态恢复至 **已连接** 后下发新配置即可（推荐）；或可选择 **下载配置** 按钮，将该新配置下载至本地，然后自行在本地替换，然后再启动 Baetyl
