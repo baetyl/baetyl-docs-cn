@@ -5,7 +5,7 @@
 - 本文测试所用设备系统为 Ubuntu18.04
 - 本文测试前先安装 Baetyl，并导入默认配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
 - 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqtt-fx)
-- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBOX](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
+- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
 - 本文所用的 Hub 模块镜像和 Remote 模块镜像为 Baetyl 云端管理套件中发布的官方镜像：`hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`
 - 您也可以通过 Baetyl 源码自行编译所需的 Hub 模块镜像和 Remote 模块镜像，具体请查看 [源码编译 Baetyl](../install/Build-from-Source.md)
 - 远程 Hub 接入平台选用 [Baidu IoTHub](https://cloud.baidu.com/product/iot.html)
@@ -21,10 +21,10 @@ Remote 远程服务模块是为了满足物联网场景下另外一种用户需�
 - Step 3：打开终端，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl 可执行程序（要求 Baetyl 已事先在设备上部署完毕，相关内容可参考 [快速安装 Baetyl](../install/Quick-Install.md)），然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行，并观察 Hub 模块、Remote 模块启动状态；
   - 若 Hub、Remote 模块成功启动，则继续下一步操作；
   - 若 Hub、Remote 模块未成功启动，则重复 `Step 3`，直至看到 Hub、Remote 模块成功启动。
-- Step 4：选择 MQTTBOX 作为测试用 MQTT 客户端，与 Hub 模块[建立连接](Device-connect-to-hub-module.md)，并订阅既定主题；
+- Step 4：选择 MQTTBox 作为测试用 MQTT 客户端，与 Hub 模块[建立连接](Device-connect-to-hub-module.md)，并订阅既定主题；
   - 若成功与 Hub 模块建立连接，则继续下一步操作；
-  - 若与 Hub 建立连接失败，则重复 `Step 4` 操作，直至 MQTTBOX 与本地 Hub 模块成功建立连接。
-- Step 5：依据 Remote 模块的相关配置信息，从 MQTTBOX 向既定主题发布消息，观察 MQTT.fx 的消息接收情况；同理，从 MQTT.fx 向既定主题发布消息，观察 MQTTBOX 的消息接收情况。
+  - 若与 Hub 建立连接失败，则重复 `Step 4` 操作，直至 MQTTBox 与本地 Hub 模块成功建立连接。
+- Step 5：依据 Remote 模块的相关配置信息，从 MQTTBox 向既定主题发布消息，观察 MQTT.fx 的消息接收情况；同理，从 MQTT.fx 向既定主题发布消息，观察 MQTTBox 的消息接收情况。
 - Step 6：若 `Step 5` 中双方均能接收到对方发布的消息内容，则表明功能测试顺利通过。
 
 上述操作流程相关的流程示意图具体如下图示。
@@ -128,15 +128,15 @@ logger:
   level: 'debug'
 ```
 
-依据上述 Remote 模块的配置信息，意即 Remote 模块向本地 Hub 模块订阅主题 `t1` 的消息，向 Baidu IoTHub 订 阅主题 `t2` 的消息；当 MQTTBOX 向主题 `t1` 发布消息时，Hub 模块接收到主题 `t1` 的消息后，将其转发给 Remote 模块，再由 Remote 模块将之转发给 Baidu IoTHub，这样如果 MQTT.fx 订阅了主题 `t1`，即会收到该条从 MQTTBOX 发布的消息；同理，当 MQTT.fx 向主题 `t2` 发布消息时，Baidu IoTHub 会将消息转发给 Remote 模块，由 Remote 模块将之转发给本地 Hub 模块，这样如果 MQTTBOX 订阅了主题 `t2`，即会收到该消息。
+依据上述 Remote 模块的配置信息，意即 Remote 模块向本地 Hub 模块订阅主题 `t1` 的消息，向 Baidu IoTHub 订 阅主题 `t2` 的消息；当 MQTTBox 向主题 `t1` 发布消息时，Hub 模块接收到主题 `t1` 的消息后，将其转发给 Remote 模块，再由 Remote 模块将之转发给 Baidu IoTHub，这样如果 MQTT.fx 订阅了主题 `t1`，即会收到该条从 MQTTBox 发布的消息；同理，当 MQTT.fx 向主题 `t2` 发布消息时，Baidu IoTHub 会将消息转发给 Remote 模块，由 Remote 模块将之转发给本地 Hub 模块，这样如果 MQTTBox 订阅了主题 `t2`，即会收到该消息。
 
-简单来说，由 MQTT.fx 发布的消息，到 MQTTBOX 接收到该消息，流经的路径信息为：
+简单来说，由 MQTT.fx 发布的消息，到 MQTTBox 接收到该消息，流经的路径信息为：
 
-> **MQTT.fx -> Remote Hub -> Remote Module -> Local Hub Module -> MQTTBOX**
+> **MQTT.fx -> Remote Hub -> Remote Module -> Local Hub Module -> MQTTBox**
 
-同样，由 MQTTBOX 发布的消息，到 MQTT.fx 接收到该消息，流经的路径信息为：
+同样，由 MQTTBox 发布的消息，到 MQTT.fx 接收到该消息，流经的路径信息为：
 
-> **MQTTBOX -> Local Hub Module -> Remote Module -> Remote Hub -> MQTT.fx**
+> **MQTTBox -> Local Hub Module -> Remote Module -> Remote Hub -> MQTT.fx**
 
 ### 通过 MQTT.fx 与 Baidu IoTHub 建立连接
 
@@ -150,7 +150,7 @@ logger:
 
 ![MQTT.fx 成功与 Baidu IoTHub 建立连接](../images/guides/remote/mqttfx-connect-success.png)
 
-### 通过 MQTTBOX 与本地 Hub 模块建立连接
+### 通过 MQTTBox 与本地 Hub 模块建立连接
 
 依据步骤 `Step 3` 所述，调整 Baetyl 主程序启动加载配置项，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，这里，要求 Baetyl 启动后加载 Hub、Remote 模块，执行 `sudo systemctl status baetyl` 来查看 `baetyl` 是否正常运行，成功加载的状态如下图示。
 
@@ -160,32 +160,32 @@ logger:
 
 ![通过命令 docker ps 查看系统当前正在运行的 docker 容器列表](../images/guides/remote/docker-ps-after-remote-start.png)
 
-成功启动 Baetyl 后，通过 MQTTBOX 成功与 Hub 模块建立连接，并订阅主题 `t2`，成功订阅的状态如下图示。
+成功启动 Baetyl 后，通过 MQTTBox 成功与 Hub 模块建立连接，并订阅主题 `t2`，成功订阅的状态如下图示。
 
-![MQTTBOX 成功订阅主题 t2](../images/guides/remote/mqttbox-sub-t2-success.png)
+![MQTTBox 成功订阅主题 t2](../images/guides/remote/mqttbox-sub-t2-success.png)
 
 ### Remote 消息远程同步
 
-这里，将分别以 MQTT.fx、MQTTBOX 作为消息发布方，另一方作为消息接收方进行测试。
+这里，将分别以 MQTT.fx、MQTTBox 作为消息发布方，另一方作为消息接收方进行测试。
 
-**MQTT.fx 发布消息，MQTTBOX 接收消息**
+**MQTT.fx 发布消息，MQTTBox 接收消息**
 
 首先，通过 MQTT.fx 向主题 `t2` 发布消息 `This message is from MQTT.fx.`，具体如下图示。
 
 ![通过 MQTT.fx 向主题 t2 发布消息](../images/guides/remote/mqttfx-pub-t2-success.png)
 
-同时，观察 MQTTBOX 在订阅主题 `t2` 的消息接收状态，具体如下图示。
+同时，观察 MQTTBox 在订阅主题 `t2` 的消息接收状态，具体如下图示。
 
-![MQTTBOX 成功收到消息](../images/guides/remote/mqttbox-receive-t2-message-success.png)
+![MQTTBox 成功收到消息](../images/guides/remote/mqttbox-receive-t2-message-success.png)
 
-**MQTTBOX 发布消息，MQTT.fx 接收消息**
+**MQTTBox 发布消息，MQTT.fx 接收消息**
 
-同理，通过 MQTTBOX 作为发布端向主题 `t1` 发布消息 `This message is from MQTTBOX.`，具体如下图示。
+同理，通过 MQTTBox 作为发布端向主题 `t1` 发布消息 `This message is from MQTTBox.`，具体如下图示。
 
-![通过 MQTTBOX 向主题 t1 发布消息](../images/guides/remote/mqttbox-pub-t1-success.png)
+![通过 MQTTBox 向主题 t1 发布消息](../images/guides/remote/mqttbox-pub-t1-success.png)
 
 同时，观察 MQTT.fx 在订阅主题 `t1` 的消息接收状态，具体如下图示。
 
 ![MQTT.fx 成功收到消息](../images/guides/remote/mqttfx-receive-t1-message-success.png)
 
-综上，MQTT.fx 与 MQTTBOX 均已正确接收到了对应的消息，且内容吻合。
+综上，MQTT.fx 与 MQTTBox 均已正确接收到了对应的消息，且内容吻合。

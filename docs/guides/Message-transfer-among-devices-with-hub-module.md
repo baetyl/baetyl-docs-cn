@@ -2,38 +2,37 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
-- 本文测试前先安装 Baetyl，并导入默认配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
-- 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.html#下载-MQTTBOX-客户端)
-- 本文中基于 Hub 模块创建的服务名称为 `localhub` 服务
+- 本文测试所用设备系统为 Ubuntu 18.04
+- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载-MQTTBox-客户端)
 
 _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
 
-与 [连接测试](./Device-connect-to-hub-module.md) 不同的是，若需要通过 `localhub` 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](./Config-interpretation.html#baetyl-hub配置)。
+与 [连接测试](./Device-connect-to-hub-module.md) 不同的是，若需要通过 Hub 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](./Config-interpretation.html#baetyl-hub配置)。
 
-本文以 TCP 连接方式为例，测试 `localhub` 服务的消息路由、转发功能。
+本文以 TCP 连接方式为例，测试 Hub 服务的消息路由、转发功能。
 
 ## 操作流程
 
-- Step 1：依据使用需求编写配置文件信息，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl 可执行程序，然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行；
-- Step 2：通过 MQTTBOX 以 TCP 方式与 `localhub` 服务[建立连接](./Device-connect-to-hub-module.md)；
-  - 若成功与 `localhub` 服务建立连接，则依据配置的主题权限信息向有权限的主题发布消息，同时向拥有订阅权限的主题订阅消息；
-  - 若与 `localhub` 服务建立连接失败，则重复 `Step 2` 操作，直至 MQTTBOX 与 `localhub` 服务成功建立连接为止。
-- Step 3：通过 MQTTBOX 查看消息的收发状态。
+- 步骤一：安装 Baetyl，**并导入默认配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
+- 步骤二：依据测试需求修改导入的配置信息，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行。如果 Baetyl 已经启动，执行 `sudo systemctl start baetyl` 重启来加载新的配置。
+- 步骤三：通过 MQTTBox 以 TCP 方式与 Hub 服务[建立连接](./Device-connect-to-hub-module.md)；
+  - 若成功与 Hub 服务建立连接，则依据配置的主题权限信息向有权限的主题发布消息，同时向拥有订阅权限的主题订阅消息；
+  - 若与 Hub 服务建立连接失败，则重复 `步骤三` 操作，直至 MQTTBox 与 Hub 服务成功建立连接为止。
+- 步骤四：通过 MQTTBox 查看消息的收发状态。
 
 ## 消息路由测试
 
-Baetyl 主程序的配置文件位置 `var/db/baetyl/application.yml`，配置信息如下：
+Baetyl 应用配置替换成如下配置：
 
 ```yaml
+# /usr/local/var/db/baetyl/application.yml
 version: V2
 services:
   - name: hub
-    image: 'hub.baidubce.com/baetyl/baetyl-hub:latest'
+    image: 'hub.baidubce.com/baetyl/baetyl-hub'
     replica: 1
     ports:
       - '1883:1883'
-    env: {}
     mounts:
       - name: localhub-conf
         path: etc/baetyl
@@ -51,10 +50,10 @@ volumes:
     path: var/db/baetyl/localhub_data
 ```
 
-Baetyl Hub 模块启动的连接相关配置文件位置 `var/db/baetyl/localhub-conf/service.yml`，配置信息如下：
+Baetyl Hub 服务配置替换成如下配置：
 
 ```yaml
-# localhub 服务配置
+# /usr/local/var/db/baetyl/localhub-conf/service.yml
 listen:
   - tcp://0.0.0.0:1883
 principals:
@@ -73,17 +72,6 @@ subscriptions:
 logger:
   path: var/log/baetyl/service.log
   level: 'debug'
-```
-
-目录结构如下：
-
-```shell
-var
-└── db
-    └── baetyl
-        ├── application.yml
-        └── localhub-conf
-            └── service.yml
 ```
 
 如上配置，消息路由依赖 `subscriptions` 配置项，这里表示发布到主题 `t` 的消息将会转发给所有订阅主题 `t/topic` 的设备（用户）。
@@ -120,16 +108,14 @@ var
 
 ![设备间消息转发路由流程图](../images/guides/trans/trans-flow.png)
 
-具体地，如上图所示，**client1**、**client2** 及 **client3** 分别与 `localhub` 服务建立连接关系，**client1** 具备向主题 `t` 发布消息的权限，**client2** 及 **client3** 分别拥有向主题 `t` 及 `t/topic` 订阅消息的权限。
+具体地，如上图所示，**client1**、**client2** 及 **client3** 分别与 Hub 服务建立连接关系，**client1** 具备向主题 `t` 发布消息的权限，**client2** 及 **client3** 分别拥有向主题 `t` 及 `t/topic` 订阅消息的权限。
 
-一旦上述三个 client 与 `localhub` 服务的连接关系建立后，依照上文 subscriptions 配置项信息，**client2** 及 **client3** 将会分别得到从 **client1** 向 Baetyl Hub 服务发布到主题 `t` 的消息。
+一旦上述三个 client 与 Hub 服务的连接关系建立后，依照上文 subscriptions 配置项信息，**client2** 及 **client3** 将会分别得到从 **client1** 向 Baetyl Hub 服务发布到主题 `t` 的消息。
 
-特别地，**client1**、**client2** 及 **client3** 可以合并为一个 client，则新的 client 即会拥有向主题 `t` 的发布消息权限，拥有向主题 `t` 及 `t/topic` 订阅消息的权限。这里，采用 MQTTBOX 作为该新 client，点击 `Add subscriber` 按钮添加主题 `t` 及 `t/topic` 进行订阅，具体如下图示。
+特别地，**client1**、**client2** 及 **client3** 可以合并为一个 client，则新的 client 即拥有向主题 `t` 的发布消息权限，又拥有向主题 `t` 及 `t/topic` 订阅消息的权限。这里，采用 MQTTBox 作为该新 client，点击 `Add subscriber` 按钮添加主题 `t` 及 `t/topic` 进行订阅。
 
-![设备间消息转发路由 MQTTBOX 配置](../images/guides/trans/mqttbox-tcp-trans-sub-config.png)
+如上图示，可以发现在以 TCP 连接方式与 Hub 服务建立连接后，MQTTBox 成功订阅主题 `t` 及 `t/topic` ，然后点击 `Publish` 按钮向主题 `t` 发布消息 `This is a new message.`，即会发现在订阅的主题 `t` 及 `t/topic` 中均收到了该消息，详细如下图示。
 
-如上图示，可以发现在以 TCP 连接方式与 `localhub` 服务建立连接后，MQTTBOX 成功订阅主题 `t` 及 `t/topic` ，然后点击 `Publish` 按钮向主题 `t` 发布消息 `This message is from baetyl.`，即会发现在订阅的主题 `t` 及 `t/topic` 中均收到了该消息，详细如下图示。
+![MQTTBox 成功收到消息](../images/guides/trans/mqttbox-tcp-trans-message-success.png)
 
-![MQTTBOX 成功收到消息](../images/guides/trans/mqttbox-tcp-trans-message-success.png)
-
-综上，即通过 MQTTBOX 完成了基于 `localhub` 服务的设备间消息转发、路由测试。
+综上，即通过 MQTTBox 完成了基于 Hub 服务的设备间消息转发、路由测试。

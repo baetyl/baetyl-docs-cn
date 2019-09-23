@@ -44,11 +44,11 @@ Python 代码示例：下载 [MQTT-Python-MQTT-client](https://baetyl.cdn.bcebos
 | Windows(exe) | x86_64 | 4adfbb0eee65273bead6ce9885cf064de72d00d437bbaf3b9ff5236634fb6057 | [点击下载](https://baetyl.cdn.bcebos.com/mqttfx/mqttfx-1.7.1-windows-x64.exe) |
 | Darwin(dmg)  | x86_64 | 544b6ac0afefb80b5a56c2a6f2411f999862fb8f0f20502c912f28a9d1aa3b4a | [点击下载](https://baetyl.cdn.bcebos.com/mqttfx/mqttfx-1.7.1-macos.dmg)       |
 
-### 下载 MQTTBOX 客户端
+### 下载 MQTTBox 客户端
 
 源站：[http://workswithweb.com/html/mqttbox/downloads.html](http://workswithweb.com/html/mqttbox/downloads.html)
 
-百度云 BOS MQTTBOX 安装包下载链接：
+百度云 BOS MQTTBox 安装包下载链接：
 
 | 系统             | SHA256 编码                                                      | 下载链接                                                          |
 | ---------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------- |

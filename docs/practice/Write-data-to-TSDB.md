@@ -4,7 +4,7 @@
 
 - 本文测试所用设备系统为 Ubuntu18.04
 - 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqtt-fx)
-- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBOX](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
+- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
 - 本文所应用的各服务与本地 Hub 服务间通信认证强制使用 TLS/SSL 安全证书
 
 ## 测试前准备
@@ -89,8 +89,8 @@ _**提示**：以上创建的物接入 Endpoint、规则引擎 Rule、TSDB 数�
     ![localhubremote_volume](../images/practice/write-tsdb/remote-mqtt-volume.png)
 - 步骤4: **发布及下发服务配置** 完成核心所需的各个服务的配置后，点击“生成配置”按钮生成当前版本配置，然后再点击“下发配置”按钮将生成的版本配置下发至本地，Baetyl 服务会自动切换、加载该下发的新配置信息，具体可参考[BIE 操作实践](https://cloud.baidu.com/doc/BIE/s/0jzdn8zls)
     - 此过程要求 Baetyl 持续 **保持连接** 状态，如果 Baetyl 在下发配置前已断开连接，则重新启动 Baetyl，在连接状态恢复至 **已连接** 后下发新配置即可（推荐）；或可选择 **下载配置** 按钮，将该新配置下载至本地，然后自行在本地替换，然后再启动 Baetyl
-- 步骤5: **配置 MQTTBOX 连接信息** 启动 MQTTBOX，配置其与本地 Hub 服务建立连接所需的各配置信息
-- 步骤6: **发送测试数据** 在 MQTTBOX 与本地 Hub 模块建立连接后，向主题 **data** 发送测试数据，然后打开 TSDB 面板，查看是否有数据成功写入，同时打开物可视展示板，观察数据写入的状态
+- 步骤5: **配置 MQTTBox 连接信息** 启动 MQTTBox，配置其与本地 Hub 服务建立连接所需的各配置信息
+- 步骤6: **发送测试数据** 在 MQTTBox 与本地 Hub 模块建立连接后，向主题 **data** 发送测试数据，然后打开 TSDB 面板，查看是否有数据成功写入，同时打开物可视展示板，观察数据写入的状态
 - 步骤7：**结果验证** 若上述过程顺利，则可以看到刚才已发送的测试已经成功写入 TSDB，并在物可视进行展示。
 
 ## 测试与验证
@@ -337,15 +337,15 @@ logger:
 
 ### 测试
 
-依据 Hub 服务配置对 MQTTBOX 进行连接设置，具体如下图示。
+依据 Hub 服务配置对 MQTTBox 进行连接设置，具体如下图示。
 
-![配置 MQTTBOX 连接信息](../images/practice/write-tsdb/practice-mqttbox-config.png)
+![配置 MQTTBox 连接信息](../images/practice/write-tsdb/practice-mqttbox-config.png)
 
 同理，依据云端物接入的配置信息，对 MQTT.fx 进行连接配置，具体如下图示。
 
-![配置 MQTTBOX 连接信息](../images/practice/write-tsdb/practice-mqttfx-config.png)
+![配置 MQTTBox 连接信息](../images/practice/write-tsdb/practice-mqttfx-config.png)
 
-然后通过 MQTTBOX 向主题 **data** 发送消息，消息内容格式参考：
+然后通过 MQTTBox 向主题 **data** 发送消息，消息内容格式参考：
 
 ```json
 {
@@ -360,15 +360,15 @@ logger:
 
 如按上文的消息处理逻辑，该条消息会被筛选出来，并回传给本地 Hub 服务，再由本地 Hub 服务将数据发送给 Remote 服务，最后上传至云端物接入，经由规则 **baetyl-demo** 封装处理，传送给 TSDB，最终在物可视展示。相关示意图如下示。
 
-**MQTTBOX 收到处理后的消息**，表示消息已被 Function Filter 服务处理，并将结果回传给了 Hub 服务。
+**MQTTBox 收到处理后的消息**，表示消息已被 Function Filter 服务处理，并将结果回传给了 Hub 服务。
 
-![MQTTBOX 收到处理后的消息](../images/practice/write-tsdb/practice-mqttbox-data-succ.png)
+![MQTTBox 收到处理后的消息](../images/practice/write-tsdb/practice-mqttbox-data-succ.png)
 
 **MQTT.fx 收到云端物接入的消息**，表示该消息已通过 Remote 服务发往了云端物接入
 
 ![MQTTFX 收到处理后的消息](../images/practice/write-tsdb/practice-mqttfx-data-succ.png)
 
-如果我们通过 MQTTBOX 向主题 **data** 发送的消息内容为：
+如果我们通过 MQTTBox 向主题 **data** 发送的消息内容为：
 
 ```json
 {
@@ -381,7 +381,7 @@ logger:
 }
 ```
 
-则 MQTTBOX 和 MQTT.fx 均不会收到处理后的消息（`temperature < 50` 被过滤掉）。同理，规则引擎 **baetyl-demo**、TSDB 和物可视均不会收到该处理后的消息。
+则 MQTTBox 和 MQTT.fx 均不会收到处理后的消息（`temperature < 50` 被过滤掉）。同理，规则引擎 **baetyl-demo**、TSDB 和物可视均不会收到该处理后的消息。
 
 为更清晰地在云端展示处理后的结果，我们写入多条符合要求的数据，得到对应的 TSDB 和物可视的展示效果如下图示。
 

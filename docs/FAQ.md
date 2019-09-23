@@ -76,12 +76,12 @@ source ~/.bash_profile
 
 **参考方案**：目前，我们推荐通过云端管理套件进行配置定义和下发，但您也可以手动更改核心设备上的配置文件，然后重启 Baetyl 服务使之生效。
 
-**问题 10：我下载了 Linux MQTTBOX 客户端，解压缩后将可执行文件放置到了 `/usr/local/bin` 目录（其他系统启动加载目录相同，如 `/usr/bin`，`/bin`，`/usr/sbin`等），启动时候提示："error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory"**
+**问题 10：我下载了 Linux MQTTBox 客户端，解压缩后将可执行文件放置到了 `/usr/local/bin` 目录（其他系统启动加载目录相同，如 `/usr/bin`，`/bin`，`/usr/sbin`等），启动时候提示："error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory"**
 
-**参考方案**：这是由于 MQTTBOX 启动缺少 `libgconf-2.so.4` 库所致。推荐做法如下：
+**参考方案**：这是由于 MQTTBox 启动缺少 `libgconf-2.so.4` 库所致。推荐做法如下：
 
-- 步骤 1：下载并解压缩 MQTTBOX 软件包；
-- 步骤 2：进入 MQTTBOX 软件包解压缩后的目录，为 MQTTBox 可执行文件配置执行权限；
+- 步骤 1：下载并解压缩 MQTTBox 软件包；
+- 步骤 2：进入 MQTTBox 软件包解压缩后的目录，为 MQTTBox 可执行文件配置执行权限；
 - 步骤 3：为 MQTTBox 设置软连接：`sudo ln -s /path/to/MQTTBox /usr/local/bin/MQTTBox`；
 - 步骤 4：进入终端，执行 `MQTTBox` 即可。
 

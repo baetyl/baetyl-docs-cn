@@ -5,7 +5,7 @@
 - 本文测试所用设备系统为 Ubuntu16.04
 - 运行模式为 **docker** 容器模式，**native** 进程模式配置流程相同
 - Python 版本为 3.6，2.7 版本配置流程相同，但需要在 Python 脚本中注意语言差异
-- 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources.html#下载-MQTTBOX-客户端)
+- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载-MQTTBox-客户端)
 - 本文选取 [`requests`](https://pypi.org/project/requests) 和 [`Pytorch`](https://pytorch.org/) 两种第三方包进行演示说明
 - 本文中基于 Hub 模块创建的服务名称为 `localhub` 服务。并且针对本文的测试案例中，对应的 `localhub` 服务、函数计算服务以及其他服务的配置统一如下：
 
@@ -179,7 +179,7 @@ functions:
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-如上，`localhub` 服务接收到发送到主题 `py` 的消息后，会调用 `get.py` 脚本执行具体处理逻辑，然后将执行结果以 MQTT 消息形式反馈给主题 `py/hi`。这里，我们通过 MQTTBOX 订阅主题 `py/hi`，并向主题 `py` 发送消息 `{"action": "A"}`，然后观察 MQTTBOX 订阅主题 `py/hi` 的消息收取情况。如正常，则可正常获取 [https://baidu.com](https://baidu.com) 的 headers 信息。
+如上，`localhub` 服务接收到发送到主题 `py` 的消息后，会调用 `get.py` 脚本执行具体处理逻辑，然后将执行结果以 MQTT 消息形式反馈给主题 `py/hi`。这里，我们通过 MQTTBox 订阅主题 `py/hi`，并向主题 `py` 发送消息 `{"action": "A"}`，然后观察 MQTTBox 订阅主题 `py/hi` 的消息收取情况。如正常，则可正常获取 [https://baidu.com](https://baidu.com) 的 headers 信息。
 
 ![获取Baetyl官网headers信息](../images/develop/write-python-script-third-lib-requests.png)
 
@@ -257,6 +257,6 @@ functions:
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-如上，`localhub` 服务接收到发送到主题 `py` 的消息后，会调用 `calc.py` 脚本执行具体处理逻辑，然后将执行结果以 MQTT 消息形式反馈给主题 `py/hi`。这里，我们通过 MQTTBOX 订阅主题 `py/hi`，并向主题 `py` 发送消息 `{"action": "B"}`，然后观察 MQTTBOX 订阅主题 `py/hi` 的消息收取情况。如正常，则可正常生成随机张量。
+如上，`localhub` 服务接收到发送到主题 `py` 的消息后，会调用 `calc.py` 脚本执行具体处理逻辑，然后将执行结果以 MQTT 消息形式反馈给主题 `py/hi`。这里，我们通过 MQTTBox 订阅主题 `py/hi`，并向主题 `py` 发送消息 `{"action": "B"}`，然后观察 MQTTBox 订阅主题 `py/hi` 的消息收取情况。如正常，则可正常生成随机张量。
 
 ![生成随机张量](../images/develop/write-python-script-third-lib-Pytorch.png)
