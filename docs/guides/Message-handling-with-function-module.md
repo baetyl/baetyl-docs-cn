@@ -4,7 +4,7 @@
 
 - 本文测试所用设备系统为 Ubuntu 18.04
 - python 版本为 3.6，2.7 版本配置流程相同，但需要在 python 脚本中注意语言差异
-- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载MQTTBOX客户端)
+- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载-MQTTBox-客户端)
 - 本文所用镜像为依赖 Baetyl 源码自行编译所得，具体请查看 [如何从源码构建镜像](../install/Build-from-Source.md)
 
 _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
@@ -15,7 +15,7 @@ _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码�
 
 ## 操作流程
 
-- 步骤一：安装 Baetyl，**并导入默认配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
+- 步骤一：安装 Baetyl，**并导入示例配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
 - 步骤二：依据测试需求修改导入的配置信息，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行。如果 Baetyl 已经启动，执行 `sudo systemctl start baetyl` 重启来加载新的配置。
 - 步骤三：通过 MQTTBox 以 TCP 方式与 Baetyl Hub 服务 [建立连接](./Device-connect-to-hub-module.md)；
   - 若成功与 Hub 服务建立连接，则依据配置的主题权限信息向有权限的主题发布消息，同时向拥有订阅权限的主题订阅消息，并观察 Baetyl 日志信息；
@@ -28,7 +28,7 @@ _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码�
 
 ## 消息处理测试
 
-依据 `步骤一` 导入默认配置后，确认一下应用配置、 Hub 服务配置以及函数计算服务配置。
+依据 `步骤一` 导入示例配置包后，确认一下应用配置、 Hub 服务配置以及函数计算服务配置。
 
 将 Baetyl 应用配置改成如下配置：
 

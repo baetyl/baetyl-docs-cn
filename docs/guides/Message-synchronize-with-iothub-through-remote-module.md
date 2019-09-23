@@ -3,7 +3,7 @@
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu18.04
-- 本文测试前先安装 Baetyl，并导入默认配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
+- 本文测试前先安装 Baetyl，并导入示例配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
 - 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqtt-fx)
 - 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
 - 本文所用的 Hub 模块镜像和 Remote 模块镜像为 Baetyl 云端管理套件中发布的官方镜像：`hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`

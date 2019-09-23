@@ -13,7 +13,7 @@ _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码�
 
 ## 操作流程
 
-- 步骤一：安装 Baetyl，**并导入默认配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
+- 步骤一：安装 Baetyl，**并导入示例配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
 - 步骤二：依据测试需求修改导入的配置信息，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行。如果 Baetyl 已经启动，执行 `sudo systemctl start baetyl` 重启来加载新的配置。
 - 步骤三：通过 MQTTBox 以 TCP 方式与 Hub 服务[建立连接](./Device-connect-to-hub-module.md)；
   - 若成功与 Hub 服务建立连接，则依据配置的主题权限信息向有权限的主题发布消息，同时向拥有订阅权限的主题订阅消息；
@@ -114,7 +114,7 @@ logger:
 
 特别地，**client1**、**client2** 及 **client3** 可以合并为一个 client，则新的 client 即拥有向主题 `t` 的发布消息权限，又拥有向主题 `t` 及 `t/topic` 订阅消息的权限。这里，采用 MQTTBox 作为该新 client，点击 `Add subscriber` 按钮添加主题 `t` 及 `t/topic` 进行订阅。
 
-如上图示，可以发现在以 TCP 连接方式与 Hub 服务建立连接后，MQTTBox 成功订阅主题 `t` 及 `t/topic` ，然后点击 `Publish` 按钮向主题 `t` 发布消息 `This is a new message.`，即会发现在订阅的主题 `t` 及 `t/topic` 中均收到了该消息，详细如下图示。
+然后点击 `Publish` 按钮向 Hub 服务发送主题为 `t` 负载为 `This is a new message.` 的消息，即会发现在订阅的主题 `t` 及 `t/topic` 中均收到了该消息，详细如下图示。
 
 ![MQTTBox 成功收到消息](../images/guides/trans/mqttbox-tcp-trans-message-success.png)
 
