@@ -2,14 +2,21 @@
 
 单位统一说明：
 
-- 大小：b：字节（byte）；k：千字节（kilobyte）；m：兆字节（megabyte），g：吉字节（gigabyte）
-- 时间：s：秒；m：分；h：小时
+- 大小
+  - b：字节（byte）
+  - k：千字节（kilobyte）
+  - m：兆字节（megabyte）
+  - g：吉字节（gigabyte）
+- 时间
+  - s：秒
+  - m：分
+  - h：小时
 
-配置示例可参考本项目 `example` 目录中的各种例子。
+配置示例可参考[baeyle项目](https://github.com/baetyl/baetyl)中 `example` 目录下的例子。
 
 ## 主程序配置
 
-主程序的配置和应用配置是分离的，默认配置文件是工作目录下的`etc/baetyl/conf.yml`，配置解读如下：
+主程序配置和应用配置是分离的，主程序配置的默认配置文件是工作目录下的`etc/baetyl/conf.yml`，配置释义如下：
 
 ```yaml
 mode: 默认值：docker，服务运行模式。docker：容器模式；native：进程模式
@@ -31,7 +38,7 @@ logger: 日志配置项
 
 ## 应用配置
 
-应用配置的默认配置文件是工作目录下的 `var/db/baetyl/application.yml`，配置解读如下：
+应用配置的默认配置文件是工作目录下的 `var/db/baetyl/application.yml`，配置释义如下：
 
 ```yaml
 version: 应用版本
@@ -78,7 +85,11 @@ volumes: 存储卷列表
     path: [必须]存储卷在宿主机上的路径，相对于主程序的工作目录而言
 ```
 
-## baetyl-agent 配置
+## 模块配置
+
+模块配置的默认配置文件是工作目录下的：`/etc/baetyl/service.yml`
+
+### baetyl-agent 模块
 
 ```yaml
 remote: Agent 模块对接 BIE 云端管理套件的配置项
@@ -106,7 +117,7 @@ remote: Agent 模块对接 BIE 云端管理套件的配置项
     topic: 下发主题模板，无需配置
 ```
 
-## baetyl-hub 配置
+### baetyl-hub 模块
 
 ```yaml
 listen: [必须]监听地址，例如：
@@ -186,7 +197,7 @@ shutdown: Hub 退出配置项
   timeout: 默认值：10m，Hub退出超时时间
 ```
 
-## baetyl-function-manager 配置
+### baetyl-function-manager 模块
 
 ```yaml
 hub:
@@ -263,7 +274,7 @@ logger: 日志配置项
         max: 默认值：15，日志文件保留的最大数量
 ```
 
-## baetyl-remote-mqtt 配置
+### baetyl-remote-mqtt 模块
 
 ```yaml
 hub:
@@ -323,7 +334,7 @@ logger: 日志配置项
     max: 默认值：15，日志文件保留的最大数量
 ```
 
-## baetyl-timer 配置
+### baetyl-timer 模块
 
 ```yaml
 hub: 要连接的 Hub 信息
