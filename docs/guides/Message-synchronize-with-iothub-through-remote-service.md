@@ -110,7 +110,7 @@ remotes:
   - name: iothub
     address: 'ssl://xxxxxx.mqtt.iot.bj.baidubce.com:1884' # 测试时将 "xxxxxx" 替换为自己的 endpoint，注意区域
     clientid: remote-iothub-1
-    username: xxxxxxx/test # 测试时将 "xxxxxx" 替换为自己的 endpoint
+    username: xxxxxxx/${username} # 测试时将 "xxxxxx" 替换为自己的 endpoint，${username} 替换为实际 endpoint 下创建的用户名
     ca: var/db/baetyl/cert/ca.pem
     cert: var/db/baetyl/cert/client.pem
     key: var/db/baetyl/cert/client.key
