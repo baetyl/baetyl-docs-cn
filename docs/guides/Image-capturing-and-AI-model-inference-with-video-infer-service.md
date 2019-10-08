@@ -177,7 +177,7 @@ logger:
   level: "debug"
 ```
 
-需要注意的是，这里 `uri` 配置代表的是 IP 网络摄像头的地址，其通用格式为 `rtsp://$(username):$(password)@$(ip):$(port)/Streaming/channels/${stream_number}`，其中，`username` 和 `password` 为激活成功后的 IP 摄像头的登录认证口令，`ip` 为该摄像头的IP地址，`port` 为 RTSP 协议的端口号，默认为 554，后面内容为信道，其中 `stream_number` 为 1 代表抓取主码流，为 2 代表抓取次码流。
+需要注意的是，这里 `uri` 配置代表的是 IP 网络摄像头的地址，其通用格式为 `rtsp://<username>:<password>@<ip>:<port>/Streaming/channels/<stream_number>`，其中，`<username>` 和 `<password>` 为激活成功后的 IP 摄像头的登录认证口令，`<ip>` 为该摄像头的IP地址，`<port>` 为 RTSP 协议的端口号，默认为 554，后面内容为信道，其中 `<stream_number>` 为 1 代表抓取主码流，为 2 代表抓取次码流。
 
 此外，Video infer 服务除支持抓取 IP 网络摄像头图片信息外，还支持抓取 USB 摄像头采集图像信息和读取视频文件进行抽帧。相应地，若为 USB 摄像头，则 `uri` 配置为设备编号，通用性配置为 "0"，同时需要将设备地址 `/dev/video0` 映射进容器；若配置读取视频文件进行抽帧，则直接配置 `uri` 内容为视频文件的地址，同时将该视频文件以（自定义）存储卷形式挂载到 Video infer 服务即可，更多关于存储卷的内容可以参考 [如何正确地引入存储卷](https://cloud.baidu.com/doc/BIE/s/Cjzdn8xig)。
 

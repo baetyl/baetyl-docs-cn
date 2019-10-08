@@ -108,9 +108,9 @@ hub:
   password: hahaha
 remotes:
   - name: iothub
-    address: 'ssl://xxxxxx.mqtt.iot.bj.baidubce.com:1884' # 测试时将 "xxxxxx" 替换为自己的 endpoint，注意区域
+    address: '<iothub_endpoint>' # 从物接入的项目列表中复制 ssl 地址替换 <iothub_endpoint>，比如：ssl://xxxxxx.mqtt.iot.gz.baidubce.com:1884，xxxxxx 为 endpoint
     clientid: remote-iothub-1
-    username: xxxxxxx/${username} # 测试时将 "xxxxxx" 替换为自己的 endpoint，${username} 替换为实际 endpoint 下创建的用户名
+    username: '<username>' # 从上面选定（address）的物接入项目下创建的用户名列表中复制支持 ssl 连接的用户名替换 <username>，比如：xxxxxx/test，xxxxxx 为 endpoint
     ca: var/db/baetyl/cert/ca.pem
     cert: var/db/baetyl/cert/client.pem
     key: var/db/baetyl/cert/client.key
