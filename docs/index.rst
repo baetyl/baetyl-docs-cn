@@ -71,7 +71,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    Resources.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 版本信息
 
    releasenotes/Baetyl-0.1.6.md
