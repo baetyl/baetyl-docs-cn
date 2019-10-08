@@ -7,7 +7,7 @@
 
 _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
 
-与 [连接测试](./Device-connect-to-hub-service.md) 不同的是，若需要通过 Hub 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](Config-interpretation.html#baetyl-hub)。
+与 [连接测试](Device-connect-to-hub-service.md) 不同的是，若需要通过 Hub 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](Config-interpretation.html#baetyl-hub)。
 
 本文以 TCP 连接方式为例，测试 Hub 服务的消息路由、转发功能。
 

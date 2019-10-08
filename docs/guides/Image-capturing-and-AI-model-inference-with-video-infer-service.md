@@ -13,7 +13,7 @@
 
 - 步骤 1：在 Ubuntu18.04 上安装 Baetyl，相关内容可参考 [快速安装 Baetyl](../install/Quick-Install.md)
 - 步骤 2：依据本文测试需求，撰写各服务的配置文件，然后执行 `sudo systemctl start baetyl` 命令启动 Baetyl 服务，可以通过 `sudo systemctl status baetyl` 命令查看 Baetyl 服务的运行情况，关于各服务的配置情况请参考下文 [各服务配置](#id2)
-- 步骤 3：根据 Hub 服务的配置信息对 MQTTBox 进行连接配置，确保 MQTTBox 与 Hub 服务建立连接，更多可参考 [与 Hub 服务建立连接](./Device-connect-to-hub-service.md)
+- 步骤 3：根据 Hub 服务的配置信息对 MQTTBox 进行连接配置，确保 MQTTBox 与 Hub 服务建立连接，更多可参考 [与 Hub 服务建立连接](Device-connect-to-hub-service.md)
 - 步骤 4：MQTTBox 订阅主题 `video/infer/result`，观察其是否能够正常接收到模型的推断结果消息。
 
 上述步骤的操作流程示意图如下图所示。
