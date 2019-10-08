@@ -36,10 +36,11 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    :caption: 指南
 
    guides/Config-interpretation.md
-   guides/Device-connect-to-hub-module.md
-   guides/Message-transfer-among-devices-with-hub-module.md
-   guides/Message-handling-with-function-module.md
-   guides/Message-synchronize-with-iothub-through-remote-module.md
+   guides/Device-connect-to-hub-service.md
+   guides/Message-transfer-among-devices-with-hub-service.md
+   guides/Message-handling-with-function-service.md
+   guides/Message-synchronize-with-iothub-through-remote-service.md
+   guides/Image-capturing-and-AI-model-inference-with-video-infer-service.md
 
 .. toctree::
    :maxdepth: 2

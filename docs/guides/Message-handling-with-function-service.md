@@ -17,7 +17,7 @@ _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码�
 
 - 步骤一：安装 Baetyl，**并导入示例配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
 - 步骤二：依据测试需求修改导入的配置信息，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行。如果 Baetyl 已经启动，执行 `sudo systemctl start baetyl` 重启来加载新的配置。
-- 步骤三：通过 MQTTBox 以 TCP 方式与 Baetyl Hub 服务 [建立连接](./Device-connect-to-hub-module.md)；
+- 步骤三：通过 MQTTBox 以 TCP 方式与 Baetyl Hub 服务 [建立连接](./Device-connect-to-hub-service.md)；
   - 若成功与 Hub 服务建立连接，则依据配置的主题权限信息向有权限的主题发布消息，同时向拥有订阅权限的主题订阅消息，并观察 Baetyl 日志信息；
     - 若 Baetyl 日志显示已经启动 Python 运行时服务，则表明发布的消息受到了预期的函数处理；
     - 若 Baetyl 日志显示未成功启动 Python 运行时服务，则重复上述步骤，直至看到 Baetyl 主程序成功启动了 Python 运行时服务。

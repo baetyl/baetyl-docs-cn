@@ -21,7 +21,7 @@ Remote 远程服务模块是为了满足物联网场景下另外一种用户需�
 - Step 3：打开终端，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl 可执行程序（要求 Baetyl 已事先在设备上部署完毕，相关内容可参考 [快速安装 Baetyl](../install/Quick-Install.md)），然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行，并观察 Hub 模块、Remote 模块启动状态；
   - 若 Hub、Remote 模块成功启动，则继续下一步操作；
   - 若 Hub、Remote 模块未成功启动，则重复 `Step 3`，直至看到 Hub、Remote 模块成功启动。
-- Step 4：选择 MQTTBox 作为测试用 MQTT 客户端，与 Hub 模块[建立连接](Device-connect-to-hub-module.md)，并订阅既定主题；
+- Step 4：选择 MQTTBox 作为测试用 MQTT 客户端，与 Hub 模块[建立连接](Device-connect-to-hub-service.md)，并订阅既定主题；
   - 若成功与 Hub 模块建立连接，则继续下一步操作；
   - 若与 Hub 建立连接失败，则重复 `Step 4` 操作，直至 MQTTBox 与本地 Hub 模块成功建立连接。
 - Step 5：依据 Remote 模块的相关配置信息，从 MQTTBox 向既定主题发布消息，观察 MQTT.fx 的消息接收情况；同理，从 MQTT.fx 向既定主题发布消息，观察 MQTTBox 的消息接收情况。
