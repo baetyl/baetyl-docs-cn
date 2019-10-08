@@ -3,11 +3,11 @@
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu 18.04
-- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载-MQTTBox-客户端)
+- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#mqttbox)
 
 _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
 
-与 [连接测试](./Device-connect-to-hub-service.md) 不同的是，若需要通过 Hub 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](./Config-interpretation.html#baetyl-hub配置)。
+与 [连接测试](./Device-connect-to-hub-service.md) 不同的是，若需要通过 Hub 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](Config-interpretation.html#baetyl-hub)。
 
 本文以 TCP 连接方式为例，测试 Hub 服务的消息路由、转发功能。
 
@@ -15,7 +15,7 @@ _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码�
 
 - 步骤一：安装 Baetyl，**并导入示例配置包**。参考 [快速安装 Baetyl](../install/Quick-Install.md) 进行操作；
 - 步骤二：依据测试需求修改导入的配置信息，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，然后执行 `sudo systemctl status baetyl` 来查看 Baetyl 是否正常运行。如果 Baetyl 已经启动，执行 `sudo systemctl start baetyl` 重启来加载新的配置。
-- 步骤三：通过 MQTTBox 以 TCP 方式与 Hub 服务[建立连接](./Device-connect-to-hub-service.md)；
+- 步骤三：通过 MQTTBox 以 TCP 方式与 Hub 服务[建立连接](Device-connect-to-hub-service.md)；
   - 若成功与 Hub 服务建立连接，则依据配置的主题权限信息向有权限的主题发布消息，同时向拥有订阅权限的主题订阅消息；
   - 若与 Hub 服务建立连接失败，则重复 `步骤三` 操作，直至 MQTTBox 与 Hub 服务成功建立连接为止。
 - 步骤四：通过 MQTTBox 查看消息的收发状态。

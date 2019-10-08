@@ -10,7 +10,7 @@
 
 #### Go 开发环境安装
 
-前往 [相关资源下载页面](../Resources.md) 完成相关二进制包下载。具体请执行：
+前往 [相关资源下载页面](../Resources.html#golang) 完成相关二进制包下载。具体请执行：
 
 ```shell
 tar -C /usr/local -zxf go$VERSION.$OS-$ARCH.tar.gz  # 解压 Go 压缩包至 /usr/local 目录，其中，VERSION、OS、ARCH 参数为下载包对应版本
@@ -73,7 +73,7 @@ test -d "${GOPATH}" || mkdir "${GOPATH}"
 
 - 通过二进制文件安装
 
-前往 [相关资源下载页面](../Resources.md) 完成二进制包下载。具体请执行：
+前往 [相关资源下载页面](../Resources.html#golang) 完成二进制包下载。具体请执行：
 
 ```shell
 tar -C /usr/local -zxf go$VERSION.$OS-$ARCH.tar.gz  # 解压 Go 压缩包至 /usr/local 目录，其中，VERSION、OS、ARCH 参数为下载包对应版本

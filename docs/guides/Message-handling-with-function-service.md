@@ -4,7 +4,7 @@
 
 - 本文测试所用设备系统为 Ubuntu 18.04
 - python 版本为 3.6，2.7 版本配置流程相同，但需要在 python 脚本中注意语言差异
-- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载-MQTTBox-客户端)
+- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#mqttbox)
 - 本文所用镜像为依赖 Baetyl 源码自行编译所得，具体请查看 [如何从源码构建镜像](../install/Build-from-Source.md)
 
 _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_

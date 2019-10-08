@@ -3,8 +3,8 @@
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu18.04
-- 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqtt-fx)
-- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](https://docs.baetyl.io/zh_CN/latest/Resources.html#mqttbox)
+- 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](../Resources.html#mqtt-fx)
+- 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](../Resources.html#mqttbox)
 - 本文所应用的各服务与本地 Hub 服务间通信认证强制使用 TLS/SSL 安全证书
 
 ## 测试前准备
@@ -106,15 +106,15 @@ services:
     image: 'hub.baidubce.com/baetyl/baetyl-agent:latest'
     replica: 1
     mounts:
-      - name: agent-conf-wgon28r2x-V1
+      - name: agent-conf
         path: etc/baetyl
         readonly: true
-      - name: agent-cert-wgon28r2x-V1
+      - name: agent-cert
         path: var/db/baetyl/cert
         readonly: true
-      - name: agent-volumes-wgon28r2x-V1
+      - name: agent-volumes
         path: var/db/baetyl/volumes
-      - name: agent-log-wgon28r2x-V1
+      - name: agent-log
         path: var/log/baetyl
   - name: localhub
     image: 'hub.baidubce.com/baetyl/baetyl-hub:latest'
@@ -123,114 +123,77 @@ services:
       - '1883:1883'
       - '8883:8883'
     mounts:
-      - name: baetyl-localhub-conf-V1
+      - name: baetyl-localhub-conf
         path: etc/baetyl
         readonly: true
-      - name: baetyl-log-V1
+      - name: baetyl-log
         path: var/log/baetyl
-      - name: baetyl-localhub-cert-V1
+      - name: baetyl-localhub-cert
         path: var/db/baetyl/cert
         readonly: true
-      - name: baetyl-persist-data-V1
+      - name: baetyl-persist-data
         path: var/db/baetyl/data
   - name: function-manager
-    image: >-
-      hub.baidubce.com/baetyl/baetyl-function-manager:latest
+    image: hub.baidubce.com/baetyl/baetyl-function-manager:latest
     replica: 1
     mounts:
-      - name: baetyl-func-manager-conf-V1
+      - name: baetyl-func-manager-conf
         path: etc/baetyl
         readonly: true
-      - name: baetyl-mqtt-client-cert-V1
+      - name: baetyl-mqtt-client-cert
         path: var/db/baetyl/cert
         readonly: true
-      - name: baetyl-log-V1
+      - name: baetyl-log
         path: var/log/baetyl
   - name: function-filter
     image: 'hub.baidubce.com/baetyl/baetyl-function-sql:latest'
     replica: 0
     mounts:
-      - name: baetyl-function-filter-conf-V1
+      - name: baetyl-function-filter-conf
         path: etc/baetyl
         readonly: true
   - name: remote-mqtt
     image: 'hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest'
     replica: 1
     mounts:
-      - name: baetyl-remote-mqtt-conf-V1
+      - name: baetyl-remote-mqtt-conf
         path: etc/baetyl
         readonly: true
-      - name: baetyl-remote-iothub-cert-V1
+      - name: baetyl-remote-iothub-cert
         path: var/db/baetyl/iothub/cert
         readonly: true
-      - name: baetyl-mqtt-client-cert-V1
+      - name: baetyl-mqtt-client-cert
         path: var/db/baetyl/localhub/cert
         readonly: true
-      - name: baetyl-log-V1
+      - name: baetyl-log
         path: var/log/baetyl
 volumes:
-  - name: agent-conf-wgon28r2x-V1
-    path: var/db/baetyl/agent-conf-wgon28r2x/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: 6wKhAQhA/H1nymnO6G7u3g==
-      version: V1
-  - name: agent-cert-wgon28r2x-V1
-    path: var/db/baetyl/agent-cert-wgon28r2x/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: ZzM0vIavNPP66En8Cog3Wg==
-      version: V1
-  - name: agent-volumes-wgon28r2x-V1
+  - name: agent-conf
+    path: var/db/baetyl/agent-conf
+  - name: agent-cert
+    path: var/db/baetyl/agent-cert
+  - name: agent-volumes
     path: var/db/baetyl
-  - name: agent-log-wgon28r2x-V1
+  - name: agent-log
     path: var/db/baetyl/agent-log
-  - name: baetyl-log-V1
+  - name: baetyl-log
     path: var/db/baetyl/baetyl-log
-  - name: baetyl-localhub-cert-V1
-    path: var/db/baetyl/baetyl-localhub-cert/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: El/cnLg2nGC1/UfTZl6NLw==
-      version: V1
-  - name: baetyl-persist-data-V1
+  - name: baetyl-localhub-cert
+    path: var/db/baetyl/baetyl-localhub-cert
+  - name: baetyl-persist-data
     path: var/db/baetyl/baetyl-persist-data
-  - name: baetyl-mqtt-client-cert-V1
-    path: var/db/baetyl/baetyl-mqtt-client-cert/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: 8/McnX+CC3dQoyYCtN+99Q==
-      version: V1
-  - name: baetyl-function-filter-conf-V1
-    path: var/db/baetyl/baetyl-function-filter-conf/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: TshyXdCfRZqAnS57MCzIRw==
-      version: V1
-  - name: baetyl-localhub-conf-V1
-    path: var/db/baetyl/baetyl-localhub-conf/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: 4SCOtrGHd8fAnx7nkJ5pGw==
-      version: V1
-  - name: baetyl-remote-iothub-cert-V1
-    path: var/db/baetyl/baetyl-remote-iothub-cert/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: XzfchDcE3xUcWa/PwqLGCw==
-      version: V1
-  - name: baetyl-remote-mqtt-conf-V1
-    path: var/db/baetyl/baetyl-remote-mqtt-conf/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: ncrHak7Le3nodgVoIrEmMQ==
-      version: V1
-  - name: baetyl-func-manager-conf-V1
-    path: var/db/baetyl/baetyl-func-manager-conf/V1
-    meta:
-      url: https://edge.bos.gz.xxxxxxx
-      md5: 65ksedn9d6jUcLEtHJl/0Q==
-      version: V1
+  - name: baetyl-mqtt-client-cert
+    path: var/db/baetyl/baetyl-mqtt-client-cert
+  - name: baetyl-function-filter-conf
+    path: var/db/baetyl/baetyl-function-filter-conf
+  - name: baetyl-localhub-conf
+    path: var/db/baetyl/baetyl-localhub-conf
+  - name: baetyl-remote-iothub-cert
+    path: var/db/baetyl/baetyl-remote-iothub-cert
+  - name: baetyl-remote-mqtt-conf
+    path: var/db/baetyl/baetyl-remote-mqtt-conf
+  - name: baetyl-func-manager-conf
+    path: var/db/baetyl/baetyl-func-manager-conf
 ```
 
 ### Hub 服务配置
@@ -314,9 +277,9 @@ hub:
   insecure: true
 remotes:
   - name: iothub
-    address: 'ssl://guqgsr9.mqtt.iot.gz.baidubce.com:1884'
+    address: 'ssl://xxxxxx.mqtt.iot.gz.baidubce.com:1884' # 测试时将 "xxxxxx" 替换为自己的 endpoint，注意区域
     clientid: remote-iothub-1
-    username: guqgsr9/test
+    username: xxxxxx/test # 测试时将 "xxxxxx" 替换为自己的 endpoint
     ca: var/db/baetyl/iothub/cert/ca.pem
     cert: var/db/baetyl/iothub/cert/client.pem
     key: var/db/baetyl/iothub/cert/client.key
