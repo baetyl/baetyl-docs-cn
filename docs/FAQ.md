@@ -116,7 +116,7 @@ source ~/.bash_profile
 
 **参考方案**：消息到达物接入后，可以通过 [规则引擎](https://cloud.baidu.com/product/re.html) 进行简单的 sql 处理，或者通过规则引擎传输给 [百度云函数计算平台](https://cloud.baidu.com/product/cfc.html) 等其他云端服务，具体配置详情参考 [规则引擎操作指南](https://cloud.baidu.com/doc/RE/GUIGettingStarted.html#.E6.93.8D.E4.BD.9C.E5.87.86.E5.A4.87)。更多配置亦可参考 [通过 Baetyl 实现数据脱敏后存储百度云 TSDB](practice/Write-data-to-TSDB.md) 一文。
 
-**问题 15：Baetyl 如何使用 [Remote](guides/Message-synchronize-with-iothub-through-remote-module.md) 功能连接 [百度云 IoT Hub 设备型项目](https://cloud.baidu.com/doc/IOT/GettingStarted.html#.E5.88.9B.E5.BB.BA.E7.89.A9.E6.A8.A1.E5.9E.8B)？**
+**问题 15：Baetyl 如何使用 [Remote](guides/Message-synchronize-with-iothub-through-remote-service.md) 功能连接 [百度云 IoT Hub 设备型项目](https://cloud.baidu.com/doc/IOT/GettingStarted.html#.E5.88.9B.E5.BB.BA.E7.89.A9.E6.A8.A1.E5.9E.8B)？**
 
 **参考方案**：Baetyl 端云协同强制使用证书认证，目前物接入设备型项目还不支持证书认证，作为临时方案可以在本地手动配置用户名密码和物接入设备型项目交互。
 

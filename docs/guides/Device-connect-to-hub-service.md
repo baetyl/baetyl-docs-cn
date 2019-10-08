@@ -3,11 +3,11 @@
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu 18.04
-- 模拟 MQTT Client 行为的客户端为 MQTT.fx 和 MQTTBox，其中 [MQTT.fx](../Resources.md) 用于 TCP 和 SSL 连接方式的测试，[MQTTBox](../Resources.md) 用于 WS(Websocket）连接方式的测试。
+- 模拟 MQTT Client 行为的客户端为 MQTT.fx 和 MQTTBox，其中 [MQTT.fx](../Resources.html#mqtt-fx) 用于 TCP 和 SSL 连接方式的测试，[MQTTBox](../Resources.html#mqttbox) 用于 WS(Websocket）连接方式的测试。
 - 本文所用的 Hub 服务镜像为 Baetyl 云端管理套件中发布的官方镜像：`hub.baidubce.com/baetyl/baetyl-hub`
 - 您也可以通过 Baetyl 源码自行编译所需的 Hub 服务镜像，具体请查看 [如何从源码构建镜像](../install/Build-from-Source.md)
 
-Baetyl Hub 服务的完整的配置参考 [Hub 服务配置](./Config-interpretation.md)。
+Baetyl Hub 服务的完整的配置参考 [Hub 服务配置](Config-interpretation.html#baetyl-hub)。
 
 _**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
 
@@ -150,4 +150,4 @@ _**提示**：Darwin 系统通过源码安装 Baetyl，可执行 `sudo baetyl st
 
 ![WS（Websocket）连接成功](../images/guides/connect/mqttbox-ws-connect-success.png)
 
-综上，我们通过 MQTT.fx 和 MQTTBox 顺利完成了与 Baetyl Hub 服务的连接测试，除此之外，我们还可以通过 Paho-MQTT 自己编写测试脚本与 Baetyl Hub 连接，具体参见[相关资源下载](../Resources.md)。
+综上，我们通过 MQTT.fx 和 MQTTBox 顺利完成了与 Baetyl Hub 服务的连接测试，除此之外，我们还可以通过 Paho-MQTT 自己编写测试脚本与 Baetyl Hub 连接，具体参见[相关资源下载](../Resources.html#mqtt-client-sdk)。

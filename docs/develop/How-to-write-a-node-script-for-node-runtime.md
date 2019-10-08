@@ -2,9 +2,9 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu16.04
+- 本文测试所用设备系统为 Ubuntu18.04
 - node 版本为 8.5
-- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#下载-MQTTBox-客户端)
+- 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#mqttbox)
 - 本文中基于 Hub 模块创建的服务名称为 `localhub` 服务。并且针对本文的测试案例中，对应的 `localhub` 服务、函数计算服务以及其他服务的配置统一如下：
 
 ```yaml
@@ -126,7 +126,7 @@ function-sayjs-code/
 └── index.js
 ```
 
-更多函数运行时服务配置请查看 [函数运行时服务配置释义](../guides/Config-interpretation.md)。
+更多函数运行时服务配置请查看 [函数运行时服务配置释义](../guides/Config-interpretation.html#baetyl-function-manager)。
 
 ## 参数约定
 
@@ -182,4 +182,4 @@ exports.handler = (event, context, callback) => {
 
 ![发送非字典类数据](../images/develop/write-node-script-none-dict.png)
 
-如上，对于一些常规的需求，我们通过系统 Node 环境的标准库就可以完成。但是，对于一些较为复杂的需求，往往需要引入第三方库来完成。如何解决这个问题？我们将在 [如何针对 Node 运行时引入第三方包](./How-to-import-third-party-libraries-for-node-runtime.md) 小节详述。
+如上，对于一些常规的需求，我们通过系统 Node 环境的标准库就可以完成。但是，对于一些较为复杂的需求，往往需要引入第三方库来完成。如何解决这个问题？我们将在 [如何针对 Node 运行时引入第三方包](How-to-import-third-party-libraries-for-node-runtime.md) 小节详述。
