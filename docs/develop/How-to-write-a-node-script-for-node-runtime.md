@@ -126,7 +126,7 @@ function-sayjs-code/
 └── index.js
 ```
 
-更多函数运行时服务配置请查看 [函数运行时服务配置释义](../guides/Config-interpretation.html#baetyl-function-manager)。
+更多函数运行时服务配置请查看 [函数运行时服务配置释义](../guides/Config-interpretation.html#baetyl-function-node)。
 
 ## 参数约定
 

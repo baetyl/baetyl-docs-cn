@@ -240,6 +240,16 @@ functions: 函数列表
     backoff:
       max: 默认值：1m，Client 连接函数实例最大重连间隔
     timeout: 默认值：30s，Client 连接函数实例超时时间
+logger: 日志配置项
+  path: 默认为空，即不打印到文件；如果指定文件则输出到文件
+  level: 默认值：info，日志等级，支持debug、info、warn 和 error
+  format: 默认值：text，日志打印格式，支持 text 和 json
+  age:
+    max: 默认值：15，日志文件保留的最大天数
+  size:
+    max: 默认值：50，日志文件大小限制，单位MB
+  backup:
+    max: 默认值：15，日志文件保留的最大数量
 ```
 
 ## baetyl-function-python 配置
@@ -265,13 +275,101 @@ functions: 函数列表
 logger: 日志配置项
   path: 默认为空，即不打印到文件；如果指定文件则输出到文件
   level: 默认值：info，日志等级，支持 debug、info、warn 和 error
+  age:
+    max: 默认值：15，日志文件保留的最大天数
+  backup:
+        max: 默认值：15，日志文件保留的最大数量
+```
+
+### baetyl-function-node 模块
+
+```yaml
+server: 作为 GRPC Server 独立启动时配置；托管给 baetyl-function-manager 无需配置
+  address: GRPC Server 监听的地址，<host>:<port>
+  message:
+    length:
+      max: 默认值：4m， 函数实例允许接收和发送的最大消息长度
+  ca: Server 的 CA 证书路径
+  key: Server 的服务端私钥路径
+  cert: Server 的服务端公钥路径
+functions: 函数列表
+  - name: [必须] 函数名称，列表内唯一
+    handler: [必须] 函数包和处理函数名，比如：'sayjs.handler'
+    codedir: [必须] Node 代码所在路径
+logger: 日志配置项
+  path: 默认为空，即不打印到文件；如果指定文件则输出到文件
+  level: 默认值：info，日志等级，支持 debug、info、warn 和 error
+  backupCount:
+        max: 默认值：15，日志文件保留的最大数量
+```
+
+### baetyl-video-infer 模块
+
+```yaml
+hub:
+  clientid: Client 连接 Hub 的 Client ID。cleansession 为 false 则不允许为空
+  address: [必须] Client 连接Hub的地址
+  username: [必须] Client 连接Hub的用户名
+  password: 如果采用账号密码，必须填 Client 连接Hub的密码，否者不用填写
+  ca: 如果采用证书双向认证，必须填 Client 连接Hub的CA证书路径
+  key: 如果采用证书双向认证，必须填 Client 连接Hub的客户端私钥路径
+  cert: 如果采用证书双向认证，必须填 Client 连接Hub的客户端公钥路径
+  timeout: 默认值：30s，Client 连接 Hub 的超时时间
+  interval: 默认值：1m，Client 连接 Hub 的重连最大间隔时间，从500微秒翻倍增加到最大值
+  keepalive: 默认值：1m，Client 连接Hub的保持连接时间
+  cleansession: 默认值：false，Client 连接 Hub 的是否保持 Session
+  validatesubs: 默认值：false，Client 是否检查 Hub 订阅结果，如果是发现订阅失败报错退出
+  buffersize: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发
+video:
+  uri: [必须] 摄像头地址或视频文件路径，摄像头可支持 IP 网络摄像头和 USB 摄像头
+    # 对于 IP 网络摄像头，通用配置方式为：`rtsp://<username>:<password>@<ip>:<port>/Streaming/channels/<stream_number>/`
+      # `<username>` 和 `<password>` 代表摄像头登录、认证口令
+      # `<ip>` 代表 IP 网络摄像头的 IP 地址
+      # `<port>` 代表 RTSP 协议的端口，默认为 554
+      # `<stream_number>` 代表码流通道编号。如果为 1，则表示抓取的是主码流；如果为 2，则表示抓取的是次码流
+    # 对于 USB 摄像头，其配置内容为挂载的 USB 编号，如 "0" 代表设备 `/dev/video0`，另外还需要将设备 `/dev/video0` 映射进容器
+    # 对于视频文件，其配置内容为视频文件的路径，需要将视频文件以（自定义）存储卷方式挂载到 video infer 服务
+  limit:
+    fps: [必须] 表示每秒能够处理的最大帧量。如果摄像头帧率为 N，每秒最多能够处理的帧量为 M，则 Ceil(N/M) - 1 帧将会被跳过
+infer:
+  model: [必须] 模型文件路径。需要了解更多内容可参考：https://docs.opencv.org/4.1.1/d6/d0f/group__dnn.html#ga3b34fe7a29494a6a4295c169a7d32422.
+  config: [必须] 模型文件的配置文件路径。需要了解更多内容可参考：https://docs.opencv.org/4.1.1/d6/d0f/group__dnn.html#ga3b34fe7a29494a6a4295c169a7d32422.
+  backend: [可选] 模型推断后处理加速配置项，可支持的配置项为：halide，openvino，opencv，vulkan，default。需要了解更多内容可参考：https://docs.opencv.org/4.1.1/d6/d0f/group__dnn.html#ga186f7d9bfacac8b0ff2e26e2eab02625
+  device: [可选] 表示用何种硬件对模型进行推断，可选择的配置项为 cpu（默认），fp32，fp16，vpu，vulkan，fpga。需要了解更多内容可参考：https://docs.opencv.org/4.1.1/d6/d0f/group__dnn.html#ga709af7692ba29788182cf573531b0ff5
+process: 
+  before: 从图像创建 4 维 blob。（可选）从中心调整大小和裁剪图像，减去平均值，按比例因子缩放值，交换蓝色和红色通道。需要了解更多内容可参考：https://docs.opencv.org/4.1.1/d6/d0f/group__dnn.html#ga29f34df9376379a603acd8df581ac8d7
+    scale: multiplier for image values.
+    swaprb: 标志位，用于转换图像的第 1、3 通道，即将常用的 RGB 顺序调整为 BGR
+    width: 输出图像的宽度
+    hight: 输出图像的高度
+    mean: 从通道中减去平均值的标量。如果图像具有 BGR 排序并且 swaprb 为 true，则值的排列顺序应为（均值 R，均值 G，均值 B）
+      v1: 代表 RGB 中的蓝色分量，与下面的 v2，v3，v4 一起常被用于传递像素值
+      v2: 代表 RGB 中的绿色分量
+      v3: 代表 RGB 中的红色分量
+      v4: 代表 Alpha 透明色分量
+    crop: 标志位，表明图像在进行 resize 操作后是否会被裁剪
+  after:
+    function: 
+      name: [必须] 处理模型推断结果的函数名称
+functions:
+  - name: [必须] 函数名称，列表内唯一
+    address: function manager 服务地址，通用配置方式是 <host>:<port>，如 `function-manager:50051`
+    message:
+      length:
+        max: 默认值：4m， 函数实例允许接收和发送的最大消息长度
+    backoff:
+      max: 默认值：1m，Client 连接函数实例最大重连间隔
+    timeout: 默认值：30s，Client 连接函数实例超时时间
+logger: 日志配置项
+  path: 默认为空，即不打印到文件；如果指定文件则输出到文件
+  level: 默认值：info，日志等级，支持 debug、info、warn 和 error
   format: 默认值：text，日志打印格式，支持 text 和 json
   age:
     max: 默认值：15，日志文件保留的最大天数
   size:
-    max: 默认值：50，日志文件大小限制，单位MB
+    max: 默认值：50，日志文件大小限制，单位 MB
   backup:
-        max: 默认值：15，日志文件保留的最大数量
+    max: 默认值：15，日志文件保留的最大数量
 ```
 
 ### baetyl-remote-mqtt 模块
@@ -337,11 +435,20 @@ logger: 日志配置项
 ### baetyl-timer 模块
 
 ```yaml
-hub: 要连接的 Hub 信息
-  address: timer 模块要连接的 Hub 地址
-  username: timer 模块接入 Hub 的用户名
-  password: timer 模块接入 Hub 密码
-  clientid: Client 连接 Hub 的 Client ID
+hub:
+  clientid: Client 连接 Hub 的 Client ID。cleansession 为 false 则不允许为空
+  address: [必须] Client 连接 Hub 的地址
+  username: [必须] Client 连接 Hub 的用户名
+  password: 如果采用账号密码，必须填 Client 连接 Hub 的密码，否者不用填写
+  ca: 如果采用证书双向认证，必须填 Client 连接 Hub 的 CA 证书路径
+  key: 如果采用证书双向认证，必须填 Client 连接 Hub 的客户端私钥路径
+  cert: 如果采用证书双向认证，必须填 Client 连接 Hub 的客户端公钥路径
+  timeout: 默认值：30s，Client 连接 Hub 的超时时间
+  interval: 默认值：1m，Client 连接 Hub 的重连最大间隔时间，从500微秒翻倍增加到最大值
+  keepalive: 默认值：1m，Client 连接 Hub 的保持连接时间
+  cleansession: 默认值：false，Client 连接 Hub 的是否保持 Session
+  validatesubs: 默认值：false，Client 是否检查 Hub 订阅结果，如果是发现订阅失败报错退出
+  buffersize: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发
 timer: timer 相关属性
   interval: timer 模块定时间隔
 publish:
@@ -351,4 +458,11 @@ publish:
 logger: 日志配置项
   path: 默认为空，即不打印到文件；如果指定文件则输出到文件
   level: 默认值：info，日志等级，支持 debug、info、warn 和 error
+  format: 默认值：text，日志打印格式，支持 text 和 json
+  age:
+    max: 默认值：15，日志文件保留的最大天数
+  size:
+    max: 默认值：50，日志文件大小限制，单位 MB
+  backup:
+    max: 默认值：15，日志文件保留的最大数量
 ```
