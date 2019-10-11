@@ -3,11 +3,10 @@
 **声明**：
 
 - 本文测试所用设备系统为 Ubuntu 18.04
-- python 版本为 3.6，2.7 版本配置流程相同，但需要在 python 脚本中注意语言差异
+- 本文测试使用的函数运行时是 Python3
 - 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#mqttbox)
-- 本文所用镜像为依赖 Baetyl 源码自行编译所得，具体请查看 [如何从源码构建镜像](../install/Build-from-Source.md)
 
-_**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
+_**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码安装 Baetyl](../install/Install-from-source.md)。_
 
 与基于 Hub 服务实现设备间消息转发不同的是，本文主要介绍利用本地函数计算服务进行消息处理。其中 Hub 服务用于建立 Baetyl 与 MQTT 客户端之间的连接，Python 运行时服务用于处理 MQTT 消息，而本地函数计算服务则通过 MQTT 消息上下文衔接本地 Hub 服务与 Python 运行时服务。
 
@@ -315,8 +314,6 @@ _**提示**：凡是在 `rules` 消息路由配置项中出现、用到的函数
 ### Baetyl 启动
 
 依据 `步骤二`，执行 `sudo systemctl start baetyl` 以容器模式启动 Baetyl，如果 Baetyl 已经启动，执行 `sudo systemctl restart baetyl` 来重启。
-
-_**提示**：Darwin 系统通过源码安装 Baetyl，可执行 `sudo baetyl start` 以容器模式启动 Baetyl。_
 
 查看 Baetyl 主程序的日志，执行 `sudo tail -f -n 40 /usr/local/var/log/baetyl/baetyl.log` 显示如下：
 

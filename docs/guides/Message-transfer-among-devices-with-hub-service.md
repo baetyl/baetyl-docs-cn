@@ -5,7 +5,7 @@
 - 本文测试所用设备系统为 Ubuntu 18.04
 - 模拟 MQTT client 行为的客户端为 [MQTTBox](../Resources.html#mqttbox)
 
-_**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码编译 Baetyl](../install/Build-from-Source.md)。_
+_**提示**：Darwin 系统可以通过源码安装 Baetyl，可参考 [源码安装 Baetyl](../install/Install-from-source.md)。_
 
 与 [连接测试](Device-connect-to-hub-service.md) 不同的是，若需要通过 Hub 服务完成消息在设备间的转发及简单路由，除需要配置连接项信息外，还需要给可允许连接的 client 配置相应主题的权限，及简单的消息路由策略，完整的配置参考 [Hub 服务配置](Config-interpretation.html#baetyl-hub)。
 

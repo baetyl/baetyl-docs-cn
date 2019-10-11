@@ -2,12 +2,11 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
+- 本文测试所用设备系统为 Ubuntu 18.04
 - 本文测试所用摄像头为海康威视 IP 网络摄像头，其型号为 DS-IPC-B12-1
-- 本文测试 video-infer 服务基于 CPU 和 AI 模型对摄像头采集照片进行推断
+- 本文测试的 AI 推断跑在 CPU 使用官方的 video-infer 模块
 - 本文测试采用的 AI 模型为 [ssd_mobilenet_v1_coco_2017_11_17](https://baetyl.cdn.bcebos.com/example/guides/ssd_mobilenet_v1_coco_2017_11_17.tar.gz)
 - 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](../Resources.html#mqttbox)
-- 本文所应用的各服务与本地 Hub 服务间连接采用 TCP 连接方式
 
 ## 操作流程
 
