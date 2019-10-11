@@ -17,7 +17,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    BAETYL 主页 <https://baetyl.io/zh/>
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 概述
 
    overview/Whatis.md
@@ -25,14 +25,14 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    overview/Contributing.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 安装
 
    install/Quick-Install.md
-   install/Build-from-Source.md
+   install/Install-from-source.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 指南
 
    guides/Config-interpretation.md
@@ -43,7 +43,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    guides/Image-capturing-and-AI-model-inference-with-video-infer-service.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 开发
 
    develop/How-to-write-a-python-script-for-python-runtime.md
@@ -54,25 +54,25 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    develop/How-to-develop-a-customize-module.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 实践
 
    practice/Write-data-to-TSDB.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 问题
 
    FAQ.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 资源
 
    Resources.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 版本信息
 
    releasenotes/Baetyl-0.1.6.md

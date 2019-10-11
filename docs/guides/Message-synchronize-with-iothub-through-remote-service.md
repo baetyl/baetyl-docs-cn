@@ -2,12 +2,10 @@
 
 **声明**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
+- 本文测试所用设备系统为 Ubuntu 18.04
 - 本文测试前先安装 Baetyl，并导入示例配置包，可参考 [快速安装 Baetyl](../install/Quick-Install.md)
 - 模拟 MQTT client 向百度云 IoTHub 订阅消息的客户端为 [MQTT.fx](../Resources.html#mqtt-fx)
 - 模拟 MQTT client 向本地 Hub 服务发送消息的客户端为 [MQTTBox](../Resources.html#mqttbox)
-- 本文所用的 Hub 模块镜像和 Remote 模块镜像为 Baetyl 云端管理套件中发布的官方镜像：`hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`
-- 您也可以通过 Baetyl 源码自行编译所需的 Hub 模块镜像和 Remote 模块镜像，具体请查看 [源码编译 Baetyl](../install/Build-from-Source.md)
 - 远程 Hub 接入平台选用 [Baidu IoTHub](https://cloud.baidu.com/product/iot.html)
 
 Remote 远程服务模块是为了满足物联网场景下另外一种用户需求而研发，能够实现本地 Hub 与远程 Hub 服务（如[Baidu IoTHub](https://cloud.baidu.com/product/iot.html)等）的数据同步。即通过 Remote 远程服务模块我们既可以从远程 Hub 订阅消息到本地 Hub，也可以将本地 Hub 的消息发送给远程 Hub，完整的配置可参考 [Remote 模块配置](Config-interpretation.html#baetyl-remote-mqtt)。
@@ -33,10 +31,9 @@ Remote 远程服务模块是为了满足物联网场景下另外一种用户需�
 
 ## Remote 模块消息远程同步
 
-Baetyl 主程序的配置文件位置 `var/db/baetyl/application.yml`，配置信息如下：
+Baetyl 位于 `var/db/baetyl/application.yml` 的应用配置如下：
 
 ```yaml
-# application.yml 配置
 version: v0
 services:
   - name: localhub
