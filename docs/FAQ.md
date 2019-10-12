@@ -147,4 +147,4 @@ sudo apt-get install ca-certificates
 
 **问题 19：CentOS7 系统上启动 Baetyl 时，报没有权限的错误："container (0054b7d0da0f) [agent][agent] failed to load config: open etc/baetyl/service.yml: permission denied" Or "container (0054b7d0da0f) failed to parse log level (), use default level (info)[agent][agent] service is stopped with error: open etc/baetyl/service.yml: permission denied"**
 
-**参考方案**：这种情况是因为 CentOS7 中的安全模块 selinux 并未开放相关文件的权限, 新版本 docker 已经修复这个问题。用户可以参考 [CentOS 安装 docker](https://docs.docker.com/install/linux/docker-ce/centos/) 文章来安装最新版本 docker 即可解决。
+**参考方案**：这种情况是因为 CentOS7 中的安全模块 selinux 并未开放相关文件的权限，Docker 19.03 版本已经修复这个问题。用户可以参考 [docker.com/install](https://docs.docker.com/install/linux/docker-ce/centos/) 升级到 19.03 或以上版本。
