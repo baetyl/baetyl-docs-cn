@@ -133,17 +133,25 @@ source ~/.bash_profile
 
 **参考方案**： 目前我们的云管理不支持进程模式，如果需要在本地以进程模式启动 `Baetyl` 请参考 `example/native` 中的配置内容，执行命令 `make install-native` 来进行安装，并通过命令 `sudo baetyl start` 以进程方式来启动。
 
-**问题 18：下载镜像时有类似报错："error="Error response from daemon: Get https://hub.baidubce.com/v2/: x509: failed to load system roots and no roots provided" baetyl=master"**
+**问题 18：下载镜像时有类似报错："error="Error response from daemon: Get https://hub.baidubce.com/v2/: x509: certificate signed by unknown authority" baetyl=master" Or "error="Error response from daemon: Get https://hub.baidubce.com/v2/: x509: failed to load system roots and no roots provided" baetyl=master"**
 
-**参考方案**：这种情况是因为系统中缺少 `ca-certificates` 包，安装即可。
+**参考方案**：这种情况是因为系统中缺少 https://hub.baidubce.com 网站的证书导致，可以先尝试安装 `ca-certificates` 包解决。
 例如，如宿主机系统为 debian ，可使用以下命令操作
 
 ```shell
 sudo apt-get update
 sudo apt-get install ca-certificates
+sudo service docker restart
 ```
 
-其他系统请自行查询相关安装操作。
+如果仍然报错，可以使用 openssl 添加 https://hub.baidubce.com 网站的证书到系统中
+
+```shell
+echo -n | openssl s_client -showcerts -connect hub.baidubce.com:443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+sudo service docker restart
+```
+
+其他系统可类比上述方案进行解决。
 
 **问题 19：CentOS7 系统上启动 Baetyl 时，报没有权限的错误："container (0054b7d0da0f) [agent][agent] failed to load config: open etc/baetyl/service.yml: permission denied" Or "container (0054b7d0da0f) failed to parse log level (), use default level (info)[agent][agent] service is stopped with error: open etc/baetyl/service.yml: permission denied"**
 
