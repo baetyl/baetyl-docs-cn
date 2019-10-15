@@ -64,6 +64,16 @@ export DOCKER_API_VERSION=1.38
 source ~/.bash_profile
 ```
 
+另外，如果执行完上述命令之后发现服务还是不能启动，则是由于环境变量在当前用户并未生效导致。可以参考的解决办法如下：
+
+```shell
+sudo vim /etc/sudoers # 如果系统没有安装 vim，可以先安装或是采用 vi，gedit 等其他编辑器
+```
+
+然后，将 `Defaults env_reset` 修改为 `Defaults !env_reset` 保存、退出即可。
+
+**注意**：以上修改的仅仅是当前用户的环境变量规则，也就是说，在当前用户下使用 `sudo` 不会更改环境变量，但是 `sudo -s` 后进入的是 `root` 用户，再提权即 `root` 用户使用 `sudo`，那么环境变量依然遵循 `root`用户的配置。相关原理可以参考 [系统中 sudo 的作用](https://www.ibm.com/developerworks/cn/aix/library/au-sudo/index.html)。如果想要 `root` 后依旧保留当前环境配置，需要额外设置，可以参考 [如何对所有用户设置环境变量](https://askubuntu.com/questions/978300/how-do-i-set-environment-variable-for-all-users-even-when-doing-sudo-su)。
+
 **问题 7: Baetyl 如何使用 NB-IoT 连接百度云管理套件或者物接入?**
 
 **参考方案**：NB-IoT 是一种网络制式，和 2/3/4G 类似，带宽窄功耗低。NB-IoT 支持基于 TCP 的 MQTT 通信协议，因此可以使用 NB-IoT 卡连接百度云物接入，部署 Baetyl 应用和 BIE 云管理通信。但国内三大运营商中，电信对他们的 NB 卡做了限制，仅允许连接电信的云服务 IP，所以目前只能使用移动 NB 卡和联通 NB 卡连接百度云服务。
