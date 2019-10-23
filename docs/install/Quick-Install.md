@@ -1,8 +1,8 @@
 # 快速安装 Baetyl
 
-相较于之前版本的手动下载安装方式，新版本 Baetyl 支持新的在线安装方式，主要通过包管理器和二进制包拷贝方式实现。用户可以在终端简单输入几条命令，快速安装 Baetyl。
+Baetyl 支持快速安装，推荐使用。具体如下:
 
-Baetyl 快速安装方式目前支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9、CentOS7、Raspbian、Darwin，支持的平台有 amd64、i386、armv7l 和 arm64。
+Baetyl 安装支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9、CentOS7、Raspbian、Darwin，支持的平台有 amd64、i386、armv7l 和 arm64。
 
 Baetyl 支持两种运行模式，分别是 **docker** 容器模式和 **native** 进程模式。本文基于 **docker** 容器模式进行快速安装。
 
@@ -14,12 +14,20 @@ Baetyl 支持两种运行模式，分别是 **docker** 容器模式和 **native*
 curl -sSL https://get.docker.com | sudo sh
 ```
 
-对于 CentOS7 系统，在安装结束后你需要手动启动 docker:
+对于 CentOS7 系统，在安装结束后需要手动启动 docker:
 
 ```shell
+# 设置 docker 开机自启动
 sudo systemctl enable docker
+# 启动 docker
 sudo systemctl start docker
 ```
+
+在 Darwin 系统上安装 Docker 可参考 [docker.com/install](https://docs.docker.com/docker-for-mac/install/)。
+
+然后设置 Baetyl 的配置目录 `/usr/local/var` 允许挂载到容器内。
+
+![Mount path on Mac](../images/install/docker-path-mount-on-mac.png) 
 
 安装结束后，用户可以查看 docker 的版本号:
 
@@ -27,19 +35,19 @@ sudo systemctl start docker
 docker version
 ```
 
-**注意**：根据官方 Release 日志说明，新版本 Docker 版本已经修复了一些漏洞和安全隐患，建议安装/更新 Docker 版本到 19.03 及以上。
+**注意**：建议用户安装/更新 Docker 版本到 19.03 及以上。
 
 **更多内容请参考 [官方文档](https://docs.docker.com/install/)。**
 
 ## 安装 Baetyl
 
-Baetyl 发布新版本的同时，也会发布对应的二进制文件以及相应的 rpm、deb 包。使用以下命令，用户可以将 Baetyl 快速安装到设备上:
+Baetyl 发布新版本的同时，也会发布对应的二进制文件以及相应的 rpm、deb 包。使用以下命令，可以将 Baetyl 快速安装到设备上:
 
 ```shell
-curl -sSL http://dl.baetyl.io/install.sh | sudo sh
+curl -sSL http://dl.baetyl.io/install.sh | sudo bash
 ```
 
-执行完毕后，Baetyl 将会被安装到 `/usr/local/bin` 目录下。Baetyl 的运行配置存放在 `/usr/local/etc/baetyl` 和 `/usr/local/var/db/baetyl` 目录下，具体的配置方法可以参考 [配置文件解读文档](guides/Config-interpretation.md)。
+执行完毕后，Baetyl 将会被安装到 /usr/local/bin 目录下。Baetyl 的运行配置存放在 /usr/local/etc/baetyl 和 /usr/local/var/db/baetyl 目录下，具体的配置方法可以参考 [配置文件解读文档](guides/Config-interpretation.md)。
 
 ## 导入示例配置包（可选）
 
@@ -48,7 +56,8 @@ curl -sSL http://dl.baetyl.io/install.sh | sudo sh
 Baetyl 官方提供了一套示例配置，用户可通过以下命令导入示例配置文件:
 
 ```shell
-curl -sSL http://dl.baetyl.io/install_with_docker_example.sh | sudo sh
+# Darwin OS use Docker as a non-root user. So we don't run this script with "sudo" directly.
+curl -O http://dl.baetyl.io/install_with_docker_example.sh && bash install_with_docker_example.sh
 ```
 
 上述脚本将会检测当前系统上是否存在历史配置文件，用户根据提示选择**是否**删除历史配置文件。用户也可以根据脚本中的提示选择**是否**提前拉取示例配置中要用到的各个模块的镜像。
@@ -85,7 +94,7 @@ sudo systemctl stop baetyl
 查看运行状态:
 
 ```shell
-sudo systemctl stop baetyl
+sudo systemctl status baetyl
 ```
 
 如果用户之前安装过 Baetyl 或者导入了新的配置文件，请重启 Baetyl:
@@ -106,7 +115,7 @@ launchctl load ~/Library/LaunchAgents/baetyl.plist
 停止 Baetyl:
 
 ```shell
-launchctl load ~/Library/LaunchAgents/baetyl.plist 
+launchctl unload ~/Library/LaunchAgents/baetyl.plist 
 ```
 
 ## 验证是否成功安装
