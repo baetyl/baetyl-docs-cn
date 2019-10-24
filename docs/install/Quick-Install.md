@@ -1,8 +1,6 @@
 # 快速安装 Baetyl
 
-Baetyl 支持快速安装，推荐使用。具体如下:
-
-Baetyl 安装支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9、CentOS7、Raspbian、Darwin，支持的平台有 amd64、i386、armv7l 和 arm64。
+Baetyl 快速安装支持的系统有: Ubuntu16.04、Ubuntu18.04、Debian9、CentOS7、Raspbian、Darwin，支持的平台有 amd64、i386、armv7l 和 arm64。
 
 Baetyl 支持两种运行模式，分别是 **docker** 容器模式和 **native** 进程模式。本文基于 **docker** 容器模式进行快速安装。
 
