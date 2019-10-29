@@ -24,6 +24,9 @@ grace: 默认值：30s，服务优雅退出超时时间
 server: 主程序API Server配置项
   address: 默认值可读取环境变量：BAETYL_MASTER_API_ADDRESS，主程序 API Server 地址
   timeout: 默认值：30s，主程序 API Server 请求超时时间
+snfile: 设备序列号文件，可以作为设备指纹。如果设置，可读取环境变量：`BAETYL_HOST_SN` 获取内容
+docker:
+  api_version: 默认值：1.38，客户端调用 Docker Engine 服务接口的版本
 logger: 日志配置项
   path: 默认为空，即不打印到文件；如果指定文件则输出到文件
   level: 默认值：info，日志等级，支持 debug、info、warn 和 error

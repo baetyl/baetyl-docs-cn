@@ -129,12 +129,12 @@ sudo baetyl start
 sudo ./output/bin/baetyl start
 ```
 
-**注意**：启动方式根据安装方式的不同而不同，即，若选择 docker 运行模式安装，则上述命令会以 docker 容器模式运行 Baetyl。
+**注意**：启动方式根据安装方式的不同而不同，即，若选择 **docker** 运行模式安装，则上述命令会以 **docker** 容器模式运行 Baetyl。
 
 **提示**：
 
 - baetyl 启动后，可通过 `ps -ef | grep "baetyl"` 查看 baetyl 是否已经成功运行，并确定启动时所使用的参数。通过查看日志确定更多信息，日志文件默认存放在工作目录下的 `var/log/baetyl` 目录中。
-- docker 容器模式运行，可通过 `docker ps` 或者 `docker stats` 命令查看容器运行状态。
+- **docker** 容器模式运行，可通过 `docker ps` 或者 `docker stats` 命令查看容器运行状态。
 - 如需使用自己的镜像，需要修改应用配置中的模块和函数的 `image`，指定自己的镜像。
 - 如需自定义配置，请按照 [配置解读](../guides/Config-interpretation.md) 中的内容进行相关设置。
 
