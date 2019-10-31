@@ -105,7 +105,7 @@ remote: Agent 模块对接 BIE 云端管理套件的配置项
     cert: [必须]云端 MQTT 通道连接的客户端公钥路径
     timeout: 默认值：30s，云端 MQTT 通道连接超时时间
     interval: 默认值：1m，云端 MQTT 通道重连的最大间隔时间，从500微秒翻倍增加到最大值
-    keepalive: 默认值：1m，云端 MQTT 通道连接的保持时间
+    keepalive: 默认值：10m，云端 MQTT 通道连接的保持时间
     cleansession: 默认值：false，云端 MQTT 通道连接的的是否保持 Session
     validatesubs: 默认值：false，云端 MQTT 通道连接是否检查订阅结果。 如果为 true 发现订阅失败报错退出
     buffersize: 默认值：10，发送消息内存队列大小，异常退出会导致消息丢失
@@ -213,7 +213,7 @@ hub:
   cert: 如果采用证书双向认证，必须填 Client 连接Hub的客户端公钥路径
   timeout: 默认值：30s，Client 连接 Hub 的超时时间
   interval: 默认值：1m，Client 连接 Hub 的重连最大间隔时间，从500微秒翻倍增加到最大值
-  keepalive: 默认值：1m，Client 连接Hub的保持连接时间
+  keepalive: 默认值：10m，Client 连接Hub的保持连接时间
   cleansession: 默认值：false，Client 连接 Hub 的是否保持 Session
   validatesubs: 默认值：false，Client 是否检查 Hub 订阅结果，如果是发现订阅失败报错退出
   buffersize: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发
@@ -319,7 +319,7 @@ hub:
   cert: 如果采用证书双向认证，必须填 Client 连接Hub的客户端公钥路径
   timeout: 默认值：30s，Client 连接 Hub 的超时时间
   interval: 默认值：1m，Client 连接 Hub 的重连最大间隔时间，从500微秒翻倍增加到最大值
-  keepalive: 默认值：1m，Client 连接Hub的保持连接时间
+  keepalive: 默认值：10m，Client 连接Hub的保持连接时间
   cleansession: 默认值：false，Client 连接 Hub 的是否保持 Session
   validatesubs: 默认值：false，Client 是否检查 Hub 订阅结果，如果是发现订阅失败报错退出
   buffersize: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发
@@ -388,7 +388,7 @@ hub:
   cert: 如果采用证书双向认证，必须填 Client 连接 Hub 的客户端公钥路径
   timeout: 默认值：30s，Client 连接 Hub 的超时时间
   interval: 默认值：1m，Client 连接 Hub 的重连最大间隔时间，从500微秒翻倍增加到最大值
-  keepalive: 默认值：1m，Client 连接 Hub 的保持连接时间
+  keepalive: 默认值：10m，Client 连接 Hub 的保持连接时间
   cleansession: 默认值：false，Client 连接 Hub 的是否保持 Session
   validatesubs: 默认值：false，Client 是否检查 Hub 订阅结果，如果是发现订阅失败报错退出
   buffersize: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发
@@ -419,7 +419,7 @@ remotes: Remote列表
     cert: 如果采用证书双向认证，必须填 Client 连接 Remote 的客户端公钥路径
     timeout: 默认值：30s，Client 连接 Remote 的超时时间
     interval: 默认值：1m，Client 连接 Remote 的重连最大间隔时间，从500微秒翻倍增加到最大值
-    keepalive: 默认值：1m，Client 连接 Remote 的保持连接时间
+    keepalive: 默认值：10m，Client 连接 Remote 的保持连接时间
     cleansession: 默认值：false，Client 连接 Remote 的是否保持 Session
     validatesubs: 默认值：false，Client 是否检查Remote订阅结果，如果是发现订阅失败报错退出
     buffersize: 默认值：10，Client 发送消息给 Remote 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Remote 重发
@@ -448,7 +448,7 @@ hub:
   cert: 如果采用证书双向认证，必须填 Client 连接 Hub 的客户端公钥路径
   timeout: 默认值：30s，Client 连接 Hub 的超时时间
   interval: 默认值：1m，Client 连接 Hub 的重连最大间隔时间，从500微秒翻倍增加到最大值
-  keepalive: 默认值：1m，Client 连接 Hub 的保持连接时间
+  keepalive: 默认值：10m，Client 连接 Hub 的保持连接时间
   cleansession: 默认值：false，Client 连接 Hub 的是否保持 Session
   validatesubs: 默认值：false，Client 是否检查 Hub 订阅结果，如果是发现订阅失败报错退出
   buffersize: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发
