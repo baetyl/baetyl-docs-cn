@@ -6,7 +6,7 @@
 
 - 安装 Golang 工具并启用 Modules 管理
 
-Golang 的最低版本要求为 1.12。 下载安装 Golang 可参考 [golang.org](https://golang.org/dl/) 或者 [golang.google.cn](https://golang.google.cn/dl/)。我们现在采用 Go Modules 来管理依赖包，可以参考 [goproxy.io](https://goproxy.io/) 来启用。
+Golang 的最低版本要求为 1.12。 下载安装 Golang 可参考 [golang.org](https://golang.org/dl/) 或者 [golang.google.cn](https://golang.google.cn/dl/)。我们现在采用 Go Modules 来管理依赖包，可以参考 [goproxy.cn](https://github.com/goproxy/goproxy.cn/blob/master/README.zh-CN.md) 来启用。
 
 - 安装 Docker Engine 并打开 Buildx 功能
 
