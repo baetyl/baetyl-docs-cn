@@ -6,7 +6,23 @@
 
 - 安装 Golang 工具并启用 Modules 管理
 
-Golang 的最低版本要求为 1.12。 下载安装 Golang 可参考 [golang.org](https://golang.org/dl/) 或者 [golang.google.cn](https://golang.google.cn/dl/)。我们现在采用 Go Modules 来管理依赖包，可以参考 [goproxy.cn](https://goproxy.cn) 来启用。
+Golang 的最低版本要求为 1.12。 下载安装 Golang 可参考 [golang.org](https://golang.org/dl/) 或者 [golang.google.cn](https://golang.google.cn/dl/)。我们现在采用 Go Modules 来管理依赖包，为了能够正常下载墙外的代码，可以参考 [goproxy.baidu.com](https://goproxy.baidu.com/) 来设置 GOPROXY，如下：
+
+    1. 使用go1.11以上版本并开启go module机制
+    
+```shell
+export GOPROXY=https://goproxy.baidu.com/           ## 配置GOPROXY环境变量
+```
+
+    2. 使用go1.13以上版本
+
+```shell
+go env -w GONOPROXY=\*\*.baidu.com\*\*              ## 配置GONOPROXY环境变量,所有百度内代码,不走代理
+go env -w GONOSUMDB=\*                              ## 配置GONOSUMDB,暂不支持sumdb索引
+go env -w GOPROXY=https://goproxy.baidu.com         ## 配置GOPROXY,可以下载墙外代码
+```
+
+Golang 的最低版本要求为 1.12。 下载安装 Golang 可参考 [golang.org](https://golang.org/dl/) 或者 [golang.google.cn](https://golang.google.cn/dl/)。我们现在采用 Go Modules 来管理依赖包，可以参考 [goproxy.baidu.com](https://goproxy.baidu.com/) 来启用。
 
 - 安装 Docker Engine 并打开 Buildx 功能
 
@@ -17,7 +33,7 @@ Docker 的最低版本要求为 19.03，因为从该版本开始内置了 Buildx
 从 [Baetyl Github](https://github.com/baetyl/baetyl) 下载代码，执行如下命令：
 
 ```shell
-go get github.com/baetyl/baetyl
+git clone git@github.com:baetyl/baetyl.git
 ```
 
 ## 编译 Baetyl 和模块
@@ -25,7 +41,7 @@ go get github.com/baetyl/baetyl
 进入 Baetyl 项目目录，执行 `make` 即可编译出当前系统平台的 Baetyl 主程序和模块程序。
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
+# 国内请设置GOPROXY，否则无法下载被墙依赖代码，参考开头的准备工作
 # 当前平台，所有模块
 make # make all
 ```
@@ -61,7 +77,7 @@ make rebuild PLATFORMS="linux/amd64 linux/arm64" MODULES="agent hub"
 进入 Baetyl 项目目录，执行 `make image` 即可生成当前系统平台的模块镜像。
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
+# 为了制作多平台的镜像，我们采用了 docker 的 buildx，参考开头的准备工作
 # 当前平台，所有模块
 make image
 # 当前平台，指定的模块
