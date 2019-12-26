@@ -5,18 +5,12 @@
 ## 准备工作
 
 - 安装 Golang 工具并启用 Modules 管理
-
 Golang 的最低版本要求为 1.12。 下载安装 Golang 可参考 [golang.org](https://golang.org/dl/) 或者 [golang.google.cn](https://golang.google.cn/dl/)。我们现在采用 Go Modules 来管理依赖包，为了能够正常下载墙外的代码，可以参考 [goproxy.baidu.com](https://goproxy.baidu.com/) 来设置 GOPROXY，如下：
 
-    1. 使用go1.11以上版本并开启go module机制
-    
 ```shell
+# 使用 go1.11 以上版本并开启 go module 机制
 export GOPROXY=https://goproxy.baidu.com/           ## 配置GOPROXY环境变量
-```
-
-    2. 使用go1.13以上版本
-
-```shell
+# 使用 go1.13 以上版本 
 go env -w GONOPROXY=\*\*.baidu.com\*\*              ## 配置GONOPROXY环境变量,所有百度内代码,不走代理
 go env -w GONOSUMDB=\*                              ## 配置GONOSUMDB,暂不支持sumdb索引
 go env -w GOPROXY=https://goproxy.baidu.com         ## 配置GOPROXY,可以下载墙外代码
