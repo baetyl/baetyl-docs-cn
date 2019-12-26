@@ -114,7 +114,6 @@ make image PLATFORMS="linux/amd64 linux/arm64" MODULES="agent hub" XFLAGS=--push
 使用如下命令安装 Baetyl 和示例，默认安装到 `/usr/local`。
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
 sudo make install # 会同时安装 docker 容器模式的示例
 sudo make install MODE=native # 会同时安装 native 进程模式的示例
 ```
@@ -122,7 +121,6 @@ sudo make install MODE=native # 会同时安装 native 进程模式的示例
 你也可以指定安装的目录，例如项目下的 `output` ：
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
 make install PREFIX=output # 会同时安装 docker 容器模式的示例
 make install MODE=native PREFIX=output # 会同时安装 native 进程模式的示例
 ```
