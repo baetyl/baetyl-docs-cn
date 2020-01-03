@@ -456,8 +456,9 @@ timer: timer 相关属性
   interval: timer 模块定时间隔
 publish:
   topic: 定时结果发布到 Hub 的主题
-  payload: 负载数据，map 数据结构，例如：
-    id: 1
+  payload: 负载数据，string 数据结构，书写格式遵循go template模板。Map的key可以任意写，如果要输出0~m的随机整数，value填{{.Rand.Intn m}}，如果要输出0~m的随机浮点数，
+  value填{{.Rand. Float64n m}}，如果输出字符串（例如：你好！），value就写字符串\"你好！\"，如果要输出时间戳，value填{{.Time.NowUnixNano}}。例如：
+  "{\"timestamp\": {{.Time.NowUnixNano}},\"Rand.Intn\": {{.Rand.Intn 10}},\"Rand.Float64n\": {{.Rand.Float64n 60}},\"anyString\": \"inputString\"}"
 logger: 日志配置项
   path: 默认为空，即不打印到文件；如果指定文件则输出到文件
   level: 默认值：info，日志等级，支持 debug、info、warn 和 error
