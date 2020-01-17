@@ -457,8 +457,8 @@ timer: timer 相关属性
 publish:
   topic: 定时结果发布到 Hub 的主题
   payload: '发布的消息内容，采用 golang template，目前支持两种类型的函数：Time和Rand。Time 可以用来获取当前的日期和时间，Rand 可以用来获取随机数。例如：如果输入
-  "{\"datetime\": {{.Time.Now}},\"timestamp\": {{.Time.NowUnix}},\"timestampNano\": {{.Time.NowUnixNano}},\"random1\": {{.Rand.Int}},\"random2\": {{.Rand.Int63}},\"random3\": {{.Rand.Intn 10}},\"random4\": {{.Rand.Float64}},\"random5\": {{.Rand.Float64n 60}},\"anyString\": \"inputString\"}"，
-  则输出为：{"datetime": 2020-01-03 10:01:40.4381073 +0000 UTC m=+20.018560801,"timestamp": 1578045700,"timestampNano": 1578045700438177900,"random1": 1618091568073368693,"random2": 448858416199438315,"random3": 4,"random4": 0.04151395666829934,"random5": 29.64961133775892,"anyString": "inputString"}'
+  "{\"datetime\": \"{{.Time.Now}}\",\"timestamp\": {{.Time.NowUnix}},\"timestampNano\": {{.Time.NowUnixNano}},\"random1\": {{.Rand.Int}},\"random2\": {{.Rand.Int63}},\"random3\": {{.Rand.Intn 10}},\"random4\": {{.Rand.Float64}},\"random5\": {{.Rand.Float64n 60}},\"anyString\": \"inputString\"}"，
+  则输出为：{"datetime": "2020-01-03 10:01:40.4381073 +0000 UTC m=+20.018560801","timestamp": 1578045700,"timestampNano": 1578045700438177900,"random1": 1618091568073368693,"random2": 448858416199438315,"random3": 4,"random4": 0.04151395666829934,"random5": 29.64961133775892,"anyString": "inputString"}'
 logger: 日志配置项
   path: 默认为空，即不打印到文件；如果指定文件则输出到文件
   level: 默认值：info，日志等级，支持 debug、info、warn 和 error
