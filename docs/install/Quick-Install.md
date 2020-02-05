@@ -43,7 +43,7 @@ Baetyl 发布新版本的同时，也会发布对应的二进制文件以及相�
 curl -sSL http://dl.baetyl.io/install.sh | sudo bash
 ```
 
-执行完毕后，Baetyl 将会被安装到 /usr/local/bin 目录下。Baetyl 的运行配置存放在 /usr/local/etc/baetyl 和 /usr/local/var/db/baetyl 目录下，具体的配置方法可以参考 [配置文件解读文档](guides/Config-interpretation.md)。
+执行完毕后，Baetyl 将会被安装到 /usr/local/bin 目录下。Baetyl 的运行配置存放在 /usr/local/etc/baetyl 和 /usr/local/var/db/baetyl 目录下，具体的配置方法可以参考 [配置文件解读文档](../guides/Config-interpretation.md)。
 
 ## 导入示例配置包（可选）
 
