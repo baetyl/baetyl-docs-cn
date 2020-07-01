@@ -28,36 +28,17 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    :maxdepth: 1
    :caption: 安装
 
-   install/Quick-Install.md
-   install/Install-from-source.md
-
 .. toctree::
    :maxdepth: 1
    :caption: 指南
-
-   guides/Config-interpretation.md
-   guides/Device-connect-to-hub-service.md
-   guides/Message-transfer-among-devices-with-hub-service.md
-   guides/Message-handling-with-function-service.md
-   guides/Message-synchronize-with-iothub-through-remote-service.md
-   guides/Image-capturing-and-AI-model-inference-with-video-infer-service.md
 
 .. toctree::
    :maxdepth: 1
    :caption: 开发
 
-   develop/How-to-write-a-python-script-for-python-runtime.md
-   develop/How-to-write-a-node-script-for-node-runtime.md
-   develop/How-to-import-third-party-libraries-for-python-runtime.md
-   develop/How-to-import-third-party-libraries-for-node-runtime.md
-   develop/How-to-develop-a-customize-runtime-for-function.md
-   develop/How-to-develop-a-customize-module.md
-
 .. toctree::
    :maxdepth: 1
    :caption: 实践
-
-   practice/Write-data-to-TSDB.md
 
 .. toctree::
    :maxdepth: 1
