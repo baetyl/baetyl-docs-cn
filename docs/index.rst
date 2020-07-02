@@ -42,5 +42,3 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 .. toctree::
    :maxdepth: 1
    :caption: 支持
-
-   FAQ.md
