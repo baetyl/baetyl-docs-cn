@@ -93,7 +93,7 @@ allow_anonymous true
 
 ![节点安装4](../images/practice/application-deployment/16-node-installation-4.png)
 
-在节点详情页可以查看边缘设备与云端已处于连接转态，设备相关信息也已上报，可以在该页面查看设备硬件信息以及资源使用情况。
+在节点详情页可以查看边缘设备与云端已处于连接转态，设备相关信息也已上报，可以在该页面查看设备硬件信息以及资源使用情况。这里需要手动刷新状态，默认20秒会上报一次状态，无需频繁刷新。
 
 ![节点详情1](../images/practice/application-deployment/17-node-detail-1.png)
 
