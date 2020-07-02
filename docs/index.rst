@@ -26,28 +26,21 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
 .. toctree::
    :maxdepth: 1
-   :caption: 安装
+   :caption: 快速入门
+
+   guides/Configuration-Management.md
+   guides/Node-Pre-configured.md
 
 .. toctree::
    :maxdepth: 1
-   :caption: 指南
+   :caption: 最佳实践
 
 .. toctree::
    :maxdepth: 1
-   :caption: 开发
+   :caption: 开发指南
 
 .. toctree::
    :maxdepth: 1
-   :caption: 实践
-
-.. toctree::
-   :maxdepth: 1
-   :caption: 问题
+   :caption: 支持
 
    FAQ.md
-
-.. toctree::
-   :maxdepth: 1
-   :caption: 资源
-
-   Resources.md
