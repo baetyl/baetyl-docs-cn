@@ -28,8 +28,8 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    :maxdepth: 1
    :caption: 快速入门
 
-   guides/Configuration-Management.md
-   guides/Node-Pre-configured.md
+   quickstart/Configuration-Management.md
+   quickstart/Node-Pre-configured.md
 
 .. toctree::
    :maxdepth: 1
