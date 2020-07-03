@@ -83,7 +83,7 @@ allow_anonymous true
 
 ![节点安装1](../images/practice/application-deployment/13-node-installation-1.png)
 
-由于baetyl运行基于k3s/k8s，初始化时，若设备上未安装，需要选择相关组件进行安装。有 **k3s+containerd** 和 **k3s+docker** 两种运行模式。执行命令后会提示安装k3s，需输入 y 确认安装k3s。然后需要选择安装containerd或者docker。 如果输入 y 则安装containerd，baetyl的运行模式为 **k3s+containerd**，如果输入 n 则安装docker, baetyl的运行模式为 **k3s+docker**。当设备上已安装k3s时，默认运行模式为 **k3s+containerd**。
+由于baetyl运行基于k3s/k8s，初始化时，若设备上未安装，需要选择相关组件进行安装。有 **k3s+containerd** 和 **k3s+docker** 两种运行模式。执行命令后会提示安装k3s，需输入 y 确认安装k3s。然后需要选择安装containerd或者docker。 如果输入 y 则安装containerd，baetyl的运行模式为 **k3s+containerd**，如果输入 n 则安装docker, baetyl的运行模式为 **k3s+docker**。
 
 ![节点安装2](../images/practice/application-deployment/14-node-installation-2.png)
 

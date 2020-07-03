@@ -35,7 +35,7 @@
 ![编辑节点标签](../images/quickstart/node-management/05-node-update-labels.png)
 
 ## 节点安装
-节点安装现仅支持在线安装。baetyl运行模式包括 **k3s+docker** 和 **k3s+containerd** 两种，在设备安装后，会检查设备上是否有docker, k3s环境，由用户选择确认进行安装。默认仅安装k3s，使用 **k3s+containerd** 模式。如使用 **k3s+docker** 模式，则需要选择安装docker后再安装k3s。设备上已有上述环境时不会再安装。
+节点安装现仅支持在线安装。baetyl运行模式包括 **k3s+docker** 和 **k3s+containerd** 两种，在设备安装后，会检查设备上是否有docker, k3s环境，由用户选择确认进行安装。如使用 **k3s+docker** 模式，则需要选择安装docker后再安装k3s。设备上已有上述环境时不会再安装。如果原有k3s基于docker，baetyl运行模式为 **k3s+docker**，如果基于containerd，运行模式则为 **k3s+containerd**。
 
 **k3s+containerd模式**
 
