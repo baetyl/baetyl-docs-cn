@@ -49,7 +49,7 @@ services:
         path: var/db/baetyl/data
       - name: localhub-log
         path: var/log/baetyl
-   - name: remote-iothub
+  - name: remote-iothub
     image: hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest
     replica: 1
     mounts:
