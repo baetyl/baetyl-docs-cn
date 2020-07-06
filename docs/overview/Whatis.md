@@ -14,7 +14,7 @@ v2 和 v1 版本的主要区别如下：
 
 ## 架构
 
-![Architecture](./images/overview/baetyl-arch-v2.svg)
+![Architecture](../images/overview/baetyl-arch-v2.svg)
 
 ### 边缘计算框架
 
