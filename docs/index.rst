@@ -15,6 +15,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
 .. toctree::
    BAETYL 主页 <https://baetyl.io/zh/>
+   BAETYL v1 文档 <https://baetyl.readthedocs.io/zh_CN/1.0.0/overview/Whatis.html>
 
 .. toctree::
    :maxdepth: 1

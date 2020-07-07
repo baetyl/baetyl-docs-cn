@@ -1,17 +1,18 @@
-# 名词定义
-容器应用：由服务配置和数据卷配置组成的应用。
+# 应用部署
 
-函数应用：由函数定义和数据卷配置组成的应用。
+## 名词定义
+* 容器应用：由服务配置和数据卷配置组成的应用。
+* 函数应用：由函数定义和数据卷配置组成的应用。
 
-# 功能简介
+## 功能简介
 应用是用于定义在一个或一组边缘节点上的部署任务，会将**服务配置**及**存储卷配置**下发到匹配的目标设备上，并进行部署。应用根据边缘节点的标签来匹配目标设备，每一次应用信息的更改都会自动地下发到目标设备，并进行服务重部署及配置的更新。
 
 应用分为容器应用和函数应用。
 
-# 使用流程
+## 使用流程
 创建应用流程有两种，分别为创建**容器应用**流程和创建**函数应用**流程。
 
-## 应用列表
+### 应用列表
 应用列表分页展示出当前实例下所有的应用信息。
 
 在实例详情页的左侧菜单中点击**应用部署**，您将看到如下界面
@@ -20,8 +21,8 @@
 
 右上角搜索框支持对应用名称进行模糊查询。
 
-## 创建容器应用
-### 基本信息
+### 创建容器应用
+#### 基本信息
 在**应用列表**页面点击**创建应用**进入应用创建页面。
 
 ![02-create-container-app.png](../images/quickstart/application-deployment/02-create-container-app.png)
@@ -37,7 +38,7 @@
 
 ![03-create-container-app.png](../images/quickstart/application-deployment/03-create-container-app.png)
 
-### 服务配置
+#### 服务配置
 点击**下一步**进入服务配置界面。
 
 ![04-create-container-app-config.png](../images/quickstart/application-deployment/04-create-container-app-config.png)
@@ -88,7 +89,7 @@
 
 * 【镜像库凭证】表示拉取镜像时需要的凭证信息，一般用于需要凭证的镜像仓库配置， 镜像仓库凭证在[这里](./Configuration-Management.md)创建
 
-### 目标设备
+#### 目标设备
 **服务配置**设置完成之后，点击**下一步**进入目标设备匹配界面
 
 ![11-create-container-app-matcher.png](../images/quickstart/application-deployment/11-create-container-app-matcher.png)
@@ -107,8 +108,8 @@
 
 容器应用创建步骤到此全部完成。
 
-## 创建函数应用
-### 基本信息
+### 创建函数应用
+#### 基本信息
 在**应用列表**页面，点击**创建应用**进入应用创建页面。
 
 ![15-create-function-app.png](../images/quickstart/application-deployment/15-create-function-app.png)
@@ -124,7 +125,7 @@
 
 ![16-create-function-app-label.png](../images/quickstart/application-deployment/16-create-function-app-label.png)
 
-### 函数服务
+#### 函数服务
 点击**下一步**进入函数服务界面
 
 ![17-create-function-app-service.png](../images/quickstart/application-deployment/17-create-function-app-service.png)
@@ -151,7 +152,7 @@
 
 ![19-create-function-app-service.png](../images/quickstart/application-deployment/19-create-function-app-service.png)
 
-### 目标设备
+#### 目标设备
 点击**下一步**进入目标设备匹配界面
 
 ![20-create-function-app-selector.png](../images/quickstart/application-deployment/20-create-function-app-selector.png)
@@ -170,7 +171,7 @@
 
 **函数应用**创建步骤到此全部完成。
 
-## 应用修改
+### 应用修改
 在**应用列表**页面，点击准备修改**应用名或查看**，例如function-test，进入**应用详情**页面
 
 ![24-modify-app.png](../images/quickstart/application-deployment/24-modify-app.png)
@@ -179,12 +180,12 @@
 
 注意：应用修改后最新的应用配置会自动地下发到匹配的边缘节点，并进行更新。
 
-## 应用删除
+### 应用删除
 在应用列表页面，点击需要删除的应用后面的**删除**按钮
 
 ![25-delete-app.png](../images/quickstart/application-deployment/25-delete-app.png)
 
-## 应用部署
+### 应用部署
 应用创建后，需要了解应用在边缘节点部署情况。打开**应用详情**页面
 
 ![26-deploy-app.png](../images/quickstart/application-deployment/26-deploy-app.png)
