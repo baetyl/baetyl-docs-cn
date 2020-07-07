@@ -73,8 +73,3 @@ Baetyl 作为中国首发的开源边缘计算框架，
 - 欢迎加入 [Baetyl 的 LF Edge 讨论组](https://lists.lfedge.org/g/baetyl/topics)
 - 欢迎发送邮件到：<baetyl@lists.lfedge.org>
 - 欢迎到 [GitHub 提交 Issue](https://github.com/baetyl/baetyl/issues)
-
-## 如何贡献
-
-如果您热衷于开源社区贡献，Baetyl 将为您提供两种贡献方式，分别是代码贡献和文档贡献。
-具体请参考 [如何向 Baetyl 贡献代码和文档](./docs/contributing_cn.md)。
