@@ -49,9 +49,9 @@
 填写容器服务**基本信息**
 
 * 【名称】表示服务的名称，不可为空。同一个应用中的服务名称不可重复，包含相同服务名称的不同应用部署到同一个节点会导致其中一个部署报错
-* 【镜像地址】表示服务对应的镜像地址，不可为空。该地址应该填写在边缘节点（设备）上可以通过docker垃取的镜像地址
+* 【镜像地址】表示服务对应的镜像地址，不可为空。该地址应该填写在边缘节点（设备）上可以通过docker拉取的镜像地址
 * 【标签】表示用来标识服务的信息
-* 【卷配置】表示容器挂载的存储卷信息，支持hostPath，配置项和密文等三种卷的挂载 hostPath：挂载宿主机目录到容器目录；配置项：配置管理的配置信息；密文：配置管理里密文信息。配置项创建在[这里](./Configuration-Management.md)， 密文创建在[这里](./Configuration-Management.md)
+* 【卷配置】表示容器挂载的存储卷信息，支持hostPath、配置项和密文三种卷的挂载。 hostPath：挂载宿主机目录到容器目录；配置项：配置管理的配置信息；密文：配置管理里的密文信息。配置项创建在[这里](./Configuration-Management.md)， 密文创建在[这里](./Configuration-Management.md)
 
 设置**容器服务**的标签，点击标签旁边**编辑图标**弹出添加标签界面
 
@@ -65,13 +65,12 @@
 
 ![08-create-container-app-port.png](../images/quickstart/application-deployment/08-create-container-app-port.png)
 
-如果还需要更多配置，点击**高级设置**项进入配置设置
+如果还需要更多配置，点击 **高级设置项** 进入配置设置
 
 ![09-create-container-app-more.png](../images/quickstart/application-deployment/09-create-container-app-more.png)
 
 填写**高级设置项**
 
-* 【端口映射】表示容器内与宿主机的端口映射，支持TCP和UDP两种端口映射
 * 【副本数】表示服务启动的容器个数
 * 【环境变量】表示服务容器的环境变量
 * 【启动参数】表示启动时服务的参数
@@ -81,11 +80,11 @@
 
 至此**服务配置**设置完成，点击**确定**关闭服务配置界面。
 
-如需要设置镜像凭证，点击**引入凭证**进入配置镜像凭证界面
+如需要设置镜像库凭证，点击**引入凭证**进入引入镜像库凭证界面
 
 ![10-create-container-app-registry.png](../images/quickstart/application-deployment/10-create-container-app-registry.png)
 
-填写镜**像库凭证**
+填写**镜像库凭证**
 
 * 【镜像库凭证】表示拉取镜像时需要的凭证信息，一般用于需要凭证的镜像仓库配置， 镜像仓库凭证在[这里](./Configuration-Management.md)创建
 
