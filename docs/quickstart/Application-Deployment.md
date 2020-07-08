@@ -170,7 +170,7 @@
 **函数应用**创建步骤到此全部完成。
 
 ## 应用修改
-在**应用列表**页面，点击准备修改**应用名或查看**，例如function-test，进入**应用详情**页面
+在**应用列表**页面，点击准备修改的**应用名称** 或 **查看**，例如function-test，进入**应用详情**页面
 
 ![24-modify-app.png](../images/quickstart/application-deployment/24-modify-app.png)
 
