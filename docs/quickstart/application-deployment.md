@@ -134,7 +134,11 @@
 填写函数服务**基本信息**
 
 * 【名称】表示函数服务的名称，不可为空。同一个应用中的服务名称不可重复，包含相同服务名称的不同应用部署到同一个节点会导致其中一个部署报错
+<<<<<<< HEAD:docs/quickstart/application-deployment.md
 * 【函数配置项】表示选择配置管理里预先配置的函数，函数配置在[这里](./configuration-management.md)创建
+=======
+* 【函数配置项】表示选择配置管理里预先配置的函数，函数配置在[这里](./Configuration-Management.md)创建
+>>>>>>> 9b8577a... 服务去除标签:docs/quickstart/Application-Deployment.md
 * 【运行时】表示需要选择的函数运行时环境，目前运行时环境支持python3，nodejs10和sql
 * 【函数列表】表示设置函数配置项里选择的函数的函数调用入口，支持多个函数调用
 
