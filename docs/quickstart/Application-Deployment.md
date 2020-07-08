@@ -133,7 +133,7 @@
 
 ![18-create-function-app-service-config.png](../images/quickstart/application-deployment/18-create-function-app-service-config.png)
 
-填写容器服务**基本信息**
+填写函数服务**基本信息**
 
 * 【名称】表示函数服务的名称，不可为空。同一个应用中的服务名称不可重复，包含相同服务名称的不同应用部署到同一个节点会导致其中一个部署报错
 * 【函数配置项】表示选择配置管理里预先配置的函数，函数配置在[这里](./Configuration-Management.md)创建
