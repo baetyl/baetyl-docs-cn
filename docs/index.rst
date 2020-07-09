@@ -29,6 +29,7 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    :maxdepth: 1
    :caption: 快速入门
 
+   quickstart/test-env.md
    quickstart/node-management.md
    quickstart/application-deployment.md
    quickstart/configuration-management.md
