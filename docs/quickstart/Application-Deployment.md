@@ -83,7 +83,7 @@
 
 填写**镜像库凭证**
 
-* 【镜像库凭证】表示拉取镜像时需要的凭证信息，一般用于需要凭证的镜像仓库配置， 镜像仓库凭证在[这里](./Configuration-Management.md)创建
+* 【镜像库凭证】表示拉取镜像时需要的凭证信息，一般用于需要凭证的镜像仓库配置， 镜像仓库凭证在[这里](./configuration-management.md)创建
 
 #### 目标设备
 **服务配置**设置完成之后，点击**下一步**进入目标设备匹配界面
@@ -133,7 +133,7 @@
 填写函数服务**基本信息**
 
 * 【名称】表示函数服务的名称，不可为空。同一个应用中的服务名称不可重复，包含相同服务名称的不同应用部署到同一个节点会导致其中一个部署报错
-* 【函数配置项】表示选择配置管理里预先配置的函数，函数配置在[这里](./Configuration-Management.md)创建
+* 【函数配置项】表示选择配置管理里预先配置的函数，函数配置在[这里](./configuration-management.md)创建
 * 【运行时】表示需要选择的函数运行时环境，目前运行时环境支持python3，nodejs10和sql
 * 【函数列表】表示设置函数配置项里选择的函数的函数调用入口，支持多个函数调用
 
@@ -187,7 +187,7 @@
 
 ![26-deploy-app.png](../images/quickstart/application-deployment/26-deploy-app.png)
 
-点击**目标节点**里的**节点名**，跳转到**节点详情**页面，边缘节点创建在[这里](./Node-Management.md)
+点击**目标节点**里的**节点名**，跳转到**节点详情**页面，边缘节点创建在[这里](./node-management.md)
 
 ![27-app-details.png](../images/quickstart/application-deployment/27-app-details.png)
 

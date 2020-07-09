@@ -21,22 +21,25 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    :maxdepth: 1
    :caption: 概述
 
-   overview/Whatis.md
+   overview/what-is.md
+   overview/architecture.md
+   overview/contact-us.md
 
 .. toctree::
    :maxdepth: 1
    :caption: 快速入门
 
-   quickstart/Node-Management.md
-   quickstart/Application-Deployment.md
-   quickstart/Configuration-Management.md
-   quickstart/Node-Pre-configured.md
+   quickstart/test-env.md
+   quickstart/node-management.md
+   quickstart/application-deployment.md
+   quickstart/configuration-management.md
+   quickstart/node-pre-configured.md
 
 .. toctree::
    :maxdepth: 1
    :caption: 最佳实践
 
-   practice/Application-Deployment-Practice.md
+   practice/application-deployment-practice.md
 
 .. toctree::
    :maxdepth: 1
