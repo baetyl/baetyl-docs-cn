@@ -140,7 +140,7 @@ b.批量添加
 
 ![激活页面](../images/quickstart/node-pre-configured/29-product02-active.png)
 
-[注意] Mac系统宿主机端口无法正常工作，浏览器无法打开
+**[注意]** Mac系统宿主机端口无法正常工作，浏览器无法打开
 
 在【SerialNumber】对应的输入框输入注册的设备指纹，在【Description】对应的框中可以选择性的输入描述信息，然后点击【激活】即可
 
