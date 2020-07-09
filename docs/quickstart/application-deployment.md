@@ -54,6 +54,7 @@
 * 【卷配置】表示容器挂载的存储卷信息，支持hostPath、配置项和密文三种卷的挂载。 hostPath：挂载宿主机目录到容器目录；配置项：配置管理的配置信息；密文：配置管理里的密文信息。配置项创建在[这里](./configuration-management.md)， 密文创建在[这里](./configuration-management.md)
 * 【端口映射】表示容器内与宿主机的端口映射，支持TCP和UDP两种端口映射
 
+
 点击**添加卷**进行卷配置
 
 ![07-create-container-app-volume.png](../images/quickstart/application-deployment/07-create-container-app-volume.png)
