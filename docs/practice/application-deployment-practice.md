@@ -105,4 +105,4 @@ allow_anonymous true
 
 ![应用测试](../images/practice/application-deployment/19-application-test.png)
 
-**[注意]** 如果是Mac系统的边缘设备，由于Mac系统下宿主机端口无法正常工作，所以连接会失败
+**[注意]** 如果是Mac系统的边缘设备，由于Mac系统下宿主机端口映射无法正常工作，所以连接会失败

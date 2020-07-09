@@ -33,8 +33,9 @@
 
 ![创建产品1](../images/quickstart/node-pre-configured/03-create-product01.png)
 
-选择关闭【白名单】，选取SN文件作为【激活方式】，采用默认的【SN文件路径及名称】。点击确定创建产品
+选择关闭【白名单】，选取SN文件作为【激活方式】，采用默认的【SN文件路径及名称】或自己指定SN文件存放位置(**[注意]** Mac系统下SN文件得放在用户目录下，而不能放在系统目录)。点击确定创建产品
 
+**[注意]** Mac系统下SN文件得放在用户目录下，而不能放在系统目录下
 ![产品列表](../images/quickstart/node-pre-configured/04-node-pre-configured-list.png)
 
 点击产品名称或【查看】可以进入产品详情页，点击【删除】可以删除没有注册记录的产品。此处点击【查看】进入如下页面
@@ -45,7 +46,7 @@
 
 ![产品1安装命令](../images/quickstart/node-pre-configured/06-product01-init.png)
 
-在边缘测设备上【SN文件路径及名称】路径下预先烧录好记录设备指纹的文件，如图所示
+在边缘设备上 SN文件路径下 预先放置好记录设备指纹的文件，如图所示
 
 ![查看设备指纹](../images/quickstart/node-pre-configured/07-fingerprint.png)
 
@@ -140,7 +141,6 @@ b.批量添加
 
 ![激活页面](../images/quickstart/node-pre-configured/29-product02-active.png)
 
-**[注意]** Mac系统宿主机端口无法正常工作，浏览器无法打开
 
 在【SerialNumber】对应的输入框输入注册的设备指纹，在【Description】对应的框中可以选择性的输入描述信息，然后点击【激活】即可
 
