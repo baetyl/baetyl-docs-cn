@@ -101,7 +101,8 @@ allow_anonymous true
 
 ![节点详情2](../images/practice/application-deployment/18-node-detail-2.png)
 
-使用mqtt.box客户端连接边缘设备，部署的mqtt broker开放端口为1883,对订阅主题不做限制，订阅test主题后往test主题发消息验证可以接收到消息，即说明 mqtt broker 已正常运行。
+使用mqtt.box客户端连接边缘设备，连接配置中Host填边缘设备的实际IP地址，部署的mqtt broker开放端口为1883，对订阅主题不做限制，订阅test主题后往test主题发消息验证可以接收到消息，即说明 mqtt broker 已正常运行。
 
 ![应用测试](../images/practice/application-deployment/19-application-test.png)
 
+[注意] 如果是Mac系统的边缘设备，由于Mac系统下宿主机端口无法正常工作，所以连接会失败
