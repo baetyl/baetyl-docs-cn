@@ -33,7 +33,7 @@
 
 ![创建产品1](../images/quickstart/node-pre-configured/03-create-product01.png)
 
-选择关闭【白名单】，选取SN文件作为【激活方式】，采用默认的【SN文件路径及名称】。点击确定创建产品
+选择关闭【白名单】，选取SN文件作为【激活方式】，采用默认的【SN文件路径及名称】或自己指定SN文件存放位置(**[注意]** Mac系统下SN文件必须放在用户目录下，而不能放在系统目录下)。点击确定创建产品
 
 ![产品列表](../images/quickstart/node-pre-configured/04-node-pre-configured-list.png)
 
@@ -139,8 +139,6 @@ b.批量添加
 因为本次采用的是【手动输入】的激活方式，所以需要在浏览器访问：http://127.0.0.1:30007 页面来进行激活
 
 ![激活页面](../images/quickstart/node-pre-configured/29-product02-active.png)
-
-**[注意]** Mac系统宿主机端口无法正常工作，浏览器无法打开
 
 在【SerialNumber】对应的输入框输入注册的设备指纹，在【Description】对应的框中可以选择性的输入描述信息，然后点击【激活】即可
 
