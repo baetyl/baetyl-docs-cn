@@ -1,3 +1,6 @@
+# baetyl-cloud配置文件说明
+
+## baetyl-cloud配置文件
 默认配置文件是工作目录下的etc/baetyl/service.yml，配置释义如下：
 
 ```

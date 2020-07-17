@@ -63,7 +63,7 @@ make
 
 ## baetyl-cloud配置
 
-baetyl-cloud配置定义说明参见 [配置解读](./Baetyl-cloud-config-interpretation.md)。
+baetyl-cloud配置定义说明参见 [配置解读](./baetyl-cloud-config-interpretation.md)。
 参考配置解读进行相关设置。service.yml参考如下：
  ```shell
 activeServer:
@@ -137,24 +137,27 @@ kubectl apply -f scripts/crd/crd.yml
 
 ## 启动baetyl-cloud
 
-### 进程模式启动baetyl-cloud
+在上述步骤都操作完成后，就可以进行baetyl-cloud启动或部署，下面提供了三种方式: k8s部署模式启动baetyl-cloud，镜像模式启动baetyl-cloud，进程模式启动baetyl-cloud
 
-baetyl-cloud编译成功之后, 在output目录下创建配置文件service.yml并进行设置，设置完成之后通过如下命令启动：
+### k8s部署模式启动baetyl-cloud
+进入baetyl-cloud工程的examples/k8s/目录，修改baetyl-cloud-configmap里数据库配置，然后执行如下命令：
 
 ```shell
-cd output
-nohup ./baetyl-cloud -c ./service.yml > /dev/null &
+kubectl apply -f baetyl-cloud-configmap.yml
+kubectl apply -f baetyl-cloud-rabc.yml
+kubectl apply -f baetyl-cloud-deployment.yml
 ```
-启动后就可以通过http://127.0.0.1:9004访问openapi服务，http://127.0.0.1:9005访问端云同步服务，http://127.0.0.1:9003访问激活服务。
 
-  
+执行之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://127.0.0.1:9004 操作api。具体使用方式参考[API](./api.md)
+
+
 ### 镜像模式启动baetyl-cloud
 
 * 替换examples/charts/baetyl-cloud/conf/cloud.yml中的数据库地址为准备工作中数据库的地址；
 * 替换examples/charts/baetyl-cloud/conf/k8s.yml为准备工作中k8s/k3s配置；
 * 将在examples/charts/baetyl-cloud/目录复制到待部署机器上，执行helm install baetyl-cloud . 即可安装；
-* 可以通过kubectl get po 命令看到程序运行情况；
-* 通过http://0.0.0.0:30004可以访问openapi、通过https://0.0.0.0:30005可以访问端云同步服务、通过https://0.0.0.0:30003可以访问激活服务
+* 可以通过`kubectl get po` 命令看到程序运行情况；
+* 通过http://0.0.0.0:30004 可以操作api。具体使用方式参考[API](./api.md)
 
 #### 制作镜像
 
@@ -176,3 +179,13 @@ REPOSITORY                TAG                 IMAGE ID            CREATED       
 cloud                    git-be2c5a9         d70a7faf5443        About an hour ago   40.7MB
 ```
 修改examples/charts/baetyl-cloud/values.yaml里image的配置为上述镜像路径，执行helm安装，即可运行。
+
+### 进程模式启动baetyl-cloud
+
+baetyl-cloud编译成功之后, 在output目录下创建配置文件service.yml并进行设置，设置完成之后通过如下命令启动：
+
+```shell
+cd output
+nohup ./baetyl-cloud -c ./service.yml > /dev/null &
+```
+启动后就可以通过http://127.0.0.1:9004 操作api服务。具体使用方式参考[API](./api.md)

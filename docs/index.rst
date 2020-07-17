@@ -44,7 +44,9 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 .. toctree::
    :maxdepth: 1
    :caption: 开发指南
-   
+
+   develop/quick-install-baetyl-cloud.md
+   develop/baetyl-cloud-config-interpretation.md
    develop/api.md
 
 .. toctree::
