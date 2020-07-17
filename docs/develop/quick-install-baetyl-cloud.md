@@ -139,7 +139,8 @@ kubectl apply -f scripts/crd/crd.yml
 
 在上述步骤都操作完成后，就可以进行baetyl-cloud启动或部署，下面提供了三种方式: k8s部署模式启动baetyl-cloud，镜像模式启动baetyl-cloud，进程模式启动baetyl-cloud
 
-### k8s部署模式启动baetyl-cloud
+### 1. k8s部署模式启动baetyl-cloud
+
 进入baetyl-cloud工程的examples/k8s/目录，修改baetyl-cloud-configmap里数据库配置，然后执行如下命令：
 
 ```shell
@@ -150,8 +151,7 @@ kubectl apply -f baetyl-cloud-deployment.yml
 
 执行之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://127.0.0.1:9004 操作api。具体使用方式参考[API](./api.md)
 
-
-### 镜像模式启动baetyl-cloud
+### 2. 镜像模式启动baetyl-cloud
 
 * 替换examples/charts/baetyl-cloud/conf/cloud.yml中的数据库地址为准备工作中数据库的地址；
 * 替换examples/charts/baetyl-cloud/conf/k8s.yml为准备工作中k8s/k3s配置；
@@ -159,7 +159,17 @@ kubectl apply -f baetyl-cloud-deployment.yml
 * 可以通过`kubectl get po` 命令看到程序运行情况；
 * 通过http://0.0.0.0:30004 可以操作api。具体使用方式参考[API](./api.md)
 
-#### 制作镜像
+### 3. 进程模式启动baetyl-cloud
+
+baetyl-cloud编译成功之后, 在output目录下创建配置文件service.yml并进行设置，设置完成之后通过如下命令启动：
+
+```shell
+cd output
+nohup ./baetyl-cloud -c ./service.yml > /dev/null &
+```
+启动后就可以通过http://127.0.0.1:9004 操作api服务。具体使用方式参考[API](./api.md)
+
+## 制作镜像
 
 如果使用容器模式运行baetyl-cloud，我们推荐使用正式发布的官方镜像。如果你想自己制作镜像，可以使用下面提供的命令，但是前提是打开了最前面的准备工作中提到的 Buildx 功能。
 
@@ -179,13 +189,3 @@ REPOSITORY                TAG                 IMAGE ID            CREATED       
 cloud                    git-be2c5a9         d70a7faf5443        About an hour ago   40.7MB
 ```
 修改examples/charts/baetyl-cloud/values.yaml里image的配置为上述镜像路径，执行helm安装，即可运行。
-
-### 进程模式启动baetyl-cloud
-
-baetyl-cloud编译成功之后, 在output目录下创建配置文件service.yml并进行设置，设置完成之后通过如下命令启动：
-
-```shell
-cd output
-nohup ./baetyl-cloud -c ./service.yml > /dev/null &
-```
-启动后就可以通过http://127.0.0.1:9004 操作api服务。具体使用方式参考[API](./api.md)
