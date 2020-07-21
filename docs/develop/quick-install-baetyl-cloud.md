@@ -151,7 +151,7 @@ kubectl apply -f baetyl-cloud-deployment.yml
 
 执行之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://127.0.0.1:9004 操作api。具体使用方式参考[API](./api.md)
 
-### 2. 镜像模式启动baetyl-cloud
+### 2. helm启动baetyl-cloud
 
 * 替换examples/charts/baetyl-cloud/conf/cloud.yml中的数据库地址为准备工作中数据库的地址；
 * 替换examples/charts/baetyl-cloud/conf/k8s.yml为准备工作中k8s/k3s配置；
