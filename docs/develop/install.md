@@ -1,4 +1,4 @@
-## 快速安装
+# 快速安装
 
 在安装前请先下载 baetyl-cloud 项目，我们以项目中的 scripts/demo 为例演示步骤，云端管理套件和边缘计算框架全部安装在同一台机器上。
 
@@ -6,7 +6,7 @@
 git clone https://github.com/baetyl/baetyl-cloud.git
 ```
 
-### 安装数据库
+## 安装数据库
 
 在安装 baetyl-cloud 之前，我们需要先安装数据库，可执行如下命令安装。
 
@@ -17,7 +17,7 @@ helm install phpmyadmin bitnami/phpmyadmin
 ```
 **注意**：这里为了演示方便，我们 hardcode 了密码，请自行修改，可全局替换 secretpassword。
 
-### 初始化数据
+## 初始化数据
 
 确认 mariadb 和 phpmyadmin 都进入 Runing 状态。
 
@@ -39,7 +39,7 @@ kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 
 然后用浏览器打开 http://127.0.0.1:8080/index.php， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，将 baetyl-cloud 项目下 scripts/sql 目录中的所有文件的 sql 语句输入到页面执行。如果执行没有报错，则数据初始化成功。
 
-### 安装 baetyl-cloud
+## 安装 baetyl-cloud
 
 进入 baetyl-cloud 项目所在目录，执行如下命令。
 
@@ -58,7 +58,7 @@ kubectl get pod
 kubectl logs -f baetyl-cloud-57cd9597bd-z62kb
 ```
 
-### 创建和安装边缘节点
+## 创建和安装边缘节点
 
 调用 RESTful API 创建节点。
 
