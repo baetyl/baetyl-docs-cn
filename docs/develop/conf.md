@@ -1,6 +1,7 @@
-# baetyl-cloud配置文件说明
+# 配置说明
 
-## baetyl-cloud配置文件
+## baetyl-cloud 配置
+
 默认配置文件是工作目录下的etc/baetyl/service.yml，配置释义如下：
 
 ```
@@ -19,12 +20,12 @@ nodeServer:
   key: #端云同步服务key文件路径
 
 plugin: #在baetyl-cloud中，auth，lincese，pki，shadow，modelStorage是以插件形式实现，支持自定义
-  auth: #鉴权插件，默认不进行登录鉴权认证，defaultauth
+  auth: #鉴权插件，默认使用 defaultauth，不进行登录鉴权认证
   license: #license插件，默认使用 defaultlicense，不进行license限制
-  pki: #证书管理插件
-  shadow: #影子资源存储插件，支持database和kubernetes
-  modelStorage: # baetyl-cloud存储插件，支持database和kubernetes
-  databaseStorage: #数据库配置，database
+  pki: #证书管理插件，默认使用 defaultpki，自签
+  shadow: #影子资源存储插件，默认使用 database
+  modelStorage: #应用模型存储插件，默认使用 kubernetes
+  databaseStorage: #数据库配置，默认使用 database
 
 logger:
   filename: #日志文件路径
