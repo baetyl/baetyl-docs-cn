@@ -1,12 +1,40 @@
 # 快速安装
 
-在安装前请先下载 baetyl-cloud 项目，我们以项目中的 scripts/demo 为例演示步骤，云端管理套件和边缘计算框架全部安装在同一台机器上。
+目前baetyl-cloud主要有三种安装方式：
 
-```shell
-git clone https://github.com/baetyl/baetyl-cloud.git
-```
+- helm快速安装方式；
+- K8s/k3s Deployment安装方式；
+- 本地进程安装方式；
 
-## 安装数据库
+现分别介绍如下：
+
+----
+
+## 准备工作
+
+1. 下载baetyl-cloud项目源码：
+
+   ```shell
+   git clone https://github.com/baetyl/baetyl-cloud.git
+   ```
+
+2. 安装Goland并启用Go Modules：
+
+   为方便下载Go依赖包，可参考 [goproxy.baidu.com](https://goproxy.baidu.com/) 来设置 GOPROXY；
+
+3. 安装Docker Engine并打开Buildx功能：
+
+   Docker安装参考 [docker.com/install](https://docs.docker.com/install/)，Buildx功能安装参考[github.com/docker/buildx](https://github.com/docker/buildx)；
+
+4. 安装k8s/k3s
+
+5. 安装mysql
+
+----
+
+## helm快速安装
+
+### 1. 安装数据库
 
 在安装 baetyl-cloud 之前，我们需要先安装数据库，可执行如下命令安装。
 
@@ -15,9 +43,10 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
 helm install phpmyadmin bitnami/phpmyadmin 
 ```
+
 **注意**：这里为了演示方便，我们 hardcode 了密码，请自行修改，可全局替换 secretpassword。
 
-## 初始化数据
+### 2. 初始化数据
 
 确认 mariadb 和 phpmyadmin 都进入 Runing 状态。
 
@@ -39,7 +68,7 @@ kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 
 然后用浏览器打开 http://127.0.0.1:8080/index.php， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，将 baetyl-cloud 项目下 scripts/sql 目录中的所有文件的 sql 语句输入到页面执行。如果执行没有报错，则数据初始化成功。
 
-## 安装 baetyl-cloud
+### 3. 安装 baetyl-cloud
 
 进入 baetyl-cloud 项目所在目录，执行如下命令。
 
@@ -57,6 +86,95 @@ kubectl get pod
 
 kubectl logs -f baetyl-cloud-57cd9597bd-z62kb
 ```
+
+### 
+
+成功后可通过http://0.0.0.0:30004操作baetyl-cloud Api。
+
+### 4. helm卸载baetyl-cloud
+
+```shell
+helm delete baetyl-cloud
+```
+
+----
+
+## k8s/k3s Deplyment安装
+
+### 1. 在kubenetes里创建baetyl-cloud的CRD
+
+设置k8s集群为准备工作安装的k8s/k3s的集群配置, 运行*scripts/demo/k8s/crd/crds.yml*创建自定义资源。
+
+```shell
+kubectl apply -f scripts/demo/k8s/crd/crds.yml
+```
+
+### 2. mysql数据库初始化
+
+创建baetyl-cloud数据库及页表，具体sql语句见：*scripts/sql/tables.sql*
+
+初始化页表数据，数据相关sql语句见：*scripts/sql/data.sql*
+
+### 3. k8s部署启动baetyl-cloud
+
+```shell
+cd scripts/demo/k8s
+# 修改baetyl-cloud-configmap.yml中的数据库配置，然后执行如下命令：
+kubectl apply -f baetyl-cloud-configmap.yml
+kubectl apply -f baetyl-cloud-rbac.yml
+kubectl apply -f baetyl-cloud-deployment.yml
+kubectl apply -f baetyl-cloud-service.yml
+```
+
+执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://127.0.0.1:30004操作baetyl-cloud Api。 
+
+### 4. k8s卸载baetyl-cloud
+
+```shell
+cd scripts/demo/k8s
+kubectl delete -f .
+
+cd crd
+kubectl delete -f .
+```
+
+----
+
+## 进程模式安装
+
+### 1. 编译baetyl-cloud
+
+```shell
+# 进入baetyl-cloud根目录，执行make编译出当前系统平台的baetyl-cloud程序
+make
+```
+
+上述命令执行后，baetyl-cloud主程序会生成在项目的`output`目录下。
+
+### 2. 进程模式启动baetyl-cloud
+
+将`output`目录下生成的二进制程序文件拷贝到`scripts/demo/native/`目录下。
+
+```shell
+cd scripts/demo/native
+# 修改conf/cloud.yml中的数据库配置
+# 执行如下命令，然后替换conf/kubeconfig.yml文件中的example
+kubectl config view --raw
+# 然后执行如下命令：
+nohup ./baetyl-cloud -c ./conf/cloud.yml > /dev/null &
+# 执行成功后会返回成功建立的baetyl-cloud进程号
+```
+
+执行成功后可以通过http://127.0.0.1:9004 操作api服务。
+
+### 3. 进程退出
+
+```shell
+# 根据创建成功时的进程号杀死进程：
+sudo kill 进程号
+```
+
+----
 
 ## 创建和安装边缘节点
 
