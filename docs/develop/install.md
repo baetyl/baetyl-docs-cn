@@ -187,8 +187,6 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
 ```
 
-### 
-
 ### 5. 卸载baetyl-cloud
 
 ```shell
@@ -271,8 +269,6 @@ kubectl get pod -A
 curl http://0.0.0.0:30004/v1/nodes/demo-node
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
 ```
-
-### 
 
 ### 5. 进程退出
 
