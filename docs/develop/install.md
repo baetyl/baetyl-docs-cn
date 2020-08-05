@@ -64,7 +64,7 @@ kubectl get pod
 kubectl logs -f baetyl-cloud-57cd9597bd-z62kb
 ```
 
-成功后可通过http://0.0.0.0:30004操作baetyl-cloud Api。
+成功后可通过http://0.0.0.0:30004操作 baetyl-cloud API。
 
 ### 4. 安装边缘节点
 
@@ -114,20 +114,20 @@ helm delete baetyl-cloud
 
 ### 1. 安装数据库
 
-安装mysql数据库，并初始化数据如下：
+安装 mysql 数据库，并初始化数据如下：
 
-- 创建baetyl-cloud数据库及页表，具体sql语句见：*scripts/sql/tables.sql*
-- 初始化页表数据，数据相关sql语句见：*scripts/sql/data.sql*
-- 修改*baetyl-cloud-configmap.yml*中的数据库配置
+- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/sql/tables.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+- 修改 *baetyl-cloud-configmap.yml* 中的数据库配置
 
-### 2. 安装baetyl-cloud
+### 2. 安装 baetyl-cloud
 
 ```shell
 cd scripts/demo/k8s
 kubectl apply -f .
 ```
 
-执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://0.0.0.0:30004操作baetyl-cloud Api。 
+执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://0.0.0.0:30004操作 baetyl-cloud API。 
 
 ### 3. 安装边缘节点
 
@@ -178,30 +178,30 @@ kubectl delete -f .
 
 ### 1.安装数据库
 
-安装mysql数据库，并初始化数据如下：
+安装 mysql 数据库，并初始化数据如下：
 
-- 创建baetyl-cloud数据库及页表，具体sql语句见：*scripts/sql/tables.sql*
-- 初始化页表数据，数据相关sql语句见：*scripts/sql/data.sql*
-- 修改conf/cloud.yml中的数据库配置
+- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/sql/tables.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+- 修改 *conf/cloud.yml* 中的数据库配置
 
 ### 2. 源码编译
 
 参考[源码编译](../develop/build.html)
 
-### git 3. 启动baetyl-cloud
+### 3. 启动 baetyl-cloud
 
 ```shell
-# 导入k8s crd资源
+# 导入 k8s crd 资源
 kubectl apply -f scripts/demo/native/conf/crds.yml
 cd scripts/demo/native
-# 执行如下命令，然后替换conf/kubeconfig.yml文件中的example
+# 执行如下命令，然后替换 conf/kubeconfig.yml 文件中的 example
 kubectl config view --raw
 # 然后执行如下命令：
 nohup ../../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
-# 执行成功后会返回成功建立的baetyl-cloud进程号
+# 执行成功后会返回成功建立的 baetyl-cloud 进程号
 ```
 
-执行成功后可以通过http://0.0.0.0:9004 操作api服务。
+执行成功后可以通过http://0.0.0.0:9004 操作 baetyl-cloud API。
 
 ### 4. 安装边缘节点
 
