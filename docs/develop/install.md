@@ -117,7 +117,17 @@ helm delete baetyl-cloud
 安装 mysql 数据库，并初始化数据如下：
 
 - 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/sql/tables.sql*
+
 - 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+
+  ```shell
+  # 注意修改 baetyl_system_config 中 node-address 和 active-address 为实际的服务器地址：
+  # 比如服务部署在本机，则地址可配置如下：
+  # node-address : https://0.0.0.0:30005
+  # active-address : https://0.0.0.0:30003
+  # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
+  ```
+
 - 修改 *baetyl-cloud-configmap.yml* 中的数据库配置
 
 ### 2. 安装 baetyl-cloud
@@ -181,7 +191,17 @@ kubectl delete -f .
 安装 mysql 数据库，并初始化数据如下：
 
 - 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/sql/tables.sql*
+
 - 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+
+    ```shell
+  # 注意修改 baetyl_system_config 中 node-address 和 active-address 为实际的服务器地址：
+  # 比如服务部署在本机，则地址可配置如下：
+  # node-address : https://0.0.0.0:9005
+  # active-address : https://0.0.0.0:9003
+  # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
+  ```
+
 - 修改 *conf/cloud.yml* 中的数据库配置
 
 ### 2. 源码编译
