@@ -143,10 +143,7 @@ kubectl apply -f scripts/demo/k8s/crd/crds.yml
 ```shell
 cd scripts/demo/k8s
 # 修改baetyl-cloud-configmap.yml中的数据库配置，然后执行如下命令：
-kubectl apply -f baetyl-cloud-configmap.yml
-kubectl apply -f baetyl-cloud-rbac.yml
-kubectl apply -f baetyl-cloud-deployment.yml
-kubectl apply -f baetyl-cloud-service.yml
+kubectl apply -f .
 ```
 
 执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://127.0.0.1:30004操作baetyl-cloud Api。 
