@@ -4,12 +4,42 @@
 
 ## 准备工作
 
-- 安装k8s/k3s
+- 安装k8s/k3s，关于 k8s 介绍请参考 [kubernetes 官网](https://kubernetes.io)。
 
+## 声明
+
+- 撰写本文时所用 k8s 相关信息如下：
+```
+// kubectl version
+Client Version: version.Info{Major:"1", Minor:"17", GitVersion:"v1.17.3", GitCommit:"06ad960bfd03b39c8310aaf92d1e7c12ce618213", GitTreeState:"clean", BuildDate:"2020-02-11T18:14:22Z", GoVersion:"go1.13.6", Compiler:"gc", Platform:"darwin/amd64"}
+Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.5", GitCommit:"20c265fef0741dd71a66480e35bd69f18351daea", GitTreeState:"clean", BuildDate:"2019-10-15T19:07:57Z", GoVersion:"go1.12.10", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+- 撰写本文使用 baetyl-cloud 版本信息如下：
+```
+// git log
+commit 6d96271e24dbd4d5bb5f3e0509c2af7d085676af
+Author: chensheng <chensheng06@baidu.com>
+Date:   Tue Aug 11 15:54:26 2020 +0800
+
+    fix cert error (#50)
+```
+因为 baetyl-cloud 代码在快速迭代，最新的代码无法做到实时适配。所以用户在下载 baetyl-cloud 代码后需要切换到此版本：
+```shell script
+git reset --hard 6d96271e24dbd4
+```
+另外本文会定期更新来适配最新的 baetyl-cloud 代码。
 
 ----
 
 ## Helm 快速安装
+
+本文使用 helm v3 版本进行安装，版本信息如下：
+```
+// helm version
+version.BuildInfo{Version:"v3.2.3", GitCommit:"8f832046e258e2cb800894579b1b3b50c2d83492", GitTreeState:"clean", GoVersion:"go1.13.12"}
+```
+用户使用 helm v3 版本安装即可，不限定上述具体版本号。helm v3 相比于 v2 有较大升级改动，本文未兼容 helm v2 版本。关于 helm v3 的安装，可以参考 [helm 安装链接](https://helm.sh/docs/intro/install )。
 
 ### 1. 安装数据库
 
@@ -43,7 +73,7 @@ echo "phpMyAdmin URL: http://127.0.0.1:8080"
 kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 ```
 
-然后用浏览器打开 http://127.0.0.1:8080/index.php， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，将 baetyl-cloud 项目下 scripts/sql 目录中的所有文件的 sql 语句输入到页面执行。如果执行没有报错，则数据初始化成功。
+然后用浏览器打开 http://127.0.0.1:8080/index.php ， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，先后将 baetyl-cloud 项目下 scripts/sql 目录中的 tables.sql 和 data.sql 输入到页面执行。如果执行没有报错，则数据初始化成功。如果之前使用本教程安装过，再次安装时请注意删除 baetyl-cloud 数据库下的历史数据。
 
 ### 3. 安装 baetyl-cloud
 
@@ -64,7 +94,7 @@ kubectl get pod
 kubectl logs -f baetyl-cloud-57cd9597bd-z62kb
 ```
 
-成功后可通过http://0.0.0.0:30004操作 baetyl-cloud API。
+成功后可通过 http://0.0.0.0:30004 操作 baetyl-cloud API。
 
 ### 4. 安装边缘节点
 
@@ -137,7 +167,7 @@ cd scripts/demo/k8s
 kubectl apply -f .
 ```
 
-执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过http://0.0.0.0:30004操作 baetyl-cloud API。 
+执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过 http://0.0.0.0:30004 操作 baetyl-cloud API。 
 
 ### 3. 安装边缘节点
 
@@ -221,7 +251,7 @@ nohup ../../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
 # 执行成功后会返回成功建立的 baetyl-cloud 进程号
 ```
 
-执行成功后可以通过http://0.0.0.0:9004 操作 baetyl-cloud API。
+执行成功后可以通过 http://0.0.0.0:9004 操作 baetyl-cloud API。
 
 ### 4. 安装边缘节点
 
