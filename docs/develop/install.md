@@ -34,21 +34,31 @@ git reset --hard 6d96271e24dbd4
 
 ## Helm 快速安装
 
-本文使用 helm v3 版本进行安装，版本信息如下：
+本文支持使用 helm v2/v3 版本进行安装，测试时相关版本信息如下：
 ```
-// helm version
+// helm v3: helm version
 version.BuildInfo{Version:"v3.2.3", GitCommit:"8f832046e258e2cb800894579b1b3b50c2d83492", GitTreeState:"clean", GoVersion:"go1.13.12"}
+
+// helm v2: helm version
+Client: &version.Version{SemVer:"v2.16.9", GitCommit:"8ad7037828e5a0fca1009dabe290130da6368e39", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.16.9", GitCommit:"8ad7037828e5a0fca1009dabe290130da6368e39", GitTreeState:"clean"}
 ```
-用户使用 helm v3 版本安装即可，不限定上述具体版本号。helm v3 相比于 v2 有较大升级改动，本文未兼容 helm v2 版本。关于 helm v3 的安装，可以参考 [helm 安装链接](https://helm.sh/docs/intro/install )。
+关于 helm 的安装，可以参考 [helm 安装链接](https://helm.sh/docs/intro/install )。
 
 ### 1. 安装数据库
 
 在安装 baetyl-cloud 之前，我们需要先安装数据库，可执行如下命令安装。
 
 ```shell
+// helm v3
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
 helm install phpmyadmin bitnami/phpmyadmin 
+
+// helm v2
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install --name mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
+helm install --name phpmyadmin bitnami/phpmyadmin 
 ```
 
 **注意**：这里为了演示方便，我们 hardcode 了密码，请自行修改，可全局替换 secretpassword。
@@ -77,14 +87,34 @@ kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 
 ### 3. 安装 baetyl-cloud
 
-进入 baetyl-cloud 项目所在目录，执行如下命令。
+对于 helm v3，直接进入 baetyl-cloud 项目所在目录，执行如下命令。
 
 ```shell
-# helm 3
+# helm v3
 helm install baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
 ```
 
-确认 baetyl-cloud 处于 Running 状态，也可查看日志是否报错。
+对于 helm v2, 在上述目录下用户需要额外做些操作：
+
+- 将 ./scripts/demo/charts/baetyl-cloud/Chart.yaml 中 apiVersion 版本从 v2 修改为 v1 并保存，如下所示:
+```yaml
+apiVersion: v1
+name: baetyl-cloud
+description: A Helm chart for Kubernetes
+
+...
+```
+- 手动导入 crd:
+```shell script
+kubectl apply -f ./scripts/demo/charts/baetyl-cloud/crds/
+```
+- helm v2 安装 baetyl-cloud:
+```shell script
+// helm v2
+helm install --name baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
+```
+
+接下来需要确认 baetyl-cloud 处于 Running 状态，也可查看日志是否报错。
 
 ```shell
 kubectl get pod
