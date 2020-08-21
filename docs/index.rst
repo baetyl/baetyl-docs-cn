@@ -33,7 +33,6 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
    quickstart/node-management.md
    quickstart/application-deployment.md
    quickstart/configuration-management.md
-   quickstart/node-provision.md
 
 .. toctree::
    :maxdepth: 1
