@@ -3828,7 +3828,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机端口</span></td>
-            <td key=5></td>
+            <td key=5>服务所在宿主机上可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-3-6-1>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> containerPort</span></td>
@@ -3836,7 +3836,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">容器端口</span></td>
-            <td key=5></td>
+            <td key=5>服务对外暴露端口，其它baetyl启动的服务可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-3-6-2>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> hostIP</span></td>
@@ -3844,7 +3844,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机IP</span></td>
-            <td key=5></td>
+            <td key=5>对外暴露端口绑定的IP</td>
           </tr>
           <tr key=0-3-6-3>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> protocol</span></td>
@@ -3852,7 +3852,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">协议</span></td>
-            <td key=5></td>
+            <td key=5>可选TCP、UDP，默认TCP</td>
           </tr>
           <tr key=0-3-7>
             <td key=0><span style="padding-left: 20px"><span style="color: #8c8a8a">├─</span> devices</span></td>
@@ -4467,7 +4467,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机端口</span></td>
-            <td key=5></td>
+            <td key=5>服务所在宿主机上可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-6-7-1>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> containerPort</span></td>
@@ -4475,7 +4475,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">容器端口</span></td>
-            <td key=5></td>
+            <td key=5>服务对外暴露端口，其它baetyl启动的服务可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-6-8>
             <td key=0><span style="padding-left: 20px"><span style="color: #8c8a8a">├─</span> devices</span></td>
@@ -5050,7 +5050,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机端口</span></td>
-            <td key=5></td>
+            <td key=5>服务所在宿主机上可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-5-7-1>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> containerPort</span></td>
@@ -5058,7 +5058,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">容器端口</span></td>
-            <td key=5></td>
+            <td key=5>服务对外暴露端口，其它baetyl启动的服务可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-5-8>
             <td key=0><span style="padding-left: 20px"><span style="color: #8c8a8a">├─</span> devices</span></td>
@@ -5519,7 +5519,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机端口</span></td>
-            <td key=5></td>
+            <td key=5>服务所在宿主机上可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-4-6-1>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> containerPort</span></td>
@@ -5527,7 +5527,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">容器端口</span></td>
-            <td key=5></td>
+            <td key=5>服务对外暴露端口，其它baetyl启动的服务可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-4-6-2>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> hostIP</span></td>
@@ -5535,7 +5535,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机IP</span></td>
-            <td key=5></td>
+            <td key=5>对外暴露端口绑定的IP</td>
           </tr>
           <tr key=0-4-6-3>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> protocol</span></td>
@@ -5543,7 +5543,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">协议</span></td>
-            <td key=5></td>
+            <td key=5>可选TCP、UDP，默认TCP</td>
           </tr>
           <tr key=0-4-7>
             <td key=0><span style="padding-left: 20px"><span style="color: #8c8a8a">├─</span> devices</span></td>
@@ -6158,7 +6158,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">宿主机端口</span></td>
-            <td key=5></td>
+            <td key=5>服务所在宿主机上可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-5-7-1>
             <td key=0><span style="padding-left: 40px"><span style="color: #8c8a8a">├─</span> containerPort</span></td>
@@ -6166,7 +6166,7 @@
             <td key=2>非必须</td>
             <td key=3></td>
             <td key=4><span style="white-space: pre-wrap">容器端口</span></td>
-            <td key=5></td>
+            <td key=5>服务对外暴露端口，其它baetyl启动的服务可以通过该端口访问服务，范围是0-65535</td>
           </tr>
           <tr key=0-5-8>
             <td key=0><span style="padding-left: 20px"><span style="color: #8c8a8a">├─</span> devices</span></td>
