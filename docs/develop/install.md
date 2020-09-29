@@ -91,12 +91,12 @@ kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 
 ```shell
 # helm v3
-helm install baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
+helm install baetyl-cloud ./scripts/charts/baetyl-cloud/
 ```
 
 对于 helm v2, 在上述目录下用户需要额外做些操作：
 
-- 将 ./scripts/demo/charts/baetyl-cloud/Chart.yaml 中 apiVersion 版本从 v2 修改为 v1 并保存，如下所示:
+- 将 ./scripts/charts/baetyl-cloud/Chart.yaml 中 apiVersion 版本从 v2 修改为 v1 并保存，如下所示:
 ```yaml
 apiVersion: v1
 name: baetyl-cloud
@@ -106,12 +106,17 @@ description: A Helm chart for Kubernetes
 ```
 - 手动导入 crd:
 ```shell script
-kubectl apply -f ./scripts/demo/charts/baetyl-cloud/crds/
+# k8s版本为v1.16或更高版本 
+# k3s版本为v1.17.4或更高版本执行
+kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
+kubectl apply -f ./scripts/charts/baetyl-cloud/apply_v1beta1/
 ```
 - helm v2 安装 baetyl-cloud:
 ```shell script
 // helm v2
-helm install --name baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
+helm install --name baetyl-cloud ./scripts/charts/baetyl-cloud/
 ```
 
 接下来需要确认 baetyl-cloud 处于 Running 状态，也可查看日志是否报错。
@@ -193,8 +198,13 @@ helm delete baetyl-cloud
 ### 2. 安装 baetyl-cloud
 
 ```shell
-cd scripts/demo/k8s
-kubectl apply -f .
+cd scripts/k8s
+# k8s版本为v1.16或更高版本 
+# k3s版本为v1.17.4或更高版本执行
+kubectl apply -f ./apply/
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
+kubectl apply -f ./apply_v1beta1/
 ```
 
 执行成功之后，可以通过`kubectl get pods |grep baetyl-cloud` 命令看到程序运行情况，之后就可以通过 http://0.0.0.0:30004 操作 baetyl-cloud API。 
@@ -238,8 +248,13 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 ### 4. 卸载baetyl-cloud
 
 ```shell
-cd scripts/demo/k8s
-kubectl delete -f .
+cd scripts/k8s
+# k8s版本为v1.16或更高版本 
+# k3s版本为v1.17.4或更高版本执行
+kubectl delete -f ./apply/
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
+kubectl delete -f ./apply_v1beta1/
 ```
 
 ----
@@ -271,13 +286,18 @@ kubectl delete -f .
 ### 3. 启动 baetyl-cloud
 
 ```shell
+cd scripts/native
 # 导入 k8s crd 资源
-kubectl apply -f scripts/demo/native/conf/crds.yml
-cd scripts/demo/native
+# k8s版本为v1.16或更高版本 
+# k3s版本为v1.17.4或更高版本执行
+kubectl apply -f ./apply/
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
+kubectl apply -f ./apply_v1beta1/
 # 执行如下命令，然后替换 conf/kubeconfig.yml 文件中的 example
 kubectl config view --raw
 # 然后执行如下命令：
-nohup ../../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
+nohup ../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
 # 执行成功后会返回成功建立的 baetyl-cloud 进程号
 ```
 
