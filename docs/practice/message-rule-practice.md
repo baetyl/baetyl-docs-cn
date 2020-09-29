@@ -17,7 +17,7 @@ Iot Core: 云端 mqtt broker，具体指一个具体的 endpoint, 可以使用�
 
 ## 新建 Iot Core 实例
 
-参考 [百度云文档](http://yq01-inf-bce2722599.yq01.baidu.com:8188/doc/IoTCore/s/Akck4811r) 在 Iot Hub 新建 Iot Core 实例并进行相关的设备模板配置。配置成功后，使用 MqttBox 进行连接，其中 $iot/test-kuiper/user/# 主题是我们自定义的具有收发权限的用户主题。
+参考 [百度云文档](https://cloud.baidu.com/doc/IoTCore/s/Akck4811r) 在 Iot Hub 新建 Iot Core 实例并进行相关的设备模板配置。配置成功后，使用 MqttBox 进行连接，其中 $iot/test-kuiper/user/# 主题是我们自定义的具有收发权限的用户主题。
 
 相应的连接信息类似如下所示：
 ```
