@@ -1,16 +1,20 @@
-# opcua
+# opcua模块
 
 ## 简介
-opcua模块基于opcua协议读取与写入数据, 该模块支持配置多个从设备，设置读取周期定时读取数据。
+opcua模块基于OPCUA协议读取与写入数据, 该模块支持配置多个从设备，设置读取周期定时读取数据。
 读取数据点可以通过采集设备的nodeid, 变量名称，变量类型定义。
 读取的数据会以JSON发送到配置的MQTT broker主题。模块可以通过配置仅从设备采集数据，将数据进行JSON序列化后
 发送到指定MQTT主题。
 opcua模块可以通过 [baetyl](https://github.com/baetyl/baetyl) 与 [baetyl-cloud](https://github.com/baetyl/baetyl-broker) 部署，
 并结合baetyl-broker使用，baetyl会自动配置opcua与 [baetyl-broker](https://github.com/baetyl/baetyl-broker)
-之间的双向tls连接。
+之间的双向TLS连接。
 可以参考 [baetyl文档](https://docs.baetyl.io/zh_CN/latest/) 与[最佳实践](https://docs.baetyl.io/zh_CN/latest/practice/application-deployment-practice.html)。
 
-针对模块的配置可以分为3个部分：1. 连接设备配置 2. 任务配置 3. 数据发送配置：
+
+路径配置: 模块配置文件路径相对可执行文件的相对路径应为etc/baetyl/conf.yml, 日志文件相对可执行文件路径为var/log/baetyl/service.log。
+
+
+针对模块的配置可以分为3个部分：1. 连接设备配置 2. 任务配置 3. 数据发送配置，此外，还可以通过该模块反控设备。
 
 ## 连接设备配置
 devices配置项用于配置与模块连接的设备, 支持配置多个设备, 每个设备必须有唯一的id，否则后定义的设备会覆盖先定义的设备连接配置信息。
@@ -28,7 +32,7 @@ devices配置项用于配置与模块连接的设备, 支持配置多个设备, 
      password: test # 密码
    ```
 
-## 任务
+## 任务配置
 任务提供了对一系列数据点和读取周期的定义。在模块配置中可以定义多个任务, 一个任务对应一个设备,
 此外，任务还需要配置读取后数据将发送的MQTT broker主题。
 
@@ -60,7 +64,7 @@ devices配置项用于配置与模块连接的设备, 支持配置多个设备, 
        }
    }
    ```
-   该数据会发送至jobs中定义的主题。当运行在baetyl中时，可以不配置主题，默认为<service-name>/<deviceid>。
+   该数据会发送至jobs中定义的主题。当运行在baetyl中时，可以不配置主题，默认为${service-name}/${deviceid}。
 
 * nodeid
 NodeId的标识符部分唯一地标识名称空间中的节点，需要名称空间加上标识符才能形成完全限定的标识符。
@@ -70,7 +74,7 @@ NodeId的标识符部分唯一地标识名称空间中的节点，需要名称�
 指定解析项type时，应为以上类型之一。
 
 
-## 发送
+## 数据发送配置
 opcua模块目前支持将采集解析后的数据通过MQTT协议发送至MQTT broker。连接broker支持tcp/ws/ssl/wss等方式。通过
 指定待发送的MQTT主题，采集或解析后的数据会发送至该主题。
 MQTT连接配置:
@@ -92,7 +96,7 @@ MQTT连接配置:
     maxCacheMessages: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发    
    ```
 
-## 采集数据典型配置如下：
+## 配置示例
 ```yaml
 broker:
   address: tcp://127.0.0.1:1883 # 连接mqtt hub的地址 
@@ -129,9 +133,6 @@ logger:
 ```
 其中，deviceid是在配置文件中定义的从设备id, 标识数据是从哪一个从设备读取。attr域即读取的的数据。
 最后，time是读取数据时的时间戳，如前文所述，可以在配置文件中对该字段的格式进行配置。
-
-#### 日志路径配置
-模块配置文件路径相对可执行文件的相对路径应为etc/baetyl/conf.yml, 模块日志文件相对可执行文件路径为var/log/baetyl/service.log
 
 ## 反控
 通过opcua设备读取数据是常用功能，但有时也需要通过一定方式控制opcua设备中的数据。前者是通过该模块读取设备

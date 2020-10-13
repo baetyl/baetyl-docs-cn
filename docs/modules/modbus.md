@@ -1,16 +1,20 @@
-# modbus
+# modbus模块
 
 ## 简介
-modbus模块基于modbus协议采集解析数据, 该模块支持配置多个从设备（简称为slave），设置采集周期定时采集数据。
+modbus模块基于MODBUS协议采集解析数据, 该模块支持配置多个从设备（简称为slave），设置采集周期定时采集数据。
 连接方式可选TCP或RTU模式。采集数据点可以通过采集设备的id, 数据起始地址，数据单元长度，功能码，字段信息定义。
 采集后的数据会以二进制流的形式发送到配置的MQTT broker主题。模块可以通过配置仅从设备采集数据，将数据以二进制流
 发送到指定MQTT主题。也可以配置将采集后的数据进行解析得到所需的数据，以JSON格式发送到指定的MQTT主题。
 modbus模块可以通过 [baetyl](https://github.com/baetyl/baetyl) 与 [baetyl-cloud](https://github.com/baetyl/baetyl-broker) 部署，
 并结合baetyl-broker使用，baetyl会自动配置modbus与 [baetyl-broker](https://github.com/baetyl/baetyl-broker)
-之间的双向tls连接。
+之间的双向TLS连接。
 可以参考 [baetyl文档](https://docs.baetyl.io/zh_CN/latest/) 与[最佳实践](https://docs.baetyl.io/zh_CN/latest/practice/application-deployment-practice.html)。
 
-针对模块的配置可以分为3个部分：1. slave配置 2. 任务配置 3. 数据发送配置：
+
+路径配置: 模块配置文件路径应为etc/baetyl/conf.yml, 日志文件路径为var/log/baetyl/service.log。
+
+
+针对模块的配置可以分为3个部分：1. slave配置 2. 任务配置 3. 数据发送配置，此外，还可以通过该模块反控设备。
 
 ## slave配置
 slaves用于配置与模块连接的slave, 支持配置多个slave, 每个slave必须有唯一的id，否则后定义的slave会覆盖先定义的slave连接配置信息。
@@ -36,7 +40,7 @@ slave连接可以通过TCP或RTU模式连接，默认为RTU模式。此外，模
    parity: E # 奇偶校验类型，可选N(无，对应stopbits应配置为2)，E(奇校验)，O(偶校验) 默认为E
    ```
 
-## 任务
+## 任务配置
 任务提供了对一系列数据点和采集周期，仅采集或采集并解析的定义。在模块配置中可以定义多个任务, 一个任务对应一个slave,
 在任务定义中可以配置采集周期，指定任务为采集或是采集并解析。
 
@@ -73,29 +77,31 @@ slave连接可以通过TCP或RTU模式连接，默认为RTU模式。此外，模
        }
    }
    ```
-   该数据会发送至jobs中定义的主题。当运行在baetyl中时，可以不配置主题，默认为<service-name>/<slaveid>。
+   该数据会发送至jobs中定义的主题。当运行在baetyl中时，可以不配置主题，默认为 ${service-name}/${slaveid}。
 
 * 解析类型
 模块支持的解析数据类型包括有bool、int16、uint16、int32、uint32、int64、uint64、float32、float64。在
-指定解析项type时，应为以上类型之一。解析时使用大端字节序
+指定解析项type时，应为以上类型之一。此外，解析时使用大端字节序。
+
 
 * 功能码
 ​Modbus​可​访问​的​数据​存储​在​四​个​数据​库​或​地址​范围​的​其中​一个： 线圈​状态、​离散​量​输入、​保持​寄存器​和​输入​寄存器。
 其中线圈转态和离散量输入的数据以bit为单位,解析后的数据仅支持bool类型。线圈状态对应功能码1，离散量输入对应
 功能码2。保持寄存器和输入寄存器的数据以双字节（16bit）为单位，解析数据支持前文所有数据类型。保持寄存机对应
-功能码3，输入寄存器对应功能码4
+功能码3，输入寄存器对应功能码4。
+
 
 * 采集数量
 任务的encoding指定为json时，map必须对field进行配置，指定以JSON解析时的name和数据类型, map中的quantity无需
 配置。因为各种数据类型对应的quantity是固定的。例如当配置field.type为int32时，即4字节，而保持寄存器或输入寄存器
 的单位是16bit（2字节），因此quantity必然为2（32/16）。当配置field.type为float64时，即8字节，quantity必然为
 4(64/16)。此外，当任务encoding指定为binary时，即仅进行采集，不对采集后数据进行解析。map对field配置是无效的，
-且quantity必须进行配置
+且quantity必须进行配置。
 
 
 * 仅采集数据
 将任务的encoding配置为json（默认值），模块会将采集后的数据进行解析并以JSON发送，将encoding配置为binary，模块
-会将采集后的数据直接发送（不进行解析）
+会将采集后的数据直接发送（不进行解析）。
    具体格式为:
    ```
    |----|----|----|----|---------|----|---------|  
@@ -104,7 +110,7 @@ slave连接可以通过TCP或RTU模式连接，默认为RTU模式。此外，模
 
    8字节（时间戳）+ 4字节（采集设备id）+ 2字节（采集起始地址）+ 2字节（采集数量）+ 采集数据 + ...
 
-## 发送
+## 数据发送配置
 modbus模块目前支持将采集解析后的数据通过MQTT协议发送至MQTT broker。连接broker支持tcp/ws/ssl/wss等方式。通过
 指定待发送的MQTT主题，采集或解析后的数据会发送至该主题。
 MQTT连接配置:
@@ -126,7 +132,8 @@ MQTT连接配置:
     maxCacheMessages: 默认值：10，Client 发送消息给 Hub 的内存队列大小，异常退出会导致消息丢失，恢复后 QoS 为1的消息依赖 Hub 重发    
    ```
 
-## 采集数据典型配置如下：
+## 配置示例
+### 采集
 ```yaml
 broker:
   address: tcp://127.0.0.1:1883 # 连接mqtt hub的地址 
@@ -152,7 +159,7 @@ logger:
   level: info # 日志级别
 ```
 
-## 采集并解析数据典型配置如下：
+### 采集并解析
 ```yaml
 broker:
   address: tcp://127.0.0.1:1883 # 连接mqtt hub的地址 
@@ -199,9 +206,6 @@ logger:
 解析后的数据。最后，time是读取数据时的时间戳，如前文所述，可以在配置文件中对该字段的格式进行
 配置。
 
-#### 日志路径配置
-模块配置文件路径应为etc/baetyl/conf.yml, 模块日志文件路径为var/log/baetyl/service.log
-
 ## 反控
 从modbus从设备读取数据是常用功能，但有时也需要通过一定方式控制modbus从设备中的数据。前者是通过该模块读取设备
 的数据，而后者则是通过该模块向设备写入数据。读取时需要通过配置文件指定所需要读取的数据相关信息以及解析变量，写入
@@ -212,6 +216,7 @@ logger:
 反控才能生效，还是以上述采集与解析的典型配置为例，在jobs中定义了两个变量switch和humidity, 数据类型为bool和float32
 需要注意的是，需要在MQTT中配置订阅反控主题，反控主题可以为多个, 代表可以通过多个主题对设备进行控制。
 
+配置示例：
 ```yaml
 broker:
   address: tcp://127.0.0.1:1883 # 连接mqtt hub的地址 
