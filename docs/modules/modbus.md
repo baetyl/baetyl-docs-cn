@@ -11,7 +11,10 @@ modbus模块可以通过 [baetyl](https://github.com/baetyl/baetyl) 与 [baetyl-
 可以参考 [baetyl文档](https://docs.baetyl.io/zh_CN/latest/) 与[最佳实践](https://docs.baetyl.io/zh_CN/latest/practice/application-deployment-practice.html)。
 
 
-路径配置: 模块配置文件路径应为etc/baetyl/conf.yml, 日志文件路径为var/log/baetyl/service.log。
+路径配置: 模块配置文件路径应为etc/baetyl/conf.yml, 日志文件路径为var/log/baetyl/service.log，
+应用模块使用[baetyl](https://github.com/baetyl/baetyl) 与 [baetyl-cloud](https://github.com/baetyl/baetyl-broker) 部署时，
+针对设备映射需要开启应用高级配置中的特权模式，并添加hostpath卷配置映射设备。例如使用/dev/ttyS0设备时，需要添加hostpath卷，其宿主机目录和
+容器目录均为/dev/ttyS0。
 
 
 针对模块的配置可以分为3个部分：1. slave配置 2. 任务配置 3. 数据发送配置，此外，还可以通过该模块反控设备。
