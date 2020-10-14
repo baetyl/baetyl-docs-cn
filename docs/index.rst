@@ -46,6 +46,9 @@ Baetyl，将计算、数据和服务从中心无缝延伸到边缘。
 
    modules/modbus.md
    modules/opcua.md
+   modules/broker.md
+   modules/function.md
+   modules/rule.md
 
 .. toctree::
    :maxdepth: 1
