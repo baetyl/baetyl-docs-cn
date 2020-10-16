@@ -144,13 +144,13 @@ curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST h
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
 
 ```shell
-curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
 **注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_system_config 表中的 node-address 和 active-address 修改成真实的地址。
@@ -222,13 +222,13 @@ curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST h
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
 
 ```shell
-curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
 **注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_system_config 表中的 node-address 和 active-address 修改成真实的地址。
@@ -316,13 +316,13 @@ curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST h
 
 ```shell
 curl http://0.0.0.0:9004/v1/nodes/demo-node/init
-# {"cmd":"curl -skfL 'https://0.0.0.0:9003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
 
 ```shell
-curl -skfL 'https://0.0.0.0:9003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
 **注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_system_config 表中的 node-address 和 active-address 修改成真实的地址。
