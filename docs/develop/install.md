@@ -83,7 +83,7 @@ echo "phpMyAdmin URL: http://127.0.0.1:8080"
 kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 ```
 
-然后用浏览器打开 http://127.0.0.1:8080/index.php ， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，先后将 baetyl-cloud 项目下 scripts/sql 目录中的 tables.sql 和 data.sql 输入到页面执行。如果执行没有报错，则数据初始化成功。如果之前使用本教程安装过，再次安装时请注意删除 baetyl-cloud 数据库下的历史数据。
+然后用浏览器打开 http://127.0.0.1:8080/index.php ， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，先后将 baetyl-cloud 项目下 scripts/common 目录中的 tables.sql 和 data.sql 输入到页面执行。如果执行没有报错，则数据初始化成功。如果之前使用本教程安装过，再次安装时请注意删除 baetyl-cloud 数据库下的历史数据。
 
 ### 3. 安装 baetyl-cloud
 
@@ -153,7 +153,7 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node/init
 sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_system_config 表中的 node-address 和 active-address 修改成真实的地址。
+**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
 
 查看边缘节点的状态，最终会有两个边缘服务处于 Running 状态，也可调用云端 RESTful API 查看边缘节点状态，可以看到边缘节点已经在线（"ready":true）。
 
@@ -181,15 +181,15 @@ helm delete baetyl-cloud
 
 安装 mysql 数据库，并初始化数据如下：
 
-- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/sql/tables.sql*
+- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/common/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/common/data.sql*
 
   ```shell
-  # 注意修改 baetyl_system_config 中 node-address 和 active-address 为实际的服务器地址：
+  # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # node-address : https://0.0.0.0:30005
-  # active-address : https://0.0.0.0:30003
+  # sync-server-address : https://0.0.0.0:30005
+  # init-server-address : https://0.0.0.0:30003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
@@ -231,7 +231,7 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node/init
 sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_system_config 表中的 node-address 和 active-address 修改成真实的地址。
+**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
 
 查看边缘节点的状态，最终会有两个边缘服务处于 Running 状态，也可调用云端 RESTful API 查看边缘节点状态，可以看到边缘节点已经在线（"ready":true）。
 
@@ -270,10 +270,10 @@ kubectl delete -f ./apply_v1beta1/
 - 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
 
     ```shell
-  # 注意修改 baetyl_system_config 中 node-address 和 active-address 为实际的服务器地址：
+  # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # node-address : https://0.0.0.0:9005
-  # active-address : https://0.0.0.0:9003
+  # sync-server-address : https://0.0.0.0:30005
+  # init-server-address : https://0.0.0.0:30003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
@@ -281,7 +281,7 @@ kubectl delete -f ./apply_v1beta1/
 
 ### 2. 源码编译
 
-参考[源码编译](../develop/build.html)
+参考[源码编译](../develop/build.md)
 
 ### 3. 启动 baetyl-cloud
 
@@ -325,7 +325,7 @@ curl http://0.0.0.0:9004/v1/nodes/demo-node/init
 sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_system_config 表中的 node-address 和 active-address 修改成真实的地址。
+**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
 
 查看边缘节点的状态，最终会有两个边缘服务处于 Running 状态，也可调用云端 RESTful API 查看边缘节点状态，可以看到边缘节点已经在线（"ready":true）。
 
