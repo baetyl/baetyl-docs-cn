@@ -106,7 +106,7 @@ description: A Helm chart for Kubernetes
 ```
 - 手动导入 crd:
 ```shell script
-# k8s版本为v1.16或更高版本 
+# k8s版本为v1.16或更高版本
 # k3s版本为v1.17.4或更高版本执行
 kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
 # k8s版本小于v1.16
@@ -171,6 +171,8 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 
 ```shell
 helm delete baetyl-cloud
+# 边缘节点删除
+kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
 ----
@@ -183,23 +185,30 @@ helm delete baetyl-cloud
 
 - 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/common/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/common/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/k8s/sql/data.sql*
 
   ```shell
   # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # sync-server-address : https://0.0.0.0:30005
+  # sync-server-address : https://宿主机ip:30005
   # init-server-address : https://0.0.0.0:30003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
 - 修改 *baetyl-cloud-configmap.yml* 中的数据库配置
 
+   ```shell
+  database:
+  type: "mysql"
+  # 数据库账号密码及地址根据用户实际配置
+  url:"root:secretpassword@(宿主机ip:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+  ```
+
 ### 2. 安装 baetyl-cloud
 
 ```shell
 cd scripts/k8s
-# k8s版本为v1.16或更高版本 
+# k8s版本为v1.16或更高版本
 # k3s版本为v1.17.4或更高版本执行
 kubectl apply -f ./apply/
 # k8s版本小于v1.16
@@ -249,12 +258,14 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 
 ```shell
 cd scripts/k8s
-# k8s版本为v1.16或更高版本 
+# k8s版本为v1.16或更高版本
 # k3s版本为v1.17.4或更高版本执行
 kubectl delete -f ./apply/
 # k8s版本小于v1.16
 # k3s版本小于v1.17.4
 kubectl delete -f ./apply_v1beta1/
+# 边缘节点删除
+kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
 ----
@@ -265,19 +276,26 @@ kubectl delete -f ./apply_v1beta1/
 
 安装 mysql 数据库，并初始化数据如下：
 
-- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/sql/tables.sql*
+- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/common/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/native/sql/data.sql*
 
     ```shell
   # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # sync-server-address : https://0.0.0.0:30005
-  # init-server-address : https://0.0.0.0:30003
+  # sync-server-address : https://宿主机ip:9005
+  # init-server-address : https://0.0.0.0:9003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
 - 修改 *conf/cloud.yml* 中的数据库配置
+
+  ```shell
+  database:
+  type: "mysql"
+  # 数据库账号密码及地址根据用户实际配置
+  url:"root:secretpassword@(localhost:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+  ```
 
 ### 2. 源码编译
 
@@ -288,7 +306,7 @@ kubectl delete -f ./apply_v1beta1/
 ```shell
 cd scripts/native
 # 导入 k8s crd 资源
-# k8s版本为v1.16或更高版本 
+# k8s版本为v1.16或更高版本
 # k3s版本为v1.17.4或更高版本执行
 kubectl apply -f ./apply/
 # k8s版本小于v1.16
@@ -297,7 +315,7 @@ kubectl apply -f ./apply_v1beta1/
 # 执行如下命令，然后替换 conf/kubeconfig.yml 文件中的 example
 kubectl config view --raw
 # 然后执行如下命令：
-nohup ../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
+nohup ../../output/baetyl-cloud -c ./conf/conf.yml > /dev/null &
 # 执行成功后会返回成功建立的 baetyl-cloud 进程号
 ```
 
@@ -342,6 +360,9 @@ curl http://0.0.0.0:9004/v1/nodes/demo-node
 ### 5. 进程退出
 
 ```shell
-# 根据创建成功时的进程号杀死进程：
+kubectl delete -f ./apply/
+# 根据创建baetyl-cloud进程成功时的进程号杀死进程：
 sudo kill 进程号
+# 边缘节点删除
+kubectl delete ns baetyl-edge baetyl-edge-system
 ```
