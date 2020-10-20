@@ -106,7 +106,7 @@ description: A Helm chart for Kubernetes
 ```
 - 手动导入 crd:
 ```shell script
-# k8s版本为v1.16或更高版本 
+# k8s版本为v1.16或更高版本
 # k3s版本为v1.17.4或更高版本执行
 kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
 # k8s版本小于v1.16
@@ -171,7 +171,7 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 
 ```shell
 helm delete baetyl-cloud
-#边缘节点删除
+# 边缘节点删除
 kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
@@ -190,7 +190,7 @@ kubectl delete ns baetyl-edge baetyl-edge-system
   ```shell
   # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # sync-server-address : https://host.docker.internal:30005
+  # sync-server-address : https://宿主机ip:30005
   # init-server-address : https://0.0.0.0:30003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
@@ -201,18 +201,18 @@ kubectl delete ns baetyl-edge baetyl-edge-system
   database:
   type: "mysql"
   # 数据库账号密码及地址根据用户实际配置
-  url:"root:secretpassword@(host.docker.internal:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+  url:"root:secretpassword@(宿主机ip:3306)/baetyl_cloud?charset=utf8&parseTime=true"
   ```
 
 ### 2. 安装 baetyl-cloud
 
 ```shell
 cd scripts/k8s
-#k8s版本为v1.16或更高版本 
-#k3s版本为v1.17.4或更高版本执行
+# k8s版本为v1.16或更高版本
+# k3s版本为v1.17.4或更高版本执行
 kubectl apply -f ./apply/
-#k8s版本小于v1.16
-#k3s版本小于v1.17.4
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
 kubectl apply -f ./apply_v1beta1/
 ```
 
@@ -224,14 +224,14 @@ kubectl apply -f ./apply_v1beta1/
 
 ```shell
 curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST http://0.0.0.0:30004/v1/nodes
-#{"namespace":"baetyl-cloud","name":"demo-node","version":"1931564","createTime":"2020-07-22T06:25:05Z","labels":{"baetyl-node-name":"demo-node"},"ready":false}
+# {"namespace":"baetyl-cloud","name":"demo-node","version":"1931564","createTime":"2020-07-22T06:25:05Z","labels":{"baetyl-node-name":"demo-node"},"ready":false}
 ```
 
 获取边缘节点的在线安装脚本。
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-#{"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
@@ -246,25 +246,25 @@ sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl
 
 ```shell
 kubectl get pod -A
-#NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
-#baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
-#baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
+# NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
+# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
+# baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
 
 curl http://0.0.0.0:30004/v1/nodes/demo-node
-#{"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
+# {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
 ```
 
 ### 4. 卸载baetyl-cloud
 
 ```shell
 cd scripts/k8s
-#k8s版本为v1.16或更高版本 
-#k3s版本为v1.17.4或更高版本执行
+# k8s版本为v1.16或更高版本
+# k3s版本为v1.17.4或更高版本执行
 kubectl delete -f ./apply/
-#k8s版本小于v1.16
-#k3s版本小于v1.17.4
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
 kubectl delete -f ./apply_v1beta1/
-#边缘节点删除
+# 边缘节点删除
 kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
@@ -283,7 +283,7 @@ kubectl delete ns baetyl-edge baetyl-edge-system
     ```shell
   # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # sync-server-address : https://host.docker.internal:9005
+  # sync-server-address : https://宿主机ip:9005
   # init-server-address : https://0.0.0.0:9003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
@@ -293,7 +293,7 @@ kubectl delete ns baetyl-edge baetyl-edge-system
   ```shell
   database:
   type: "mysql"
-  #数据库账号密码及地址根据用户实际配置
+  # 数据库账号密码及地址根据用户实际配置
   url:"root:secretpassword@(localhost:3306)/baetyl_cloud?charset=utf8&parseTime=true"
   ```
 
@@ -305,18 +305,18 @@ kubectl delete ns baetyl-edge baetyl-edge-system
 
 ```shell
 cd scripts/native
-#导入 k8s crd 资源
-#k8s版本为v1.16或更高版本 
-#k3s版本为v1.17.4或更高版本执行
+# 导入 k8s crd 资源
+# k8s版本为v1.16或更高版本
+# k3s版本为v1.17.4或更高版本执行
 kubectl apply -f ./apply/
-#k8s版本小于v1.16
-#k3s版本小于v1.17.4
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
 kubectl apply -f ./apply_v1beta1/
-#执行如下命令，然后替换 conf/kubeconfig.yml 文件中的 example
+# 执行如下命令，然后替换 conf/kubeconfig.yml 文件中的 example
 kubectl config view --raw
-#然后执行如下命令：
+# 然后执行如下命令：
 nohup ../../output/baetyl-cloud -c ./conf/conf.yml > /dev/null &
-#执行成功后会返回成功建立的 baetyl-cloud 进程号
+# 执行成功后会返回成功建立的 baetyl-cloud 进程号
 ```
 
 执行成功后可以通过 http://0.0.0.0:9004 操作 baetyl-cloud API。
@@ -327,14 +327,14 @@ nohup ../../output/baetyl-cloud -c ./conf/conf.yml > /dev/null &
 
 ```shell
 curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST http://0.0.0.0:9004/v1/nodes
-#{"namespace":"baetyl-cloud","name":"demo-node","version":"1931564","createTime":"2020-07-22T06:25:05Z","labels":{"baetyl-node-name":"demo-node"},"ready":false}
+# {"namespace":"baetyl-cloud","name":"demo-node","version":"1931564","createTime":"2020-07-22T06:25:05Z","labels":{"baetyl-node-name":"demo-node"},"ready":false}
 ```
 
 获取边缘节点的在线安装脚本。
 
 ```shell
 curl http://0.0.0.0:9004/v1/nodes/demo-node/init
-#{"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
@@ -343,26 +343,26 @@ curl http://0.0.0.0:9004/v1/nodes/demo-node/init
 sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**注意**：如果需要在 baetyl-cloud 部署地机器以k 外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
+**注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
 
 查看边缘节点的状态，最终会有两个边缘服务处于 Running 状态，也可调用云端 RESTful API 查看边缘节点状态，可以看到边缘节点已经在线（"ready":true）。
 
 ```shell
 kubectl get pod -A
-#NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
-#baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
-#baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
+# NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
+# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
+# baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
 
 curl http://0.0.0.0:9004/v1/nodes/demo-node
-#{"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
+# {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
 ```
 
 ### 5. 进程退出
 
 ```shell
 kubectl delete -f ./apply/
-#根据创建baetyl-cloud进程成功时的进程号杀死进程：
+# 根据创建baetyl-cloud进程成功时的进程号杀死进程：
 sudo kill 进程号
-#边缘节点删除
+# 边缘节点删除
 kubectl delete ns baetyl-edge baetyl-edge-system
 ```
