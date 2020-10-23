@@ -11,22 +11,18 @@
 - 撰写本文时所用 k8s 相关信息如下：
 ```
 // kubectl version
-Client Version: version.Info{Major:"1", Minor:"17", GitVersion:"v1.17.3", GitCommit:"06ad960bfd03b39c8310aaf92d1e7c12ce618213", GitTreeState:"clean", BuildDate:"2020-02-11T18:14:22Z", GoVersion:"go1.13.6", Compiler:"gc", Platform:"darwin/amd64"}
-Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.5", GitCommit:"20c265fef0741dd71a66480e35bd69f18351daea", GitTreeState:"clean", BuildDate:"2019-10-15T19:07:57Z", GoVersion:"go1.12.10", Compiler:"gc", Platform:"linux/amd64"}
+Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.6", GitCommit:"dff82dc0de47299ab66c83c626e08b245ab19037", GitTreeState:"clean", BuildDate:"2020-07-15T23:30:39Z", GoVersion:"go1.14.4", Compiler:"gc", Platform:"darwin/amd64"}
+Server Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.3", GitCommit:"2e7996e3e2712684bc73f0dec0200d64eec7fe40", GitTreeState:"clean", BuildDate:"2020-05-20T12:43:34Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
 - 撰写本文使用 baetyl-cloud 版本信息如下：
 ```
 // git log
-commit 6d96271e24dbd4d5bb5f3e0509c2af7d085676af
-Author: chensheng <chensheng06@baidu.com>
-Date:   Tue Aug 11 15:54:26 2020 +0800
-
-    fix cert error (#50)
+commit be8687f858b5c70d8dcdd55a120949fd64668588
 ```
 因为 baetyl-cloud 代码在快速迭代，最新的代码无法做到实时适配。所以用户在下载 baetyl-cloud 代码后需要切换到此版本：
 ```shell script
-git reset --hard 6d96271e24dbd4
+git reset --hard be8687f858b5c70d8dcdd55a120949fd64668588
 ```
 另外本文会定期更新来适配最新的 baetyl-cloud 代码。
 
@@ -83,7 +79,7 @@ echo "phpMyAdmin URL: http://127.0.0.1:8080"
 kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 ```
 
-然后用浏览器打开 http://127.0.0.1:8080/index.php ， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，先后将 baetyl-cloud 项目下 scripts/common 目录中的 tables.sql 和 data.sql 输入到页面执行。如果执行没有报错，则数据初始化成功。如果之前使用本教程安装过，再次安装时请注意删除 baetyl-cloud 数据库下的历史数据。
+然后用浏览器打开 http://127.0.0.1:8080/index.php ， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，先后将 baetyl-cloud 项目下 scripts/common/tables.sql 和 scripts/native/sql/data.sql 输入到页面执行。如果执行没有报错，则数据初始化成功。如果之前使用本教程安装过，再次安装时请注意删除 baetyl-cloud 数据库下的历史数据。
 
 ### 3. 安装 baetyl-cloud
 
