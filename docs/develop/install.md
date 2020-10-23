@@ -140,13 +140,13 @@ curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST h
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
 
 ```shell
-sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
 **注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
@@ -227,13 +227,13 @@ curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST h
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
 
 ```shell
-sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
 **注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
@@ -284,7 +284,7 @@ kubectl delete ns baetyl-edge baetyl-edge-system
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
-- 修改 *conf/cloud.yml* 中的数据库配置
+- 修改 *conf/conf.yml* 中的数据库配置
 
   ```shell
   database:
@@ -330,13 +330,13 @@ curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST h
 
 ```shell
 curl http://0.0.0.0:9004/v1/nodes/demo-node/init
-# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 在 baetyl-cloud 部署地机器上执行安装脚本.
 
 ```shell
-sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete -f init.yml --ignore-not-found=true && kubectl apply -f init.yml
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
 **注意**：如果需要在 baetyl-cloud 部署地机器以外的设备上安装边缘节点，请修改数据库将 baetyl_property 表中的 sync-server-address 和 init-server-address 修改成真实的地址。
