@@ -18,15 +18,15 @@ Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.5", GitCom
 - 撰写本文使用 baetyl-cloud 版本信息如下：
 ```
 // git log
-commit 6d96271e24dbd4d5bb5f3e0509c2af7d085676af
-Author: chensheng <chensheng06@baidu.com>
-Date:   Tue Aug 11 15:54:26 2020 +0800
+commit fd97c860be11a748fa124aac721f0697312b27cf
+Author: hannatao <413024870@qq.com>
+Date:   Tue Feb 23 11:46:18 2021 +0800
 
-    fix cert error (#50)
+    Update sql to the current struct (#259)
 ```
 因为 baetyl-cloud 代码在快速迭代，最新的代码无法做到实时适配。所以用户在下载 baetyl-cloud 代码后需要切换到此版本：
 ```shell script
-git reset --hard 6d96271e24dbd4
+git reset --hard fd97c860be11a
 ```
 另外本文会定期更新来适配最新的 baetyl-cloud 代码。
 
@@ -181,15 +181,15 @@ helm delete baetyl-cloud
 
 安装 mysql 数据库，并初始化数据如下：
 
-- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/sql/tables.sql*
+- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/common/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/k8s/sql/data.sql*
 
   ```shell
-  # 注意修改 baetyl_system_config 中 node-address 和 active-address 为实际的服务器地址：
+  # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # node-address : https://0.0.0.0:30005
-  # active-address : https://0.0.0.0:30003
+  # sync-server-address : https://0.0.0.0:30005
+  # init-server-address : https://0.0.0.0:30003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
@@ -265,19 +265,19 @@ kubectl delete -f ./apply_v1beta1/
 
 安装 mysql 数据库，并初始化数据如下：
 
-- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/sql/tables.sql*
+- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/common/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/native/sql/data.sql*
 
     ```shell
-  # 注意修改 baetyl_system_config 中 node-address 和 active-address 为实际的服务器地址：
+  # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
   # 比如服务部署在本机，则地址可配置如下：
-  # node-address : https://0.0.0.0:9005
-  # active-address : https://0.0.0.0:9003
+  # sync-server-address : https://0.0.0.0:9005
+  # init-server-address : https://0.0.0.0:9003
   # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
   ```
 
-- 修改 *conf/cloud.yml* 中的数据库配置
+- 修改 *native/conf/conf.yml* 中的数据库配置
 
 ### 2. 源码编译
 
@@ -297,7 +297,7 @@ kubectl apply -f ./apply_v1beta1/
 # 执行如下命令，然后替换 conf/kubeconfig.yml 文件中的 example
 kubectl config view --raw
 # 然后执行如下命令：
-nohup ../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
+nohup ../../output/baetyl-cloud -c ./conf/conf.yml > /dev/null &
 # 执行成功后会返回成功建立的 baetyl-cloud 进程号
 ```
 
