@@ -12,7 +12,7 @@ Golang 的最低版本要求为 1.13。 下载安装 Golang 可参考 [golang.or
 # 使用 go1.13 以上版本 
 go env -w GONOPROXY=\*\*.baidu.com\*\*              ## 配置GONOPROXY环境变量,所有百度内代码,不走代理
 go env -w GONOSUMDB=\*                              ## 配置GONOSUMDB,暂不支持sumdb索引
-go env -w GOPROXY=https://goproxy.baidu.com         ## 配置GOPROXY,可以下载墙外代码
+go env -w GOPROXY=https://goproxy.baidu-int.com/    ## 配置GOPROXY,可以下载墙外代码
 ```
 
 - 安装 Docker Engine 并打开 Buildx 功能

@@ -4,7 +4,12 @@
 
 ## 准备工作
 
-- 安装k8s/k3s，关于 k8s 介绍请参考 [kubernetes 官网](https://kubernetes.io)。
+- 安装k8s，关于 k8s 介绍请参考 [kubernetes 官网](https://kubernetes.io)。
+
+- 请先准备好数据库，并依次导入scripts/sql/tables.sql和scripts/sql/data.sql中的数据。
+
+- 使用k8s或helm安装时，由于采用nodeport映射，请修改scripts/sql/data.sql中baetyl_property表中
+  sync和init address中的端口号为30005和30003。
 
 ## 声明
 
@@ -18,15 +23,15 @@ Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.5", GitCom
 - 撰写本文使用 baetyl-cloud 版本信息如下：
 ```
 // git log
-commit fd97c860be11a748fa124aac721f0697312b27cf
+commit dd37b0f7d15d1a1b7953aaaaf4be6aba55e13574 (HEAD -> master, tag: v2.2.1-rc11)
 Author: hannatao <413024870@qq.com>
-Date:   Tue Feb 23 11:46:18 2021 +0800
+Date:   Mon Jul 12 15:00:41 2021 +0800
 
-    Update sql to the current struct (#259)
+    Change goproxy and sql (#330)
 ```
 因为 baetyl-cloud 代码在快速迭代，最新的代码无法做到实时适配。所以用户在下载 baetyl-cloud 代码后需要切换到此版本：
 ```shell script
-git reset --hard fd97c860be11a
+git reset --hard dd37b0f7d15
 ```
 另外本文会定期更新来适配最新的 baetyl-cloud 代码。
 
@@ -87,6 +92,18 @@ kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 
 ### 3. 安装 baetyl-cloud
 
+首先需要手动导入 crd:
+```shell script
+# k8s版本为v1.16或更高版本 
+# k3s版本为v1.17.4或更高版本执行
+kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
+# k8s版本小于v1.16
+# k3s版本小于v1.17.4
+kubectl apply -f ./scripts/charts/baetyl-cloud/apply_v1beta1/
+```
+
+根据自己数据库的配置情况，修改scripts/charts/baetyl-cloud/conf/cloud.yaml中database的配置信息。
+
 对于 helm v3，直接进入 baetyl-cloud 项目所在目录，执行如下命令。
 
 ```shell
@@ -103,15 +120,6 @@ name: baetyl-cloud
 description: A Helm chart for Kubernetes
 
 ...
-```
-- 手动导入 crd:
-```shell script
-# k8s版本为v1.16或更高版本 
-# k3s版本为v1.17.4或更高版本执行
-kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
-# k8s版本小于v1.16
-# k3s版本小于v1.17.4
-kubectl apply -f ./scripts/charts/baetyl-cloud/apply_v1beta1/
 ```
 - helm v2 安装 baetyl-cloud:
 ```shell script
@@ -181,9 +189,9 @@ helm delete baetyl-cloud
 
 安装 mysql 数据库，并初始化数据如下：
 
-- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/common/tables.sql*
+- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/sql/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/k8s/sql/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
 
   ```shell
   # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
@@ -265,9 +273,9 @@ kubectl delete -f ./apply_v1beta1/
 
 安装 mysql 数据库，并初始化数据如下：
 
-- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/common/tables.sql*
+- 创建 baetyl-cloud 数据库及表，具体sql语句见：*scripts/sql/tables.sql*
 
-- 初始化表数据，数据相关 sql 语句见：*scripts/native/sql/data.sql*
+- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
 
     ```shell
   # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
