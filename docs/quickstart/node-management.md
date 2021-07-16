@@ -36,23 +36,17 @@
 ![编辑节点标签](../images/quickstart/node-management/05-node-update-labels.png)
 
 ### 节点安装
-节点安装现仅支持在线安装。baetyl运行模式包括 **k3s+docker** 和 **k3s+containerd** 两种，在设备安装后，会检查设备上是否有docker, k3s环境，由用户选择确认进行安装。如使用 **k3s+docker** 模式，则需要选择安装docker后再安装k3s。设备上已有上述环境时不会再安装。如果原有k3s基于docker，baetyl运行模式为 **k3s+docker**，如果基于containerd，运行模式则为 **k3s+containerd**。
+节点安装目前支持 Kube 模式在线安装。baetyl运行模式包括 **k3s+docker** 和 **k3s+containerd** 两种，用户根据实际需要选择运行环境安装命令，需要注意的是，若用户选择 **k3s+docker** 运行环境，需先安装 docker 后再安装 k3s。
 
-**k3s+containerd模式**
+- 节点安装-containerd
+![节点安装-containerd](../images/quickstart/node-management/06-node-install-command-containerd.png)
 
-在节点详情页点击安装弹出窗口，复制安装命令，在设备上执行命令，当选择是否安装k3s时输入 y，选择containerd（Yes）和 docker (No)时输入 y
+- 节点安装-docker
+![节点安装-docker](../images/quickstart/node-management/07-node-install-command-docker.png)
 
-![节点安装-containerd-1](../images/quickstart/node-management/06-node-installation-containerd-1.png)
+运行环境准备就绪后，执行节点安装命令，即可安装边缘节点，效果如下：
 
-![节点安装-containerd-2](../images/quickstart/node-management/07-node-installation-containerd-2.png)
-
-**k3s+docker模式**
-
-在节点详情页点击安装弹出窗口，复制安装命令，在设备上执行命令，当选择是否安装k3s时输入 y，选择containerd（Yes）和 docker (No)时输入 n
-
-![节点安装-docker-1](../images/quickstart/node-management/08-node-installation-docker-1.png)
-
-![节点安装-docker-2](../images/quickstart/node-management/09-node-installation-docker-2.png)
+![节点安装效果](../images/quickstart/node-management/08-node-install.png)
 
 
 采用上述两种模式安装都会在 **baetyl-edge-system** 部署 **baetyl-core** 和 **baetyl-function** 两个服务。查看 **baetyl-edge-system** 命名空间下的pod均处于运行状态即表示节点安装完成。
