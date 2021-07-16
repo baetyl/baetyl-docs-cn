@@ -79,15 +79,17 @@ allow_anonymous true
 
 ## 节点安装
 
-点击左侧菜单栏边缘节点，点击已创建的节点 **node-1**，在节点详情页点击 **安装**，复制在线安装的命令，在边缘设备上执行该命令。
+点击左侧菜单栏边缘节点，点击已创建的节点 **node-1**，在节点详情页点击 **安装**，复制在线安装的命令，baetyl运行模式包括 **k3s+docker** 和 **k3s+containerd** 两种，用户根据实际需要选择运行环境安装命令，需要注意的是，若用户选择 **k3s+docker** 运行环境，需先安装 docker 后再安装 k3s。
 
-![节点安装1](../images/practice/application-deployment/13-node-installation-1.png)
+- 节点安装-containerd
+![节点安装1](../images/practice/application-deployment/13-node-install-command-containerd.png)
 
-由于baetyl运行基于k3s/k8s，初始化时，若设备上未安装，需要选择相关组件进行安装。有 **k3s+containerd** 和 **k3s+docker** 两种运行模式。执行命令后会提示安装k3s，需输入 y 确认安装k3s。然后需要选择安装containerd或者docker。 如果输入 y 则安装containerd，baetyl的运行模式为 **k3s+containerd**，如果输入 n 则安装docker, baetyl的运行模式为 **k3s+docker**。
+- 节点安装-docker
+![节点安装2](../images/practice/application-deployment/14-node-install-command-docker.png)
 
-![节点安装2](../images/practice/application-deployment/14-node-installation-2.png)
+运行环境准备就绪后，执行节点安装命令，即可安装边缘节点，效果如下：
 
-![节点安装3](../images/practice/application-deployment/15-node-installation-3.png)
+![节点安装3](../images/practice/application-deployment/15-node-install.png)
 
 确认系统应用的服务已经启动并处于Running状态，其中系统应用位于 **baetyl-edge-system** 命名空间下，包括 **baetyl-core** 和 **baetyl-function**，用户应用位于 **baetyl-edge** 命名空间下, 确认之前所创建的broker应用为Running状态，表示应用已正常启动了。
 
