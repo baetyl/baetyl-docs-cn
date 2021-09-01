@@ -11,6 +11,8 @@
 - 使用k8s或helm安装时，由于采用nodeport映射，请修改scripts/sql/data.sql中baetyl_property表中
   sync和init address中的端口号为30005和30003。
 
+- 请先编译本地镜像，可以直接在项目根目录运行`make image`，并确保镜像tag与后续helm以及k8s安装的tag一致。具体编译流程和方法请参照编译章节。
+
 ## 声明
 
 - 撰写本文时所用 k8s 相关信息如下：
@@ -50,47 +52,25 @@ Server: &version.Version{SemVer:"v2.16.9", GitCommit:"8ad7037828e5a0fca1009dabe2
 ```
 关于 helm 的安装，可以参考 [helm 安装链接](https://helm.sh/docs/intro/install )。
 
-### 1. 安装数据库
+### 1. 初始化数据库
 
-在安装 baetyl-cloud 之前，我们需要先安装数据库，可执行如下命令安装。
+mysql / mariadb数据库初始化数据如下：
 
-```shell
-// helm v3
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
-helm install phpmyadmin bitnami/phpmyadmin 
+- 创建 baetyl-cloud 数据库及表，具体 sql 语句见：*scripts/sql/tables.sql*
 
-// helm v2
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --name mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
-helm install --name phpmyadmin bitnami/phpmyadmin 
-```
+- 初始化表数据，数据相关 sql 语句见：*scripts/sql/data.sql*
 
-**注意**：这里为了演示方便，我们 hardcode 了密码，请自行修改，可全局替换 secretpassword。
+  ```shell
+  # 注意修改 baetyl_property 中 sync-server-address 和 init-server-address 为实际的服务器地址：
+  # 比如服务部署在本机，则地址可配置如下：
+  # sync-server-address : https://0.0.0.0:30005
+  # init-server-address : https://0.0.0.0:30003
+  # 若服务部署在非本机，请将IP更改为实际的服务器IP地址
+  ```
 
-### 2. 初始化数据
+- 根据自己数据库连接配置情况，修改*scripts/charts/baetyl-cloud/conf/cloud.yml*中database的连接配置信息。
 
-确认 mariadb 和 phpmyadmin 都进入 Runing 状态。
-
-```shell
-kubectl get pod
-# NAME                            READY   STATUS             RESTARTS   AGE
-# mariadb-master-0                1/1     Running            0          2m56s
-# mariadb-slave-0                 1/1     Running            0          2m56s
-# phpmyadmin-55f4f964d7-ctmxj     1/1     Running            0          117s
-```
-
-然后执行如下命令，保持终端不要退出。
-
-```shell
-export POD_NAME=$(kubectl get pods --namespace default -l "app=phpmyadmin,release=phpmyadmin" -o jsonpath="{.items[0].metadata.name}")
-echo "phpMyAdmin URL: http://127.0.0.1:8080"
-kubectl port-forward --namespace default svc/phpmyadmin 8080:80
-```
-
-然后用浏览器打开 http://127.0.0.1:8080/index.php ， 服务器输入：mariadb，账号输入：root，密码输入：secretpassword。登录后选择数据库 baetyl-cloud，点击 SQL按钮，先后将 baetyl-cloud 项目下 scripts/sql 目录中的 tables.sql 和 data.sql 输入到页面执行。如果执行没有报错，则数据初始化成功。如果之前使用本教程安装过，再次安装时请注意删除 baetyl-cloud 数据库下的历史数据。
-
-### 3. 安装 baetyl-cloud
+### 2. 安装 baetyl-cloud
 
 首先需要手动导入 crd:
 ```shell script
@@ -101,8 +81,6 @@ kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
 # k3s版本小于v1.17.4
 kubectl apply -f ./scripts/charts/baetyl-cloud/apply_v1beta1/
 ```
-
-根据自己数据库的配置情况，修改scripts/charts/baetyl-cloud/conf/cloud.yaml中database的配置信息。
 
 对于 helm v3，直接进入 baetyl-cloud 项目所在目录，执行如下命令。
 
@@ -139,7 +117,7 @@ kubectl logs -f baetyl-cloud-57cd9597bd-z62kb
 
 成功后可通过 http://0.0.0.0:30004 操作 baetyl-cloud API。
 
-### 4. 安装边缘节点
+### 2. 安装边缘节点
 
 调用 RESTful API 创建节点。
 
@@ -168,14 +146,15 @@ curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a3
 ```shell
 kubectl get pod -A
 # NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
-# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
-# baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
+# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          108s
+# baetyl-edge-system   baetyl-init-cbc59995-z8sd8                1/1     Running   0          114s
+# baetyl-edge-system   baetyl-broker-79cc99848c-ht6lq            1/1     Running   0          100s
 
 curl http://0.0.0.0:30004/v1/nodes/demo-node
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
 ```
 
-### 5. 卸载baetyl-cloud
+### 3. 卸载baetyl-cloud
 
 ```shell
 helm delete baetyl-cloud
@@ -185,7 +164,7 @@ helm delete baetyl-cloud
 
 ## K8s 安装
 
-### 1. 安装数据库
+### 1. 初始化数据库
 
 安装 mysql 数据库，并初始化数据如下：
 
@@ -246,8 +225,9 @@ curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a3
 ```shell
 kubectl get pod -A
 # NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
-# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
-# baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
+# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          108s
+# baetyl-edge-system   baetyl-init-cbc59995-z8sd8                1/1     Running   0          114s
+# baetyl-edge-system   baetyl-broker-79cc99848c-ht6lq            1/1     Running   0          100s
 
 curl http://0.0.0.0:30004/v1/nodes/demo-node
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
@@ -340,8 +320,9 @@ curl -skfL 'https://0.0.0.0:9003/v1/active/setup.sh?token=f6d21baa9b7b2265223a33
 ```shell
 kubectl get pod -A
 # NAMESPACE            NAME                                      READY   STATUS    RESTARTS   AGE
-# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
-# baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
+# baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          108s
+# baetyl-edge-system   baetyl-init-cbc59995-z8sd8                1/1     Running   0          114s
+# baetyl-edge-system   baetyl-broker-79cc99848c-ht6lq            1/1     Running   0          100s
 
 curl http://0.0.0.0:9004/v1/nodes/demo-node
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
