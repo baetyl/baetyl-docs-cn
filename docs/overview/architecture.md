@@ -11,7 +11,7 @@
 目前有如下几个系统应用：
 * baetyl-init：负责激活边缘节点到云端，并初始化 baetyl-core，任务完成后就会退出。
 * baetyl-core：负责本地节点管理（node）、端云数据同步（sync）和应用部署（engine）。
-* baetyl-function: 所有函数运行时服务的代理模块，函数调用都到通过这个模块。
+* baetyl-function: 所有函数运行时服务的代理模块，函数调用都要通过这个模块。
 
 目前框架支持 Linux/amd64、Linux/arm64、Linux/armv7，
 如果边缘节点的资源有限，可考虑使用轻量版 Kubernetes：[K3S](https://k3s.io/)。
